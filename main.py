@@ -315,6 +315,15 @@ class AutoRun(object):
             print('    港口商店完成')
 
 
+
+    def get_task_reward(self):
+        ''' 任务领奖 '''
+        self.back_to_home()
+        print('任务领奖开始')
+        self.find_and_click(img_path='./img/rw.png', name='任务')
+        while found:
+            found, _, _ = self.find_and_click(img_path='./img/rw_ljl', name='任务领奖')
+        print('任务领奖完成')
 ar = AutoRun()
 ar.run()
 
