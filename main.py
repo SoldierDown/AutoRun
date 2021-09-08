@@ -41,6 +41,7 @@ class AutoRun(object):
             for iter in range(n_clicks):
                 pag.click()
             pag.PAUSE=SHORT_PAUSE
+            time.sleep(3)
             return True, pos.left, pos.top
         else:
             output=''
@@ -49,6 +50,7 @@ class AutoRun(object):
             output+=name
             output+='未找到'
             print(output)
+            time.sleep(3)
             return False, 0, 0
     
     def drag_find_and_click(self, fp=[0, 0], dragto=[0, 0], img_path='', name='', offset=[0, 0],ind=1, n_clicks=1, n_drags=1):
@@ -69,6 +71,7 @@ class AutoRun(object):
             pag.moveTo(pos.left + offset[0], pos.top + offset[1])
             for iter in range(n_clicks):
                 pag.click()
+            time.sleep(3)
             return True, pos.left, pos.top
         else:
             output=''
@@ -77,16 +80,18 @@ class AutoRun(object):
             output+=name
             output+='未找到'
             print(output)
+            time.sleep(3)
             return False, 0, 0
 
     def run(self):
         ''''''
-        self.harbor_shop()
-        # self.normal_activity()
-        # self.time_limited_activity()
-        # self.game_assistant()
-        # self.harbor()
-        # self.union()
+        self.normal_activity()
+        self.time_limited_activity()
+        self.game_assistant()
+        self.harbor()
+        self.union()
+        self.functions()
+        self.get_task_reward()
     
     def back_to_home(self):
         ''' 回到主页 '''
@@ -314,8 +319,64 @@ class AutoRun(object):
         if finished:
             print('    港口商店完成')
 
+    
 
-
+    def functions(self):
+        ''' 功能 '''
+        print('功能开始')
+        self.adventure_logs()
+        print('功能完成')
+    def adventure_logs(self):
+        ''' 冒险日志 '''
+        print('    冒险日志开始')
+        self.gumball_machine()
+        self.adventure_fights()
+        print('    冒险日志完成')
+    def gumball_machine(self):
+        ''' 扭蛋机 '''
+        total_chances = 3
+        self.back_to_home()
+        finished = False
+        print('        扭蛋机开始')
+        self.find_and_click(img_path='./img/gn.png', name='功能')
+        self.find_and_click(img_path='./img/gn_mxrz.png', name='冒险日志')
+        self.find_and_click(img_path='./img/gn_mxrz_ndj.png', name='扭蛋机')
+        for iter in range(total_chances):
+            self.find_and_click(img_path='./img/gn_mxrz_ndj_tb.png', name='投币一次')
+        print('        扭蛋机完成')
+    def adventure_fights(self):
+        ''' 冒险挑战 '''
+        total_changes = 3
+        total_fights = 3
+        cur_changes = 0
+        cur_fights = 0
+        self.back_to_home()
+        finished = False
+        print('        冒险挑战开始')
+        self.find_and_click(img_path='./img/gn.png', name='功能', ind=2)
+        self.find_and_click(img_path='./img/gn_mxrz.png', name='冒险日志', ind=2)
+        self.find_and_click(img_path='./img/gn_mxrz_mxtz.png', name='冒险挑战', ind=2)
+        while cur_fights < total_fights:
+            found, _, _ = self.find_and_click(img_path='./img/gn_mxrz_mxtz_mxjf.png', name='冒险积分', n_clicks=0, ind=2)
+            # 低积分海贼
+            if found:
+                # 还可免费更改
+                if cur_changes < total_changes:
+                    self.find_and_click(img_path='./img/gn_mxrz_mxtz_cxmb.png', name='重选目标', ind=2)
+                    cur_changes += 1
+                # 只能打了
+                else:
+                    self.find_and_click(img_path='./img/gn_mxrz_mxtz_fqtz.png', name='发起挑战', ind=2)
+                    self.find_and_click(img_path='./img/gn_mxrz_mxtz_tg.png', name='跳过', ind=2)
+                    cur_fights += 1
+            # 高积分海贼: 直接打
+            else:
+                self.find_and_click(img_path='./img/gn_mxrz_mxtz_fqtz.png', name='发起挑战', ind=2)
+                self.find_and_click(img_path='./img/gn_mxrz_mxtz_tg.png', name='跳过', ind=2)
+                cur_fights += 1
+        print('        冒险挑战完成')
+    
+    
     def get_task_reward(self):
         ''' 任务领奖 '''
         self.back_to_home()
