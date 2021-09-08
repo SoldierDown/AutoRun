@@ -47,3 +47,187 @@ Day 1: 09/08/2021
     ??????
     ??????
 ??????
+
+
+Day 2: 09/08/2021
+日常任务开始
+    每日签到开始
+    每日签到完成
+    购买贝里开始
+        购买贝里一次未找到
+    VIP礼物开始
+        VIP每日礼包未找到
+        VIP每日礼包领取未找到
+    日常礼包开始
+                日常礼包每周礼包领取未找到
+                日常礼包每月礼包领取未找到
+日常任务完成
+限时活动开始
+    累计登录开始
+    累计登录完成
+    道具折扣开始
+        道具折扣未找到
+        道具折扣购买体力未找到
+    福利商店开始
+    福利商店完成
+限时活动完成
+游戏助手开始
+游戏助手完成
+港口开始
+    港口领奖开始
+    港口领奖完成
+    港口商店开始
+        港口商店未找到
+        固定点未找到
+Traceback (most recent call last):
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 389, in <module>
+    ar.run()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 91, in run
+    self.harbor()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 262, in harbor
+    self.harbor_shop()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 294, in harbor_shop
+    pag.drag(DPM*2)
+  File "C:\Users\dyhar\anaconda3\envs\GA\lib\site-packages\pyautogui\__init__.py", line 958, in dragRel
+    failSafeCheck()
+  File "C:\Users\dyhar\anaconda3\envs\GA\lib\site-packages\pyautogui\__init__.py", line 1257, in failSafeCheck      
+    raise FailSafeException('PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen. To disable this fail-safe, set pyautogui.FAILSAFE to False. DISABLING FAIL-SAFE IS NOT RECOMMENDED.')
+pyautogui.FailSafeException: PyAutoGUI fail-safe triggered from mouse moving to a corner of the screen. To disable this fail-safe, set pyautogui.FAILSAFE to False. DISABLING FAIL-SAFE IS NOT RECOMMENDED.
+
+日常任务开始
+    每日签到开始
+        每日签到领取未找到
+    VIP礼物开始
+        日常活动未找到
+        固定点未找到
+        VIP礼包未找到
+        VIP每日礼包未找到
+Traceback (most recent call last):
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 390, in <module>
+    ar.run()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 88, in run
+    self.normal_activity()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 105, in normal_activity
+    self.get_vip_gift()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 139, in get_vip_gift
+    finished, _, _ = self.find_and_click(img_path='./img/na_vipg_mrg_lq.png', name='VIP每日礼包领取')
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 37, in find_and_click
+    pos = pag.locateOnScreen(img_path, confidence=conf)    
+  File "C:\Users\dyhar\anaconda3\envs\GA\lib\site-packages\pyscreeze\__init__.py", line 372, in locateOnScreen        
+    retVal = locate(image, screenshotIm, **kwargs)
+  File "C:\Users\dyhar\anaconda3\envs\GA\lib\site-packages\pyscreeze\__init__.py", line 352, in locate
+    points = tuple(locateAll(needleImage, haystackImage, **kwargs))
+  File "C:\Users\dyhar\anaconda3\envs\GA\lib\site-packages\pyscreeze\__init__.py", line 228, in _locateAll_opencv     
+    result = cv2.matchTemplate(haystackImage, needleImage, 
+cv2.TM_CCOEFF_NORMED)
+KeyboardInterrupt
+日常任务开始
+    每日签到开始
+        每日签到领取未找到
+    VIP礼物开始
+        日常活动未找到
+        固定点未找到
+        VIP礼包未找到
+        VIP每日礼包未找到
+        VIP每日礼包领取未找到
+Traceback (most recent call last):
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 390, in <module>
+    ar.run()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 88, in run
+    self.normal_activity()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 106, in normal_activity
+    self.get_daily_gift()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 144, in get_daily_gift
+    self.back_to_home()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 98, in back_to_home
+    self.find_and_click(img_path='./img/bth.png', name='主
+页', n_clicks=N_CLICKS)
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 42, in find_and_click
+    pag.click()
+  File "C:\Users\dyhar\anaconda3\envs\GA\lib\site-packages\pyautogui\__init__.py", line 539, in click
+    _autoPause(pause, _pause)
+  File "C:\Users\dyhar\anaconda3\envs\GA\lib\site-packages\pyautogui\__init__.py", line 242, in _autoPause
+    time.sleep(PAUSE)
+KeyboardInterrupt
+限时活动开始
+    累计登录开始
+        累计登录领取未找到
+    道具折扣开始
+    道具折扣完成
+    福利商店开始
+    福利商店完成
+限时活动完成
+游戏助手开始
+        游戏执行完成未找到
+游戏助手完成
+港口开始
+    港口领奖开始
+    港口领奖完成
+    港口商店开始
+        红色饰品精华未找到
+        +10未找到
+        确定购买橙色饰品碎片未找到
+        返回港口商店未找到
+        +10未找到
+        确定购买科技芯片未找到
+        返回港口商店未找到
+    港口商店完成
+港口完成
+工会活动开始
+    工会建设开始
+    道具折扣完成
+    海盗悬赏开始
+    海盗悬赏完成
+工会活动完成
+功能开始
+    冒险日志开始
+        扭蛋机开始
+        投币一次未找到
+        扭蛋机完成
+        冒险挑战开始
+                冒险积分未找到
+                冒险积分未找到
+        冒险挑战完成
+    冒险日志完成
+功能完成
+        主页未找到
+任务领奖开始
+Traceback (most recent call last):
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 390, in <module>
+    ar.run()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 94, in run
+    self.get_task_reward()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 386, in get_task_reward
+    while found:
+UnboundLocalError: local variable 'found' referenced before assignment
+
+(GA) C:\Users\dyhar\OneDrive\Documents\repos\AutoRun>python main.py
+任务领奖开始
+Traceback (most recent call last):
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 392, in <module>
+    ar.get_task_reward()
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 386, in get_task_reward
+    found, _, _ = self.find_and_click(img_path='./img/rw_ljl', name='任务领奖')
+  File "C:\Users\dyhar\OneDrive\Documents\repos\AutoRun\main.py", line 34, in find_and_click
+    pos = pag.locateOnScreen(img_path, confidence=conf)
+  File "C:\Users\dyhar\anaconda3\envs\GA\lib\site-packages\pyscreeze\__init__.py", line 372, in locateOnScreen      
+    retVal = locate(image, screenshotIm, **kwargs)
+  File "C:\Users\dyhar\anaconda3\envs\GA\lib\site-packages\pyscreeze\__init__.py", line 352, in locate
+    points = tuple(locateAll(needleImage, haystackImage, **kwargs))
+  File "C:\Users\dyhar\anaconda3\envs\GA\lib\site-packages\pyscreeze\__init__.py", line 206, in _locateAll_opencv   
+    needleImage = _load_cv2(needleImage, grayscale)
+  File "C:\Users\dyhar\anaconda3\envs\GA\lib\site-packages\pyscreeze\__init__.py", line 169, in _load_cv2
+    raise IOError("Failed to read %s because file is missing, "
+OSError: Failed to read ./img/rw_ljl because file is missing, has improper permissions, or is an unsupported or invalid format
+
+(GA) C:\Users\dyhar\OneDrive\Documents\repos\AutoRun>clear
+'clear' is not recognized as an internal or external command,
+operable program or batch file.
+任务领奖开始
+        任务领奖未找到
+任务领奖完成
+
+    VIP礼物开始
+        日常活动未找到
+        固定点未找到
+KeyboardInterrupt

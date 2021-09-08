@@ -1,7 +1,7 @@
 SHORT_PAUSE = 1
 MID_PAUSE = 10
 LONG_PAUSE = 30
-N_CLICKS = 10
+N_CLICKS = 20
 MAX_CONF = 0.95
 MIN_CONF = 0.8
 DCONF = -0.05
@@ -85,7 +85,7 @@ class AutoRun(object):
 
     def run(self):
         ''''''
-        self.normal_activity()
+        # self.normal_activity()
         self.time_limited_activity()
         self.game_assistant()
         self.harbor()
@@ -100,8 +100,8 @@ class AutoRun(object):
     def normal_activity(self):
         ''' 日常任务 '''
         print('日常任务开始')
-        # self.daily_checkin()
-        self.buy_bali()
+        self.daily_checkin()
+        # self.buy_bali()
         self.get_vip_gift()
         self.get_daily_gift()
         print('日常任务完成')
@@ -181,6 +181,7 @@ class AutoRun(object):
         self.find_and_click(img_path='./img/la.png', name='限时活动')
         self.find_and_click(img_path='./img/la_lj.png', name='累计登录')
         finished, _, _ = self.find_and_click(img_path='./img/la_lj_lq.png', name='累计登录领取', n_clicks=5)
+        # todo: add offset
         if finished:
             print('    累计登录完成')
     def dollar_shop(self):
@@ -382,9 +383,10 @@ class AutoRun(object):
         self.back_to_home()
         print('任务领奖开始')
         self.find_and_click(img_path='./img/rw.png', name='任务')
+        found, _, _ = self.find_and_click(img_path='./img/rw_ljl.png', name='任务领奖')
         while found:
-            found, _, _ = self.find_and_click(img_path='./img/rw_ljl', name='任务领奖')
+            found, _, _ = self.find_and_click(img_path='./img/rw_ljl.png', name='任务领奖')
         print('任务领奖完成')
 ar = AutoRun()
-ar.run()
-
+# ar.run()
+ar.get_vip_gift()
