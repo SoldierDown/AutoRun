@@ -8,6 +8,7 @@ DCONF = -0.05
 DPM = 100
 import pyautogui as pag
 from pynput import mouse
+import time
 
 pag.PAUSE = SHORT_PAUSE
 
@@ -55,7 +56,7 @@ class AutoRun(object):
             for iter in range(n_drags):
                 pag.moveTo(fp[0], fp[1])
                 pag.drag(dragto[0], dragto[1])
-                return True, 0, 0
+            return True, 0, 0
         pag.moveTo(fp[0], fp[1])
         conf = MAX_CONF
         pos = pag.locateOnScreen(img_path, confidence=conf)
@@ -80,11 +81,12 @@ class AutoRun(object):
 
     def run(self):
         ''''''
-        self.normal_activity()
-        self.time_limited_activity()
-        self.game_assistant()
-        self.harbor()
-        self.union()
+        self.harbor_shop()
+        # self.normal_activity()
+        # self.time_limited_activity()
+        # self.game_assistant()
+        # self.harbor()
+        # self.union()
     
     def back_to_home(self):
         ''' 回到主页 '''
@@ -93,7 +95,7 @@ class AutoRun(object):
     def normal_activity(self):
         ''' 日常任务 '''
         print('日常任务开始')
-        self.daily_checkin()
+        # self.daily_checkin()
         self.buy_bali()
         self.get_vip_gift()
         self.get_daily_gift()
@@ -144,12 +146,15 @@ class AutoRun(object):
         
         self.find_and_click(img_path='./img/na_rcg_mrg.png', name='日常礼包每日礼包', ind=2)
         finished, _, _ = self.find_and_click(img_path='./img/na_rcg_mrg_mf.png', name='日常礼包每日礼包领取', ind=2)
+        time.sleep(3)
 
         self.find_and_click(img_path='./img/na_rcg_mzg.png', name='日常礼包每周礼包', ind=2)
         finished, _, _ = self.find_and_click(img_path='./img/na_rcg_mzg_mf.png', name='日常礼包每周礼包领取', ind=2)
+        time.sleep(3)
 
         self.find_and_click(img_path='./img/na_rcg_myg.png', name='日常礼包每月礼包', ind=2)
         finished, _, _ = self.find_and_click(img_path='./img/na_rcg_myg_mf.png', name='日常礼包每月礼包领取', ind=2)
+        time.sleep(3)
 
         if finished:
             print('    日常礼包完成')
@@ -259,6 +264,7 @@ class AutoRun(object):
         self.find_and_click(img_path='./img/gk.png', name='港口')
         self.find_and_click(img_path='./img/gk_lj.png', name='港口领奖')
         finished, _, _ = self.find_and_click(img_path='./img/gk_lj_qd.png', name='港口领奖确定')
+        time.sleep(5)
         self.find_and_click(img_path='./img/gk_fh.png', name='退出港口')
         if finished:
             print('    港口领奖完成')
@@ -273,8 +279,11 @@ class AutoRun(object):
         finished, _, _ = self.drag_find_and_click(fp=[fpx, fpy+2*DPM], dragto=[0, -2*DPM], offset=[6*DPM, 0.5*DPM], img_path='./img/gk_sd_r.png', name='红色饰品精华')
         if finished:
             self.find_and_click(img_path='./img/gk_sd_pt.png', name='+10')
+            time.sleep(5)
             self.find_and_click(img_path='./img/gk_sd_r_qd.png', name='确定购买红色饰品精华')
+            time.sleep(5)
             self.find_and_click(img_path='./img/gk_sd_r_qd_qd.png', name='返回港口商店')
+            time.sleep(5)
         for iter in range(5):
             pag.moveTo(fpx, fpy)
             pag.drag(DPM*2)
@@ -282,8 +291,11 @@ class AutoRun(object):
         finished, _, _ = self.drag_find_and_click(fp=[fpx, fpy+2*DPM], dragto=[0, -2*DPM], offset=[6*DPM, 0.5*DPM], img_path='./img/gk_sd_o.png', name='橙色饰品碎片')
         if finished:
             self.find_and_click(img_path='./img/gk_sd_pt.png', name='+10')
+            time.sleep(5)
             self.find_and_click(img_path='./img/gk_sd_o_qd.png', name='确定购买橙色饰品碎片')
+            time.sleep(5)
             self.find_and_click(img_path='./img/gk_sd_o_qd_qd.png', name='返回港口商店')
+            time.sleep(5)
         for iter in range(5):
             pag.moveTo(fpx, fpy)
             pag.drag(DPM*2)
@@ -291,8 +303,11 @@ class AutoRun(object):
         finished, _, _ = self.drag_find_and_click(fp=[fpx, fpy+2*DPM], dragto=[0, -2*DPM], offset=[6*DPM, 0.5*DPM], img_path='./img/gk_sd_kj.png', name='科技芯片')
         if finished:
             self.find_and_click(img_path='./img/gk_sd_pt.png', name='+10')
+            time.sleep(5)
             self.find_and_click(img_path='./img/gk_sd_kj_qd.png', name='确定购买科技芯片')
+            time.sleep(5)
             self.find_and_click(img_path='./img/gk_sd_kj_qd_qd.png', name='返回港口商店')
+            time.sleep(5)
 
         self.find_and_click(img_path='./img/gk_sd_fh.png', name='退出港口商店')
         self.find_and_click(img_path='./img/gk_fh.png', name='退出港口')
