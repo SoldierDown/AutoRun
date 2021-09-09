@@ -2,9 +2,10 @@ SHORT_PAUSE = 1
 MID_PAUSE = 10
 LONG_PAUSE = 30
 N_CLICKS = 20
+N_DRAGS = 10
 MAX_CONF = 0.95
 MIN_CONF = 0.8
-DCONF = -0.05
+DCONF = -0.03
 DPM = 100
 import pyautogui as pag
 from pynput import mouse
@@ -23,11 +24,6 @@ def on_click(x, y, button, pressed):
 class AutoRun(object):
     def __init__(self):
         pass
-        # listener = mouse.Listener(on_click=on_click)
-        # listener.start()
-        # listener.join()
-    def check_exists(self, img_name="", base_path="./img"):
-        return False
 
     def find_and_click(self, img_path='', name='', offset=[0, 0], ind=1, n_clicks=1, pause=SHORT_PAUSE):
         conf = MAX_CONF
@@ -60,13 +56,25 @@ class AutoRun(object):
                 pag.drag(dragto[0], dragto[1])
             return True, 0, 0
         pag.moveTo(fp[0], fp[1])
+        
+        
+        cnt_drags = 0
         conf = MAX_CONF
         pos = pag.locateOnScreen(img_path, confidence=conf)
-        while pos is None and conf > MIN_CONF:
-            pag.drag(dragto[0], dragto[1])
-            conf += DCONF
-            pos = pag.locateOnScreen(img_path, confidence=conf)
-            pag.moveTo(fp[0], fp[1])
+        while pos is None and cnt_drags < N_DRAGS:
+            while pos is None and conf > MIN_CONF:
+                conf += DCONF
+                pos = pag.locateOnScreen(img_path, confidence=conf)
+            if pos is None:
+                conf = MAX_CONF
+                pag.moveTo(fp[0], fp[1])
+                time.sleep(1)
+                pag.drag(dragto[0], dragto[1])
+                cnt_drags += 1
+                time.sleep(1)
+                pos = pag.locateOnScreen(img_path, confidence=conf)
+
+
         if pos is not None:
             pag.moveTo(pos.left + offset[0], pos.top + offset[1])
             for iter in range(n_clicks):
@@ -85,7 +93,7 @@ class AutoRun(object):
 
     def run(self):
         ''''''
-        # self.normal_activity()
+        self.normal_activity()
         self.time_limited_activity()
         self.game_assistant()
         self.harbor()
@@ -95,13 +103,13 @@ class AutoRun(object):
     
     def back_to_home(self):
         ''' 回到主页 '''
-        self.find_and_click(img_path='./img/bth.png', name='主页', n_clicks=N_CLICKS)
+        self.find_and_click(img_path='./img/bth.png', name='主页', n_clicks=1)
 
     def normal_activity(self):
         ''' 日常任务 '''
         print('日常任务开始')
         self.daily_checkin()
-        # self.buy_bali()
+        self.buy_bali()
         self.get_vip_gift()
         self.get_daily_gift()
         print('日常任务完成')
@@ -113,7 +121,9 @@ class AutoRun(object):
         self.find_and_click(img_path='./img/na.png', name='日常活动')
         self.find_and_click(img_path='./img/na_dci.png', name='每日签到')
         self.find_and_click(img_path='./img/na_dci_aci.png', name='每日签到格')
-        finished, _, _=self.find_and_click(img_path='./img/na_dci_aci_lq.png.bak', name='每日签到领取')
+        finished, _, _ = self.find_and_click(img_path='./img/na_dci_aci_lq_o.png', name='每日签到领取')
+        if not finished:
+            finished, _, _ = self.find_and_click(img_path='./img/na_dci_aci_lq_b.png', name='每日签到领取')
         if finished:
             print('    每日签到完成')
     def buy_bali(self):
@@ -122,7 +132,8 @@ class AutoRun(object):
         finished = False
         print('    购买贝里开始')
         self.find_and_click(img_path='./img/na.png', name='日常活动')
-        _, fpx, fpy = self.find_and_click(img_path='./img/na_fp.png', name='固定点', n_clicks=0)
+        _, fpx, fpy = self.find_and_click(img_path='./img/bth.png', name='固定点', n_clicks=0)
+        fpx, fpy = fpx, fpy - 12 * DPM
         self.drag_find_and_click(fp=[fpx + 2 * DPM, fpy], dragto=[-DPM, 0], img_path='./img/na_bb.png', name='购买贝里')
         finished, _, _ = self.find_and_click(img_path='./img/na_bb_bo.png', name='购买贝里一次')
         if finished:
@@ -133,7 +144,8 @@ class AutoRun(object):
         finished = False
         print('    VIP礼物开始')
         self.find_and_click(img_path='./img/na.png', name='日常活动')
-        _, fpx, fpy = self.find_and_click(img_path='./img/na_fp.png', name='固定点', n_clicks=0)
+        _, fpx, fpy = self.find_and_click(img_path='./img/bth.png', name='固定点', n_clicks=0)
+        fpx, fpy = fpx, fpy - 12 * DPM
         self.drag_find_and_click(fp=[fpx + 2 * DPM, fpy], dragto=[-DPM, 0], img_path='./img/na_vipg.png', name='VIP礼包')
         self.find_and_click(img_path='./img/na_vipg_mrg.png', name='VIP每日礼包')
         finished, _, _ = self.find_and_click(img_path='./img/na_vipg_mrg_lq.png', name='VIP每日礼包领取')
@@ -145,7 +157,8 @@ class AutoRun(object):
         finished = False
         print('    日常礼包开始')
         self.find_and_click(img_path='./img/na.png', name='日常活动')
-        _, fpx, fpy = self.find_and_click(img_path='./img/na_fp.png', name='固定点', n_clicks=0)
+        _, fpx, fpy = self.find_and_click(img_path='./img/bth.png', name='固定点', n_clicks=0)
+        fpx, fpy = fpx, fpy - 12 * DPM
         self.drag_find_and_click(fp=[fpx + 2 * DPM, fpy], dragto=[-DPM, 0], n_drags=8)
         self.find_and_click(img_path='./img/na_rcg.png', name='日常礼包')
         
@@ -179,8 +192,12 @@ class AutoRun(object):
         finished = False
         print('    累计登录开始')
         self.find_and_click(img_path='./img/la.png', name='限时活动')
-        self.find_and_click(img_path='./img/la_lj.png', name='累计登录')
-        finished, _, _ = self.find_and_click(img_path='./img/la_lj_lq.png', name='累计登录领取', n_clicks=5)
+        _, fpx, fpy = self.find_and_click(img_path='./img/bth.png', name='固定点', n_clicks=0)
+        fpx, fpy = fpx, fpy - 12 * DPM
+        self.drag_find_and_click(fp=[fpx + 2 * DPM, fpy], dragto=[-DPM, 0], img_path='./img/la_lj.png', name='累计登录')
+        finished, _, _ = self.find_and_click(img_path='./img/la_lj_lq.png', name='累计登录领取', n_clicks=1)
+        # add an offset to quit
+        finished, _, _ = self.find_and_click(img_path='./img/la_lj_lq.png', name='累计登录领取', offset=[0, 2*DPM], n_clicks=4)
         # todo: add offset
         if finished:
             print('    累计登录完成')
@@ -190,7 +207,9 @@ class AutoRun(object):
         finished = False
         print('    福利商店开始')
         self.find_and_click(img_path='./img/la.png', name='限时活动')
-        self.find_and_click(img_path='./img/la_fl.png', name='福利商店')
+        _, fpx, fpy = self.find_and_click(img_path='./img/bth.png', name='固定点', n_clicks=0)
+        fpx, fpy = fpx, fpy - 12 * DPM
+        self.drag_find_and_click(fp=[fpx + 2 * DPM, fpy], dragto=[-DPM, 0], img_path='./img/la_fl.png', name='福利商店')
         finished, _, _ = self.find_and_click(img_path='./img/la_fl_tl.png', name='福利商店购买体力', offset=[6*DPM, 0.5*DPM], n_clicks=5)
         if finished:
             print('    福利商店完成')
@@ -200,7 +219,9 @@ class AutoRun(object):
         finished = False
         print('    道具折扣开始')
         self.find_and_click(img_path='./img/la.png', name='限时活动')
-        self.find_and_click(img_path='./img/la_dj.png', name='道具折扣')
+        _, fpx, fpy = self.find_and_click(img_path='./img/bth.png', name='固定点', n_clicks=0)
+        fpx, fpy = fpx, fpy - 12 * DPM
+        self.drag_find_and_click(fp=[fpx + 2 * DPM, fpy], dragto=[-DPM, 0], img_path='./img/la_dj.png', name='道具折扣')
         finished, _, _ = self.find_and_click(img_path='./img/la_dj_tl.png', name='道具折扣购买体力', offset=[6*DPM, 0.5*DPM], n_clicks=5)
         if finished:
             print('    道具折扣完成')
@@ -282,7 +303,7 @@ class AutoRun(object):
         self.find_and_click(img_path='./img/gk.png', name='港口')
         self.find_and_click(img_path='./img/gk_sd.png', name='港口商店')
         _, fpx, fpy = self.find_and_click(img_path='./img/gk_sd_fp.png', name='固定点', n_clicks=0)
-        finished, _, _ = self.drag_find_and_click(fp=[fpx, fpy+2*DPM], dragto=[0, -2*DPM], offset=[6*DPM, 0.5*DPM], img_path='./img/gk_sd_r.png', name='红色饰品精华')
+        finished, _, _ = self.drag_find_and_click(fp=[fpx, fpy+2*DPM], dragto=[0, -DPM], offset=[6*DPM, 0.5*DPM], img_path='./img/gk_sd_r.png', name='红色饰品精华')
         if finished:
             self.find_and_click(img_path='./img/gk_sd_pt.png', name='+10')
             time.sleep(5)
@@ -292,9 +313,9 @@ class AutoRun(object):
             time.sleep(5)
         for iter in range(5):
             pag.moveTo(fpx, fpy)
-            pag.drag(DPM*2)
+            pag.drag([0, DPM*2])
 
-        finished, _, _ = self.drag_find_and_click(fp=[fpx, fpy+2*DPM], dragto=[0, -2*DPM], offset=[6*DPM, 0.5*DPM], img_path='./img/gk_sd_o.png', name='橙色饰品碎片')
+        finished, _, _ = self.drag_find_and_click(fp=[fpx, fpy+2*DPM], dragto=[0, -DPM], offset=[6*DPM, 0.5*DPM], img_path='./img/gk_sd_o.png', name='橙色饰品碎片')
         if finished:
             self.find_and_click(img_path='./img/gk_sd_pt.png', name='+10')
             time.sleep(5)
@@ -304,9 +325,9 @@ class AutoRun(object):
             time.sleep(5)
         for iter in range(5):
             pag.moveTo(fpx, fpy)
-            pag.drag(DPM*2)
+            pag.drag([0, DPM*2])
 
-        finished, _, _ = self.drag_find_and_click(fp=[fpx, fpy+2*DPM], dragto=[0, -2*DPM], offset=[6*DPM, 0.5*DPM], img_path='./img/gk_sd_kj.png', name='科技芯片')
+        finished, _, _ = self.drag_find_and_click(fp=[fpx, fpy+2*DPM], dragto=[0, -DPM], offset=[6*DPM, 0.5*DPM], img_path='./img/gk_sd_kj.png', name='科技芯片')
         if finished:
             self.find_and_click(img_path='./img/gk_sd_pt.png', name='+10')
             time.sleep(5)
@@ -344,11 +365,12 @@ class AutoRun(object):
         self.find_and_click(img_path='./img/gn_mxrz_ndj.png', name='扭蛋机')
         for iter in range(total_chances):
             self.find_and_click(img_path='./img/gn_mxrz_ndj_tb.png', name='投币一次')
+            self.find_and_click(img_path='./img/gn_mxrz_ndj_tb_qd.png', name='投币确定')
         print('        扭蛋机完成')
     def adventure_fights(self):
         ''' 冒险挑战 '''
-        total_changes = 3
-        total_fights = 3
+        total_changes = 0
+        total_fights = 1
         cur_changes = 0
         cur_fights = 0
         self.back_to_home()
@@ -358,20 +380,24 @@ class AutoRun(object):
         self.find_and_click(img_path='./img/gn_mxrz.png', name='冒险日志', ind=2)
         self.find_and_click(img_path='./img/gn_mxrz_mxtz.png', name='冒险挑战', ind=2)
         while cur_fights < total_fights:
-            found, _, _ = self.find_and_click(img_path='./img/gn_mxrz_mxtz_mxjf.png', name='冒险积分', n_clicks=0, ind=2)
+            found, _, _ = self.find_and_click(img_path='./img/gn_mxrz_mxtz_jf10.png', name='低分海贼', n_clicks=0, ind=2)
             # 低积分海贼
             if found:
+                print('        发现低分海贼')
                 # 还可免费更改
                 if cur_changes < total_changes:
+                    print('        更换海贼')
                     self.find_and_click(img_path='./img/gn_mxrz_mxtz_cxmb.png', name='重选目标', ind=2)
                     cur_changes += 1
                 # 只能打了
                 else:
+                    print('        攻打低分海贼')
                     self.find_and_click(img_path='./img/gn_mxrz_mxtz_fqtz.png', name='发起挑战', ind=2)
                     self.find_and_click(img_path='./img/gn_mxrz_mxtz_tg.png', name='跳过', ind=2)
                     cur_fights += 1
             # 高积分海贼: 直接打
             else:
+                print('        发现高分海贼')
                 self.find_and_click(img_path='./img/gn_mxrz_mxtz_fqtz.png', name='发起挑战', ind=2)
                 self.find_and_click(img_path='./img/gn_mxrz_mxtz_tg.png', name='跳过', ind=2)
                 cur_fights += 1
@@ -387,6 +413,20 @@ class AutoRun(object):
         while found:
             found, _, _ = self.find_and_click(img_path='./img/rw_ljl.png', name='任务领奖')
         print('任务领奖完成')
+    
+    def test(self):
+        found, _, _ = self.find_and_click(img_path='./img/gn_mxrz_mxtz_jf10.png', name='低分海贼', n_clicks=0, ind=2)
+
+
+import win32gui, win32con
+
+hwnd = win32gui.GetForegroundWindow()
+win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
+
 ar = AutoRun()
-# ar.run()
-ar.get_vip_gift()
+ar.harbor()
+# todo:
+'''
+    1. test new fixed point(na_dci.png)
+    2. test drag_and_find for la
+'''

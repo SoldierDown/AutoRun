@@ -231,3 +231,83 @@ operable program or batch file.
         日常活动未找到
         固定点未找到
 KeyboardInterrupt
+
+
+Day 3 09/09/2025
+日常任务开始
+    每日签到开始
+        每日签到领取未找到
+    每日签到完成
+    购买贝里开始
+    购买贝里完成
+    VIP礼物开始
+        VIP礼包未找到
+    VIP每日礼包完成
+    日常礼包开始
+                日常礼包每周礼包领取未找到
+                日常礼包每月礼包领取未找到
+日常任务完成
+限时活动开始
+    累计登录开始
+    累计登录完成
+    道具折扣开始
+        道具折扣未找到
+        道具折扣购买体力未找到
+    福利商店开始
+    福利商店完成
+限时活动完成
+游戏助手开始
+        退出游戏助手未找到
+游戏助手完成
+港口开始
+        主页未找到
+    港口领奖开始
+    港口领奖完成
+    港口商店开始
+        红色饰品精华未找到
+        +10未找到
+        确定购买科技芯片未找到
+        返回港口商店未找到
+    港口商店完成
+港口完成
+工会活动开始
+    工会建设开始
+        工会未找到
+    道具折扣完成
+    海盗悬赏开始
+    海盗悬赏完成
+工会活动完成
+功能开始
+    冒险日志开始
+        扭蛋机开始
+        投币一次未找到
+        扭蛋机完成
+        冒险挑战开始
+                冒险积分未找到
+                发起挑战未找到
+                跳过未找到
+                冒险积分未找到
+        冒险挑战完成
+    冒险日志完成
+功能完成
+        主页未找到
+任务领奖开始
+        任务未找到
+        任务领奖未找到
+任务领奖完成
+
+(GA) C:\Users\dyhar\OneDrive\Documents\repos\AutoRun>python main.py
+任务领奖开始
+        任务领奖未找到
+任务领奖完成
+
+(GA) C:\Users\dyhar\OneDrive\Documents\repos\AutoRun>
+
+TODO:
+1. change fp for na and la                                                      DONE
+2. add func to minimize vscode before running AutoRun                           DONE
+3. add an offset for la_lj_lq                                                   DONE
+4. add qd for gn_mxrz_ndj                                                       DONE
+5. adventure_fights() needs to use another img                                  DONE
+6. adventure_fights() needs one more click
+7. la_dj needs to use another img                                               DONE
