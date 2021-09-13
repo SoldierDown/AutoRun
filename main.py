@@ -99,11 +99,12 @@ class AutoRun(object):
         ''''''
         self.normal_activity()
         self.time_limited_activity()
-        self.game_assistant()
-        self.harbor()
-        self.union()
-        self.functions()
+        # self.game_assistant()
+        # self.harbor()
+        # self.union()
+        # self.functions()
         self.bag()
+        # self.reward_center()
         self.get_task_reward()
     
     def back_to_home(self, ind=0):
@@ -237,10 +238,9 @@ class AutoRun(object):
             finished, _, _ = self.find_and_click(img_path='./img/na_rcg_mzg_mf.png', name='日常礼包每周礼包领取', ind=ind+1)
             time.sleep(3)
             att += 1
-            if finished:
-                self.record['normal_activity']['get_daily_gift']['mz'] = 1
-                done = 1
-                self.save_to_json()
+            self.record['normal_activity']['get_daily_gift']['mz'] = 1
+            done = 1
+            self.save_to_json()
         if done == 1:
             user_print('每周礼包完成', ind=ind)
         else:
@@ -250,7 +250,7 @@ class AutoRun(object):
         user_print('每月礼包开始', ind=ind)
         done = self.record['normal_activity']['get_daily_gift']['my']
         att = 0
-        while done != 1 and att < MAX_ATTEMPTS:
+        while done != 1 and att < 1:
             self.back_to_home(ind=ind+1)
             finished = False
             self.find_and_click(img_path='./img/na.png', name='日常活动', ind=ind+1)
@@ -263,10 +263,9 @@ class AutoRun(object):
             finished, _, _ = self.find_and_click(img_path='./img/na_rcg_myg_mf.png', name='日常礼包每月礼包领取', ind=ind+1)
             time.sleep(3)
             att += 1
-            if finished:
-                self.record['normal_activity']['get_daily_gift']['my'] = 1
-                done = 1
-                self.save_to_json()
+            self.record['normal_activity']['get_daily_gift']['my'] = 1
+            done = 1
+            self.save_to_json()
         if done == 1:
             user_print('每月礼包完成', ind=ind)
         else:
