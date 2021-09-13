@@ -8,3 +8,9 @@ with open(filename, 'r') as f:
 
 with open("latestchecklist.json", "w") as jsonFile:
     json.dump(data, jsonFile, indent=4)
+
+'''
+开始
+未
+完成
+'''
