@@ -309,5 +309,8 @@ TODO:
 3. add an offset for la_lj_lq                                                   DONE
 4. add qd for gn_mxrz_ndj                                                       DONE
 5. adventure_fights() needs to use another img                                  DONE
-6. adventure_fights() needs one more click
+6. adventure_fights() needs one more click                                      DONE
 7. la_dj needs to use another img                                               DONE
+
+
+Day 4
