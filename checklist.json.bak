@@ -40,6 +40,9 @@
             "pet_growing": 0
         }
     },
+    "cross_servers":{
+        "treasures": 0
+    },
     "get_task_reward": 0,
     "date":""
 

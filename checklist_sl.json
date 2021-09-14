@@ -10,8 +10,8 @@
         }
     },
     "time_limited_activity": {
-        "consecutive_logins": 1,
-        "sales_items": 1,
+        "consecutive_logins": 0,
+        "sales_items": 0,
         "dollar_shop": 0
     },
     "game_assistant": 0,
@@ -26,7 +26,8 @@
     },
     "union": {
         "union_construction": 0,
-        "pirate_wanted": 0
+        "pirate_wanted": 0,
+        "official_pirates": 0
     },
     "functions": {
         "adventure_logs": {
@@ -36,10 +37,20 @@
     },
     "bag": {
         "pet": {
-            "play_with_pet": 1,
-            "pet_growing": 1
+            "play_with_pet": 0,
+            "pet_growing": 0
         }
     },
-    "get_task_reward": 1,
+    "cross_servers": {
+        "treasures": 0
+    },
+    "lineup": {
+        "accessory_strengthen": 0,
+        "equipment_enchant": 0
+    },
+    "boyos": {
+        "train_boyo": 0
+    },
+    "get_task_reward": 0,
     "date": ""
 }

@@ -8,6 +8,10 @@ MIN_CONF = 0.8
 DCONF = -0.03
 DPM = 100
 MAX_ATTEMPTS = 10
+level = 93
+HIGH_LEVEL = True
+if level < 81:
+    HIGH_LEVEL = False
 import pyautogui as pag
 from pynput import mouse
 import time
@@ -35,10 +39,18 @@ def user_print(txt='', ind=0):
 
 class AutoRun(object):
     def __init__(self):
-        filename = 'checklist.json'
+        filename = ''
+        filename = 'checklist_xl.json'
+        # if HIGH_LEVEL:
+        #     filename = 'checklist_xl.json'
+        # else:
+        #     filename = 'checklist_sl.json'
         with open(filename, 'r') as f:
             self.record = json.load(f)
-
+    def move_and_click(self, offset=[0, 0], n_clicks=1):
+        pag.move(offset[0], offset[1])
+        pag.click(clicks=n_clicks)
+    
     def find_and_click(self, img_path='', name='', offset=[0, 0], ind=1, n_clicks=1, pause=SHORT_PAUSE):
         conf = MAX_CONF
         pos = pag.locateOnScreen(img_path, confidence=conf)
@@ -97,19 +109,34 @@ class AutoRun(object):
 
     def run(self):
         ''''''
-        self.normal_activity()
-        self.time_limited_activity()
-        # self.game_assistant()
-        # self.harbor()
-        # self.union()
-        # self.functions()
-        self.bag()
-        # self.reward_center()
-        self.get_task_reward()
+        if HIGH_LEVEL:
+            self.normal_activity()
+            self.time_limited_activity()
+            self.game_assistant()
+            self.harbor()
+            self.union()
+            self.functions()
+            self.bag()
+            # self.reward_center()
+            self.cross_servers()
+            self.lineup()
+            self.boyos()
+            self.get_task_reward()
+        else:
+            self.normal_activity()
+            self.time_limited_activity()
+            self.union()
+            self.bag()
+            self.reward_center()
+            self.boyos()
+            self.get_task_reward()
     
     def back_to_home(self, ind=0):
         ''' 回到主页 '''
         self.find_and_click(img_path='./img/bth.png', name='主页', n_clicks=N_CLICKS, ind=ind)
+
+    def recruit(self, ind=0):
+        ''' 招募 '''
 
     def normal_activity(self, ind=0):
         ''' 日常任务 '''
@@ -292,7 +319,7 @@ class AutoRun(object):
             self.drag_find_and_click(fp=[fpx + 2 * DPM, fpy], dragto=[-DPM, 0], img_path='./img/la_lj.png', name='累计登录', ind=ind+1)
             finished, _, _ = self.find_and_click(img_path='./img/la_lj_lq.png', name='累计登录领取', n_clicks=1, ind=ind+1)
             # add an offset to quit
-            finished, _, _ = self.find_and_click(img_path='./img/la_lj_lq.png', name='累计登录领取', offset=[0, 2*DPM], n_clicks=4, ind=ind+1)
+            self.move_and_click(offset=[0, 2*DPM], n_clicks=4)
             # todo: add offset
             att += 1
             if finished:
@@ -318,7 +345,7 @@ class AutoRun(object):
             finished, _, _ = self.find_and_click(img_path='./img/la_fl_tl.png', name='福利商店购买体力', offset=[6*DPM, 0.5*DPM], n_clicks=5, ind=ind+1)
             att += 1
             if finished:
-                self.record['time_limited_activity']['consecutive_logins'] = 1
+                self.record['time_limited_activity']['dollar_shop'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -400,7 +427,40 @@ class AutoRun(object):
         user_print('工会活动开始', ind=ind)
         self.union_construction()
         self.pirate_wanted()
+        self.official_pirates()
         user_print('工会活动完成', ind=ind)
+    def official_pirates(self, ind=1):
+        ''' 七武海 '''
+        user_print('七武海开始', ind=ind)
+        done = self.record['union']['official_pirates']
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            finished = False
+            f0, _, _ = self.find_and_click(img_path='./img/gh.png', name='工会', pause=LONG_PAUSE, ind=ind+1)
+            f1, _, _ = self.find_and_click(img_path='./img/gh_qwh.png', name='七武海', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./img/gh_qwh_jsjl.png', name='击杀奖励', ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./img/gh_qwh_jsjl_yjlq.png', name='一键领取', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./img/gh_qwh_jsjl_yjlq_qd.png', name='确定', ind=ind+1)
+            time.sleep(5)
+            f5, _, _ = self.find_and_click(img_path='./img/gh_qwh_jsjl_yjlq_qd_tc.png', name='退出', ind=ind+1)
+            time.sleep(5)
+            # f6, _, _ = self.find_and_click(img_path='./img/gh_qwh_sdqb.png', name='扫荡全部', ind=ind+1)
+            # time.sleep(30)
+            # f7, _, _ = self.find_and_click(img_path='./img/gh_qwh_sdqb_tc.png', name='退出', ind=ind+1)
+            f8, _, _ = self.find_and_click(img_path='./img/gh_qwh_fh.png', name='返回', ind=ind+1)
+            f9, _, _ = self.find_and_click(img_path='./img/gh_fh.png', name='返回', ind=ind+1)
+
+            finished = f0 and f1 and f2 and f4 and f5 and f8 and f9
+            att += 1
+            if finished:
+                self.record['union']['official_pirates'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('七武海完成', ind=ind)
+        else:
+            user_print('七武海未完成', ind=ind)
 
     def union_construction(self, ind=1):
         ''' 工会建设 '''
@@ -413,7 +473,10 @@ class AutoRun(object):
             self.find_and_click(img_path='./img/gh.png', name='工会', pause=LONG_PAUSE, ind=ind+1)
             self.find_and_click(img_path='./img/gh_ghdt.png', name='工会大厅', ind=ind+1)
             self.find_and_click(img_path='./img/gh_ghdt_ptjs.png', name='普通建设', offset=[DPM/3, DPM*3.3], ind=ind+1)
-            self.find_and_click(img_path='./img/gh_ghdt_fh.png', name='退出工会大厅', ind=ind+1)
+            self.find_and_click(img_path='./img/gh_ghdt_ptjs_qwlq.png', name='前往领取奖励', ind=ind+1)
+            self.find_and_click(img_path='./img/gh_ghdt_ptjs_qwlq_lq.png', name='领取奖励', ind=ind+1)
+            self.find_and_click(img_path='./img/gh_ghdt_ptjs_qwlq_lq_qd.png', name='确定领取', ind=ind+1)
+            self.find_and_click(img_path='./img/gh_ghdt_ptjs_qwlq_lq_fh.png', name='返回工会', ind=ind+1)
             finished, _, _ = self.find_and_click(img_path='./img/gh_fh.png', name='退出工会', ind=ind+1)
             att += 1
             if finished:
@@ -590,21 +653,25 @@ class AutoRun(object):
         user_print('扭蛋机开始', ind=ind)
         done = self.record['functions']['adventure_logs']['gumball_machine']
         att = 0
+        total_chances = 3
+        cnt_tb = 0
         while done != 1 and att < MAX_ATTEMPTS:
             # TODO
-            total_chances = 3
             self.back_to_home(ind=ind+1)
             finished = False
             self.find_and_click(img_path='./img/gn.png', name='功能', ind=ind+1)
             self.find_and_click(img_path='./img/gn_mxrz.png', name='冒险日志', ind=ind+1)
             self.find_and_click(img_path='./img/gn_mxrz_ndj.png', name='扭蛋机', ind=ind+1)
-            for iter in range(total_chances):
-                self.find_and_click(img_path='./img/gn_mxrz_ndj_tb.png', name='投币一次', ind=ind+1)
-                self.find_and_click(img_path='./img/gn_mxrz_ndj_tb_qd.png', name='投币确定', ind=ind+1)
+            while cnt_tb < total_chances:
+                f0, _, _ = self.find_and_click(img_path='./img/gn_mxrz_ndj_tb.png', name='投币一次', ind=ind+1)
+                f1, _, _ = self.find_and_click(img_path='./img/gn_mxrz_ndj_tb_qd.png', name='投币确定', ind=ind+1)
+                if f0 and f1:
+                    cnt_tb += 1
             att += 1
-            self.record['functions']['adventure_logs']['gumball_machine'] = 1
-            done = 1
-            self.save_to_json()
+            if cnt_tb == total_chances: 
+                self.record['functions']['adventure_logs']['gumball_machine'] = 1
+                done = 1
+                self.save_to_json()
         if done == 1:
             user_print('扭蛋机完成', ind=ind)
         else:
@@ -680,15 +747,17 @@ class AutoRun(object):
         while done != 1 and att < MAX_ATTEMPTS:
             self.back_to_home(ind=ind+1)
             finished = False
-            self.find_and_click(img_path='./img/bag.png', name='背包', ind=ind+1)
-            self.find_and_click(img_path='./img/bag_pet.png', name='宠物', ind=ind+1)
-            self.find_and_click(img_path='./img/bag_pet_pick.png', name='选择宠物', ind=ind+1)
-            self.find_and_click(img_path='./img/bag_pet_pick_hg.png', name='好感', ind=ind+1)
-            self.find_and_click(img_path='./img/bag_pet_pick_hg_yjwy.png', name='一键喂养', ind=ind+1)
+            f0, _, _ = self.find_and_click(img_path='./img/bag.png', name='背包', ind=ind+1)
+            f1, _, _ = self.find_and_click(img_path='./img/bag_pet.png', name='宠物', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./img/bag_pet_pick.png', name='选择宠物', ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./img/bag_pet_pick_hg.png', name='好感', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./img/bag_pet_pick_hg_yjwy.png', name='一键喂养', ind=ind+1)
             att += 1
-            self.record['bag']['pet']['play_with_pet'] = 1
-            done = 1
-            self.save_to_json()
+            finished = f0 and f1 and f2 and f3 and f4
+            if finished:
+                self.record['bag']['pet']['play_with_pet'] = 1
+                done = 1
+                self.save_to_json()
         if done == 1:
             user_print('好感度完成', ind=ind)
         else:
@@ -701,15 +770,17 @@ class AutoRun(object):
         while done != 1 and att < MAX_ATTEMPTS:
             self.back_to_home(ind=ind+1)
             finished = False
-            self.find_and_click(img_path='./img/bag.png', name='背包', ind=ind+1)
-            self.find_and_click(img_path='./img/bag_pet.png', name='宠物', ind=ind+1)
-            self.find_and_click(img_path='./img/bag_pet_pick.png', name='选择宠物', ind=ind+1)
-            self.find_and_click(img_path='./img/bag_pet_pick_sj.png', name='升级', ind=ind+1)
-            self.find_and_click(img_path='./img/bag_pet_pick_sj_zdtj.png', name='自动添加', ind=ind+1)
-            self.find_and_click(img_path='./img/bag_pet_pick_sj_yjsj.png', name='一键升级', ind=ind+1)
-            self.record['bag']['pet']['pet_growing'] = 1
-            done = 1
-            self.save_to_json()
+            f0, _, _, = self.find_and_click(img_path='./img/bag.png', name='背包', ind=ind+1)
+            f1, _, _, = self.find_and_click(img_path='./img/bag_pet.png', name='宠物', ind=ind+1)
+            f2, _, _, = self.find_and_click(img_path='./img/bag_pet_pick.png', name='选择宠物', ind=ind+1)
+            f3, _, _, = self.find_and_click(img_path='./img/bag_pet_pick_sj.png', name='升级', ind=ind+1)
+            f4, _, _, = self.find_and_click(img_path='./img/bag_pet_pick_sj_zdtj.png', name='自动添加', ind=ind+1)
+            f5, _, _, = self.find_and_click(img_path='./img/bag_pet_pick_sj_yjsj.png', name='一键升级', ind=ind+1)
+            finished = f0 and f1 and f2 and f3 and f4 and f5
+            if finished:
+                self.record['bag']['pet']['pet_growing'] = 1
+                done = 1
+                self.save_to_json()
         if done == 1:
             user_print('升级完成', ind=ind)
         else:
@@ -722,13 +793,140 @@ class AutoRun(object):
         with open("latestchecklist.json", "w") as jsonFile:
             json.dump(self.record, jsonFile, indent=4)
         if os.name == 'nt':
-            os.system('del checklist.json')
-            time.sleep(3)
-            os.system('ren latestchecklist.json checklist.json')
+            if HIGH_LEVEL:
+                os.system('del checklist_xl.json')
+                time.sleep(3)
+                os.system('ren latestchecklist.json checklist_xl.json')
+            else:
+                os.system('del checklist_sl.json')
+                time.sleep(3)
+                os.system('ren latestchecklist.json checklist_sl.json')
         else:
-            os.system('rm checklist.json')
-            time.sleep(3)
-            os.system('mv latestchecklist.json checklist.json')
+            if HIGH_LEVEL:
+                os.system('rm checklist_xl.json')
+                time.sleep(3)
+                os.system('mv latestchecklist.json checklist_xl.json')
+            else:
+                os.system('rm checklist_sl.json')
+                time.sleep(3)
+                os.system('mv latestchecklist.json checklist_sl.json')
+
+    def boyos(self, ind=0):
+        ''' 伙伴 '''
+        user_print('伙伴开始', ind=ind)
+        self.train_boyo()
+        user_print('伙伴结束', ind=ind)
+    def train_boyo(self, ind=1):
+        ''' 伙伴培养 '''
+        user_print('伙伴培养开始', ind=ind)
+        done = self.record['boyos']['train_boyo']
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            finished = False
+            f0, _, _ = self.find_and_click(img_path='./img/hb.png', name='伙伴', ind=ind+1)
+            f1, _, _ = self.find_and_click(img_path='./img/hb_lf.png', name='路飞', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./img/hb_lf_py.png', name='培养', ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./img/hb_lf_py_djpy.png', name='道具培养', offset=[0, DPM], n_clicks=1, ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./img/hb_lf_py_py.png', name='一键培养', ind=ind+1)
+            time.sleep(60)
+            f5, _, _ = self.find_and_click(img_path='./img/hb_lf_py_py_tc.png', name='退出', ind=ind+1)
+            finished = f0 and f1 and f2 and f3 and f4 and f5
+            if finished:
+                self.record['boyos']['train_boyo'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('伙伴培养完成', ind=ind)
+        else:
+            user_print('伙伴培养未完成', ind=ind)
+
+
+
+    def lineup(self, ind=0):
+        ''' 阵容 '''
+        user_print('阵容开始', ind=ind)
+        self.accessory_strengthen()
+        self.equipment_enchant()
+        user_print('阵容完成', ind=ind)
+    def equipment_enchant(self, ind=1):
+        ''' 装备附魔 '''
+        user_print('装备附魔开始', ind=ind)
+        done = self.record['lineup']['equipment_enchant']
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            finished = False
+            f1, _, _ = self.find_and_click(img_path='./img/zr.png', name='阵容', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./img/zr_xl.png', name='溪流', ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./img/zr_xl_lgm.png', name='流光帽', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./img/zr_xl_lgm_fm.png', name='附魔', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./img/zr_xl_lgm_fm_yjfm.png', name='一键附魔', ind=ind+1)
+            f6, _, _ = self.find_and_click(img_path='./img/zr_xl_lgm_fm_yjfm_pt.png', name='+10', ind=ind+1)
+            f7, _, _ = self.find_and_click(img_path='./img/zr_xl_lgm_fm_yjfm_qd.png', name='确定', ind=ind+1)
+            finished = f1 and f2 and f3 and f4 and f5 and f6 and f7
+            if finished:
+                self.record['lineup']['equipment_enchant'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('装备附魔完成', ind=ind)
+        else:
+            user_print('装备附魔未完成', ind=ind)
+    def accessory_strengthen(self, ind=1):
+        ''' 饰品强化 '''
+        user_print('饰品强化开始', ind=ind)
+        done = self.record['lineup']['accessory_strengthen']
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            finished = False
+            f1, _, _ = self.find_and_click(img_path='./img/zr.png', name='阵容', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./img/zr_zyj.png', name='紫云晶', ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./img/zr_zyj_qh.png', name='强化', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./img/zr_zyj_qh_zdtj.png', name='自动添加', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./img/zr_zyj_qh_zdtj_yjqh.png', name='一键强化', ind=ind+1)
+            finished = f1 and f2 and f3 and f4 and f5
+            if finished:
+                self.record['lineup']['accessory_strengthen'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('饰品强化完成', ind=ind)
+        else:
+            user_print('饰品强化未完成', ind=ind)
+
+
+
+    def cross_servers(self, ind=0):
+        ''' 跨服 '''
+        user_print('跨服开始', ind=ind)
+        self.treasures()
+        user_print('跨服完成', ind=ind)
+    def treasures(self, ind=1):
+        ''' 宝藏争夺 '''
+        user_print('宝藏争夺开始', ind=ind)
+        done = self.record['cross_servers']['treasures']
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            finished = False
+            f0, _, _ = self.find_and_click(img_path='./img/kf.png', name='跨服', ind=ind+1)
+            f1, _, _ = self.find_and_click(img_path='./img/kf_bzzd.png', name='宝藏争夺', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./img/kf_bzzd_lj.png', name='领取', ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./img/kf_bzzd_lj_qd.png', name='确定', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./img/kf_bzzd_fh.png', name='返回', ind=ind+1)
+            finished = f0 and f1 and f2 and f3 and f4
+            if finished:
+                self.record['cross_servers']['treasures'] = 1
+                done = 1
+                self.save_to_json()
+            else:
+                self.find_and_click(img_path='./img/kf_bzzd_fh.png', name='返回', ind=ind+1)
+        if done == 1:
+            user_print('宝藏争夺完成', ind=ind)
+        else:
+            user_print('宝藏争夺未完成', ind=ind)
 
 
 
@@ -760,7 +958,10 @@ import win32gui, win32con
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
 ar = AutoRun()
-ar.run()
+# ar.bag()
+# ar.run()
+# ar.get_task_reward()
+# ar.gumball_machine()
 # todo:
 '''
 add error handling
