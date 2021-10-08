@@ -1,7 +1,7 @@
 SHORT_PAUSE = 1
 MID_PAUSE = 10
 LONG_PAUSE = 30
-N_CLICKS = 20
+N_CLICKS = 10
 N_DRAGS = 10
 MAX_CONF = 0.95
 MIN_CONF = 0.8
@@ -110,18 +110,18 @@ class AutoRun(object):
     def run(self):
         ''''''
         if HIGH_LEVEL:
-            self.normal_activity()
-            self.time_limited_activity()
+            # self.normal_activity()
+            # self.time_limited_activity()
             self.game_assistant()
-            self.harbor()
-            self.union()
-            self.functions()
-            self.bag()
+            # self.harbor()
+            # self.union()
+            # self.functions()
+            # self.bag()
             # self.reward_center()
-            self.cross_servers()
-            self.lineup()
-            self.boyos()
-            self.get_task_reward()
+            # self.cross_servers()
+            # self.lineup()
+            # self.boyos()
+            # self.get_task_reward()
         else:
             self.normal_activity()
             self.time_limited_activity()
@@ -133,7 +133,7 @@ class AutoRun(object):
     
     def back_to_home(self, ind=0):
         ''' 回到主页 '''
-        self.find_and_click(img_path='./img/bth.png', name='主页', n_clicks=N_CLICKS, ind=ind)
+        self.find_and_click(img_path='./tasks/bth.png', name='主页', n_clicks=N_CLICKS, ind=ind)
 
     def recruit(self, ind=0):
         ''' 招募 '''
@@ -385,7 +385,7 @@ class AutoRun(object):
         while done != 1 and att < MAX_ATTEMPTS:
             self.back_to_home(ind=ind+1)
             finished = False
-            f0, _, _ = self.find_and_click(img_path='./img/ga.png', name='游戏助手', ind=ind+1)
+            f0, _, _ = self.find_and_click(img_path='./tasks/game_assistant.png', name='游戏助手', ind=ind+1)
             f1, _, _ = self.find_and_click(img_path='./img/ga_da.png', name='全部执行', pause=LONG_PAUSE, ind=ind+1)
             f2, _, _ = self.find_and_click(img_path='./img/ga_da_back.png', name='游戏执行完成', ind=ind+1)
             f3, _, _ = self.find_and_click(img_path='./img/ga_da_back_back.png', name='退出游戏助手', ind=ind+1)
@@ -952,14 +952,14 @@ class AutoRun(object):
         found, _, _ = self.find_and_click(img_path='./img/gn_mxrz_mxtz_jf10.png', name='低分海贼', n_clicks=0, ind=2)
 
 
-import win32gui, win32con
+# import win32gui, win32con
 
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
 ar = AutoRun()
 # ar.bag()
-# ar.run()
+ar.run()
 # ar.get_task_reward()
 # ar.gumball_machine()
 # todo:
