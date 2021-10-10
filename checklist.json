@@ -61,5 +61,9 @@
         }
     },
     "forest_adventure": 1,
+    "assistance_punch": {
+        "done": 0,
+        "name": "qb"
+    },
     "get_task_reward": 1
 }

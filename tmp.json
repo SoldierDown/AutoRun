@@ -1,0 +1,69 @@
+{
+    "normal_activity": {
+        "daily_checkin": 1,
+        "buy_bali": 1,
+        "get_vip_gift": 1,
+        "get_daily_gift": {
+            "mr": 1,
+            "mz": 0,
+            "my": 0
+        }
+    },
+    "time_limited_activity": {
+        "consecutive_logins": 0,
+        "sales_items": 1,
+        "dollar_shop": 1
+    },
+    "game_assistant": 1,
+    "reward_center": 0,
+    "harbor": {
+        "harbor_reward": 1
+    },
+    "union": {
+        "union_construction": 1,
+        "pirate_wanted": 1,
+        "official_pirates": 0
+    },
+    "functions": {
+        "adventure_logs": {
+            "gumball_machine": {
+                "done": 1,
+                "current_chances": 3
+            },
+            "adventure_fights": {
+                "current_fights": 3,
+                "current_changes": 3,
+                "done": 1
+            }
+        }
+    },
+    "bag": {
+        "pet": {
+            "play_with_pet": 1,
+            "pet_growing": 1
+        }
+    },
+    "cross_servers": {
+        "treasures": 0
+    },
+    "daily_tasks": {
+        "train_boyo": {
+            "done": 1,
+            "name": "luffy"
+        },
+        "accessory_strengthen": {
+            "done": 1,
+            "name": "lhzl"
+        },
+        "equipment_enchant": {
+            "done": 1,
+            "name": "wzpx"
+        }
+    },
+    "forest_adventure": 1,
+    "assistance_punch": {
+        "done": 0,
+        "name": "qb"
+    },
+    "get_task_reward": 1
+}

@@ -41,7 +41,7 @@ class AutoRun(object):
     def __init__(self, to_test=False, to_reset=True):
         self.test = to_test
         filename = ''
-        filename = 'checklist_xl.json'
+        filename = 'checklist.json'
 
         # open and reset
         with open(filename, 'r') as f:
@@ -74,6 +74,7 @@ class AutoRun(object):
             pag.PAUSE=pause
             for iter in range(n_clicks):
                 pag.click()
+                time.sleep(3*pause)
             pag.PAUSE=SHORT_PAUSE
             time.sleep(3)
             return True, pos.left, pos.top
@@ -144,6 +145,7 @@ class AutoRun(object):
             self.daily_tasks()
             self.bag()
             self.forest_adventure()
+            self.assistance_punch()
             self.get_task_reward(is_final=True)
         else:
             self.normal_activity()
@@ -744,11 +746,11 @@ class AutoRun(object):
             f1, fpx, fpy = self.find_and_click(img_path='./tasks/zl.png', name='固定点', n_clicks=0, ind=ind+1)
             f2, _, _ = self.drag_find_and_click(fp=[fpx, fpy + 0.5*DPM], dragto=[-DPM, 0], img_path='./tasks/rc_mlmx.png', name="密林冒险", ind=ind+1, n_clicks=1)
             
-            # f3, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_cz.png', name='重置', ind=ind+1)
-            # f4, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_cz_qd.png', name='重置确定', ind=ind+1)
-            # f5, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_ksyd.png', name='快速移动', ind=ind+1)
-            # f6, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_ksyd_qd.png', name='快速移动确定', ind=ind+1)
-            # f7, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_ksyd_qd_qd.png', name='快速移动确定确定', ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_cz.png', name='重置', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_cz_qd.png', name='重置确定', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_ksyd.png', name='快速移动', ind=ind+1)
+            f6, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_ksyd_qd.png', name='快速移动确定', ind=ind+1)
+            f7, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_ksyd_qd_qd.png', name='快速移动确定确定', ind=ind+1)
             
             f8, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_sd.png', name='扫荡', ind=ind+1)
             f9, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_sd_-.png', name='-', ind=ind+1)
@@ -768,6 +770,35 @@ class AutoRun(object):
         else:
             user_print('密林冒险未完成', ind=ind)
     
+    def assistance_punch(self, ind=0):
+        ''' 援助招式 '''
+        user_print('援助招式开始')
+        done = self.record['assistance_punch']['done']
+        name = self.record['assistance_punch']['name']
+        if self.test:
+            done = 0
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            finished = False
+            f0, _, _ = self.find_and_click(img_path='./tasks/rc.png', name='日常', ind=ind+1)
+            f1, fpx, fpy = self.find_and_click(img_path='./tasks/zl.png', name='固定点', n_clicks=0, ind=ind+1)
+            f2, _, _ = self.drag_find_and_click(fp=[fpx, fpy + 0.5*DPM], dragto=[-DPM, 0], img_path='./tasks/rc_yzzs.png', name="援助招式", ind=ind+1, n_clicks=1)
+            path = './tasks/rc_yzzs_' + name + '.png'
+            f3, _, _ = self.find_and_click(img_path=path, name='选择招式', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/rc_yzzs_xl.png', name='训练', ind=ind+1, n_clicks=10)
+            f5, _, _ = self.find_and_click(img_path='./tasks/rc_yzzs_fh.png', name='返回', ind=ind+1)
+            att += 1
+            finished = f0 and f1 and f2 and f3 and f4 and f5
+            if finished and not self.test:
+                self.record['assistance_punch']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('援助招式完成', ind=ind)
+        else:
+            user_print('援助招式未完成', ind=ind)
+
     def bag(self, ind=0):
         ''' 背包 '''
         user_print('背包开始', ind=ind)
@@ -838,22 +869,22 @@ class AutoRun(object):
             json.dump(self.record, jsonFile, indent=4)
         if os.name == 'nt':
             if HIGH_LEVEL:
-                os.system('del checklist_xl.json')
+                os.system('del checklist.json')
                 time.sleep(3)
-                os.system('ren tmp.json checklist_xl.json')
+                os.system('ren tmp.json checklist.json')
             else:
-                os.system('del checklist_xl.json')
+                os.system('del checklist.json')
                 time.sleep(3)
-                os.system('ren tmp.json checklist_xl.json')
+                os.system('ren tmp.json checklist.json')
         else:
             if HIGH_LEVEL:
-                os.system('rm checklist_xl.json')
+                os.system('rm checklist.json')
                 time.sleep(3)
-                os.system('mv tmp.json checklist_xl.json')
+                os.system('mv tmp.json checklist.json')
             else:
                 os.system('rm tmp.json')
                 time.sleep(3)
-                os.system('mv tmp.json checklist_xl.json')
+                os.system('mv tmp.json checklist.json')
 
     def train_boyo(self, ind=1):
         ''' 伙伴培养 updated '''
