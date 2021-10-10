@@ -49,7 +49,7 @@
     "daily_tasks": {
         "train_boyo": {
             "done": 1,
-            "character": "luffy"
+            "name": "luffy"
         },
         "accessory_strengthen": {
             "done": 1,
@@ -60,6 +60,6 @@
             "name": "wzpx"
         }
     },
-    "get_task_reward": 1,
-    "date": ""
+    "forest_adventure": 1,
+    "get_task_reward": 1
 }

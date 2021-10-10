@@ -38,16 +38,27 @@ def user_print(txt='', ind=0):
     print(output)
 
 class AutoRun(object):
-    def __init__(self, to_test=False):
+    def __init__(self, to_test=False, to_reset=True):
         self.test = to_test
         filename = ''
         filename = 'checklist_xl.json'
-        # if HIGH_LEVEL:
-        #     filename = 'checklist_xl.json'
-        # else:
-        #     filename = 'checklist_sl.json'
+
+        # open and reset
         with open(filename, 'r') as f:
             self.record = json.load(f)
+        if to_reset:
+            self.reset(self.record)
+    
+    def reset(self, value):
+        for key in value:
+            val = value[key]
+            if isinstance(val, int):
+                value[key] = 0
+            else:
+                if not isinstance(val, str):
+                    self.reset(val)
+    
+        
     def move_and_click(self, offset=[0, 0], n_clicks=1):
         pag.move(offset[0], offset[1])
         pag.click(clicks=n_clicks)
@@ -91,7 +102,7 @@ class AutoRun(object):
                 conf = MAX_CONF
                 pag.moveTo(fp[0], fp[1])
                 time.sleep(1)
-                pag.click()
+                # pag.click()
                 time.sleep(1)
                 pag.drag(dragto[0], dragto[1])
                 # cnt_drags += 1
@@ -103,7 +114,7 @@ class AutoRun(object):
                 for i in range(2):
                     pag.moveTo(fp[0], fp[1])
                     time.sleep(1)
-                    pag.click()
+                    # pag.click()
                     time.sleep(1)
                     pag.drag(dragto[0], dragto[1])
                     # cnt_drags += 1
@@ -124,20 +135,16 @@ class AutoRun(object):
     def run(self):
         ''''''
         if HIGH_LEVEL:
-            # self.cross_servers()
-            # self.lineup()
-
-            # self.bag()
-            self.daily_tasks()
-            # self.normal_activity()
-            # self.time_limited_activity()
-            # self.bag()
-            # self.union()
-            # self.harbor()
-            # self.game_assistant()
+            self.normal_activity()
+            self.time_limited_activity()
+            self.union()
+            self.harbor()
+            self.game_assistant()
             self.functions()
-            # self.get_task_reward(is_final=True)
-
+            self.daily_tasks()
+            self.bag()
+            self.forest_adventure()
+            self.get_task_reward(is_final=True)
         else:
             self.normal_activity()
             self.time_limited_activity()
@@ -551,16 +558,17 @@ class AutoRun(object):
         while done != 1 and att < MAX_ATTEMPTS:
             self.back_to_home(ind=ind+1)
             finished = False
-            self.find_and_click(img_path='./tasks/gh.png', name='工会', pause=LONG_PAUSE, ind=ind+1)
-            self.find_and_click(img_path='./tasks/gh_ghdt.png', name='工会大厅', ind=ind+1)
-            self.find_and_click(img_path='./tasks/gh_ghdt_ptjs.png', name='普通建设', offset=[DPM/3, DPM*2.5], ind=ind+1)
+            f0, _, _ = self.find_and_click(img_path='./tasks/gh.png', name='工会', pause=LONG_PAUSE, ind=ind+1)
+            f1, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt.png', name='工会大厅', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt_ptjs.png', name='普通建设', offset=[DPM/3, DPM*2.5], ind=ind+1)
             time.sleep(3)
             pag.click()
-            self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_lq.png', name='领取奖励', ind=ind+1)
-            self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_lq_qd.png', name='确定领取', ind=ind+1)
-            self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_fh.png', name='返回工会大厅', ind=ind+1)
-            self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_fh.png', name='退出公会', ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_lq.png', name='领取奖励', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_lq_qd.png', name='确定领取', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_fh.png', name='返回工会大厅', ind=ind+1)
+            f6, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_fh.png', name='退出公会', ind=ind+1)
             att += 1
+            finished = f0 and f1 and f2 and f3 and f4 and f5 and f6
             if finished:
                 self.record['union']['union_construction'] = 1
                 done = 1
@@ -722,7 +730,43 @@ class AutoRun(object):
         else:
             user_print('冒险挑战未完成', ind=ind)
 
-
+    def forest_adventure(self, ind=0):
+        ''' 密林冒险 '''
+        user_print('密林冒险开始')
+        done = self.record['forest_adventure']
+        if self.test:
+            done = 0
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            finished = False
+            f0, _, _ = self.find_and_click(img_path='./tasks/rc.png', name='日常', ind=ind+1)
+            f1, fpx, fpy = self.find_and_click(img_path='./tasks/zl.png', name='固定点', n_clicks=0, ind=ind+1)
+            f2, _, _ = self.drag_find_and_click(fp=[fpx, fpy + 0.5*DPM], dragto=[-DPM, 0], img_path='./tasks/rc_mlmx.png', name="密林冒险", ind=ind+1, n_clicks=1)
+            
+            # f3, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_cz.png', name='重置', ind=ind+1)
+            # f4, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_cz_qd.png', name='重置确定', ind=ind+1)
+            # f5, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_ksyd.png', name='快速移动', ind=ind+1)
+            # f6, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_ksyd_qd.png', name='快速移动确定', ind=ind+1)
+            # f7, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_ksyd_qd_qd.png', name='快速移动确定确定', ind=ind+1)
+            
+            f8, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_sd.png', name='扫荡', ind=ind+1)
+            f9, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_sd_-.png', name='-', ind=ind+1)
+            f10, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_sd_kssd.png', name='快速扫荡', ind=ind+1)
+            time.sleep(90)
+            f11, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_sd_kssd_wcsd.png', name='完成扫荡', ind=ind+1)
+            f12, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_sd_kssd_wcsd_tcgm.png', name='退出购买', ind=ind+1)
+            f13, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_fh.png', name='退出密林', ind=ind+1)
+            att += 1
+            finished = f0 and f1 and f2 and f3 and f4 and f5 and f6 and f7 and f8 and f9 and f10 and f11 and f12 and f13
+            if finished and not self.test:
+                self.record['forest_adventure'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('密林冒险完成', ind=ind)
+        else:
+            user_print('密林冒险未完成', ind=ind)
     
     def bag(self, ind=0):
         ''' 背包 '''
@@ -790,32 +834,32 @@ class AutoRun(object):
 
     def save_to_json(self):
         ''' 保存 '''
-        with open("latestchecklist.json", "w") as jsonFile:
+        with open("tmp.json", "w") as jsonFile:
             json.dump(self.record, jsonFile, indent=4)
         if os.name == 'nt':
             if HIGH_LEVEL:
                 os.system('del checklist_xl.json')
                 time.sleep(3)
-                os.system('ren latestchecklist.json checklist_xl.json')
+                os.system('ren tmp.json checklist_xl.json')
             else:
-                os.system('del checklist_sl.json')
+                os.system('del checklist_xl.json')
                 time.sleep(3)
-                os.system('ren latestchecklist.json checklist_sl.json')
+                os.system('ren tmp.json checklist_xl.json')
         else:
             if HIGH_LEVEL:
                 os.system('rm checklist_xl.json')
                 time.sleep(3)
-                os.system('mv latestchecklist.json checklist_xl.json')
+                os.system('mv tmp.json checklist_xl.json')
             else:
-                os.system('rm checklist_sl.json')
+                os.system('rm tmp.json')
                 time.sleep(3)
-                os.system('mv latestchecklist.json checklist_sl.json')
+                os.system('mv tmp.json checklist_xl.json')
 
     def train_boyo(self, ind=1):
         ''' 伙伴培养 updated '''
         user_print('伙伴培养开始', ind=ind)
         done = self.record['daily_tasks']['train_boyo']['done']
-        character = self.record['daily_tasks']['train_boyo']['character']
+        name = self.record['daily_tasks']['train_boyo']['name']
         if self.test:
             done = 0
         att = 0
@@ -825,14 +869,16 @@ class AutoRun(object):
             f0, _, _ = self.find_and_click(img_path='./tasks/rw.png', name='任务', ind=ind+1)
             f1, fpx, fpy = self.find_and_click(img_path='./tasks/rw_cjrw.png', name='固定点', n_clicks=0, ind=ind+1)
             f2, _, _ = self.drag_find_and_click(fp=[fpx, fpy + 4 * DPM], dragto=[0, -2*DPM], img_path='./tasks/rw_pyhb.png', name="培养伙伴", offset=[4*DPM,0.5*DPM], ind=ind+1, n_clicks=1)
-            char_path = './tasks/rw_pyhb_' + character + '.png'
+            char_path = './tasks/rw_pyhb_' + name + '.png'
             f3, _, _ = self.find_and_click(img_path=char_path, name='路飞', offset=[4*DPM, 0], ind=ind+1)
             f4, _, _ = self.find_and_click(img_path='./tasks/rw_pyhb_py.png', name='培养', ind=ind+1)
             f5, _, _ = self.find_and_click(img_path='./tasks/rw_pyhb_py_djpy.png', name='道具培养', ind=ind+1)
             f6, _, _ = self.find_and_click(img_path='./tasks/rw_pyhb_py_djpy_py.png', name='自动培养培养', ind=ind+1)
-            time.sleep(60)
+            finished_partial = f0 and f1 and f2 and f3 and f4 and f5 and f6
+            if finished_partial: 
+                time.sleep(60)
             f6, _, _ = self.find_and_click(img_path='./tasks/rw_pyhb_tc.png', name='结束培养', ind=ind+1)
-            finished = f0 and f1 and f2 and f3 and f4 and f5 and f6
+            finished = finished_partial and f6
             if finished and not self.test:
                 self.record['daily_tasks']['train_boyo']['done'] = 1
                 done = 1
@@ -904,10 +950,9 @@ class AutoRun(object):
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(to_test=False)
-# ar.bag()
+ar = AutoRun(to_test=False, to_reset=False)
 ar.run()
-
+# ar.bag()
 
 # ar.get_task_reward()
 # ar.gumball_machine()
