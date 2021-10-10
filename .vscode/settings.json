@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/haozhe/anaconda3/envs/GA/bin/python",
+    "python.pythonPath": "C:\\Users\\dyhar\\Anaconda3\\envs\\GA\\python.exe",
     "python.linting.enabled": false,
     "python.linting.pylintArgs": ["--disable={C0111}"]
 }

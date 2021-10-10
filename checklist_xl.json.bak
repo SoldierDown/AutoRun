@@ -1,0 +1,62 @@
+{
+    "normal_activity": {
+        "daily_checkin": 0,
+        "buy_bali": 0,
+        "get_vip_gift": 0,
+        "get_daily_gift": {
+            "mr": 0,
+            "mz": 0,
+            "my": 0
+        }
+    },
+    "time_limited_activity": {
+        "consecutive_logins": 0,
+        "sales_items": 0,
+        "dollar_shop": 0
+    },
+    "game_assistant": 0,
+    "reward_center": 0,
+    "harbor": {
+        "harbor_reward": 0,
+        "harbor_shop": {
+            "orange": 0,
+            "red": 0,
+            "tech": 0
+        }
+    },
+    "union": {
+        "union_construction": 1,
+        "pirate_wanted": 0,
+        "official_pirates": 0
+    },
+    "functions": {
+        "adventure_logs": {
+            "gumball_machine": 0,
+            "adventure_fights": 0
+        }
+    },
+    "bag": {
+        "pet": {
+            "play_with_pet": 0,
+            "pet_growing": 0
+        }
+    },
+    "cross_servers": {
+        "treasures": 0
+    },
+    "lineup": {
+        "accessory_strengthen": 0,
+        "equipment_enchant": 0
+    },
+    "daily_tasks":{
+        "train_boyo": {
+            "done": 0,
+            "character": "luffy"
+        },
+        "equipment_enchant":{
+            "name": "lhzl"
+        }
+    },
+    "get_task_reward": 0,
+    "date": ""
+}
