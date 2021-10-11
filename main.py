@@ -74,7 +74,7 @@ class AutoRun(object):
             pag.PAUSE=pause
             for iter in range(n_clicks):
                 pag.click()
-                time.sleep(3*pause)
+                time.sleep(pause)
             pag.PAUSE=SHORT_PAUSE
             time.sleep(3)
             return True, pos.left, pos.top
@@ -975,14 +975,31 @@ class AutoRun(object):
     def test(self):
         found, _, _ = self.find_and_click(img_path='./tasks/gn_mxrz_mxtz_jf10.png', name='低分海贼', n_clicks=0, ind=2)
 
+    def tmp(self, ind=0):
+        while True:
+            _, fpx, fpy = self.find_and_click(img_path='./tasks/mly.png', name='莫利亚', ind=ind+1)
+            _, mlyx, mlyy = self.find_and_click(img_path='./tasks/mly_belly.png', name='莫利亚', ind=ind+1, n_clicks=6)
+            # for i in range(6):
+            #     pag.click()
+            self.find_and_click(img_path='./tasks/mly_zd.png', name='战斗', ind=ind+1)
+            _, tgx, tgy = self.find_and_click(img_path='./tasks/mly_zd_tg.png', name='跳过', ind=ind+1)
+            pag.moveTo(mlyx, mlyy)
+            for i in range(2):
+                pag.click()
+            time.sleep(5)
+            pag.moveTo(tgx, tgy)
+            pag.click()
+            time.sleep(2)
+            pag.click()
+
 
 # import win32gui, win32con
-
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
 ar = AutoRun(to_test=False, to_reset=False)
-ar.run()
+# ar.run()
+ar.tmp()
 # ar.bag()
 
 # ar.get_task_reward()
