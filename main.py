@@ -142,8 +142,8 @@ class AutoRun(object):
             self.harbor()
             self.game_assistant()
             self.functions()
-            self.daily_tasks()
             self.bag()
+            self.daily_tasks()
             self.forest_adventure()
             self.assistance_punch()
             self.get_task_reward(is_final=True)
@@ -182,6 +182,8 @@ class AutoRun(object):
             f0, _, _ = self.find_and_click(img_path='./tasks/na.png', name='日常活动', ind=ind+1)
             f1, _, _ = self.find_and_click(img_path='./tasks/na_dci.png', name='每日签到', ind=ind+1)
             f2, _, _ = self.find_and_click(img_path='./tasks/na_dci_lq.png', name='每日签到格', ind=ind+1)
+            if not f2:
+                f2, _, _ = self.find_and_click(img_path='./tasks/na_dci_lq_b.png', name='每日签到格', ind=ind+1)
             finished = f0 and f1 and f2
             if not finished:
                 finished, _, _ = self.find_and_click(img_path='./tasks/na_dci_lq_b.png', name='每日签到领取', ind=ind+1)
@@ -976,30 +978,46 @@ class AutoRun(object):
         found, _, _ = self.find_and_click(img_path='./tasks/gn_mxrz_mxtz_jf10.png', name='低分海贼', n_clicks=0, ind=2)
 
     def tmp(self, ind=0):
+        _, fpx, fpy = self.find_and_click(img_path='./tasks/mly.png', name='莫利亚', ind=ind+1)
+        _, mlyx, mlyy = self.find_and_click(img_path='./tasks/mly_belly.png', name='莫利亚', ind=ind+1, n_clicks=6)
+        _, zdx, zdy = self.find_and_click(img_path='./tasks/mly_zd.png', name='战斗', ind=ind+1)
+        _, tgx, tgy = self.find_and_click(img_path='./tasks/mly_zd_tg.png', name='跳过', ind=ind+1)
+        pag.moveTo(mlyx, mlyy)
+        for i in range(2):
+            pag.click()
+        time.sleep(5)
+        pag.moveTo(tgx, tgy)
+        pag.click()
+        time.sleep(2)
+        pag.click()
         while True:
-            _, fpx, fpy = self.find_and_click(img_path='./tasks/mly.png', name='莫利亚', ind=ind+1)
-            _, mlyx, mlyy = self.find_and_click(img_path='./tasks/mly_belly.png', name='莫利亚', ind=ind+1, n_clicks=6)
-            # for i in range(6):
-            #     pag.click()
-            self.find_and_click(img_path='./tasks/mly_zd.png', name='战斗', ind=ind+1)
-            _, tgx, tgy = self.find_and_click(img_path='./tasks/mly_zd_tg.png', name='跳过', ind=ind+1)
+            pag.moveTo(fpx, fpy)
+            pag.click()
+            pag.moveTo(mlyx, mlyy)
+            for i in range(5):
+                pag.click()
+            pag.moveTo(zdx, zdy)
+            pag.click()
+            time.sleep(3)
+            pag.moveTo(tgx, tgy)
+            pag.click()
             pag.moveTo(mlyx, mlyy)
             for i in range(2):
                 pag.click()
-            time.sleep(5)
             pag.moveTo(tgx, tgy)
             pag.click()
-            time.sleep(2)
+            time.sleep(3)
             pag.click()
+
 
 
 # import win32gui, win32con
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(to_test=False, to_reset=False)
-# ar.run()
-ar.tmp()
+ar = AutoRun(to_test=False, to_reset=True)
+ar.run()
+# ar.tmp()
 # ar.bag()
 
 # ar.get_task_reward()
