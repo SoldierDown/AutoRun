@@ -1,6 +1,6 @@
 {
     "normal_activity": {
-        "daily_checkin": 1,
+        "daily_checkin": 0,
         "buy_bali": 1,
         "get_vip_gift": 1,
         "get_daily_gift": {
@@ -27,20 +27,20 @@
     "functions": {
         "adventure_logs": {
             "gumball_machine": {
-                "done": 0,
-                "current_chances": 0
+                "done": 1,
+                "current_chances": 3
             },
             "adventure_fights": {
-                "current_fights": 0,
-                "current_changes": 0,
-                "done": 0
+                "current_fights": 3,
+                "current_changes": 3,
+                "done": 1
             }
         }
     },
     "bag": {
         "pet": {
-            "play_with_pet": 0,
-            "pet_growing": 0
+            "play_with_pet": 1,
+            "pet_growing": 1
         }
     },
     "cross_servers": {
@@ -48,16 +48,16 @@
     },
     "daily_tasks": {
         "train_boyo": {
-            "done": 0,
+            "done": 1,
             "name": "luffy"
         },
         "accessory_strengthen": {
-            "done": 0,
+            "done": 1,
             "name": "lhzl"
         },
         "equipment_enchant": {
             "done": 0,
-            "name": "wzpx"
+            "name": "wzwt"
         }
     },
     "forest_adventure": 0,

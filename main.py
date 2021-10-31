@@ -1,7 +1,7 @@
 SHORT_PAUSE = 1
 MID_PAUSE = 10
 LONG_PAUSE = 30
-N_CLICKS = 10
+N_CLICKS = 3
 N_DRAGS = 30
 MAX_CONF = 0.95
 MIN_CONF = 0.8
@@ -19,6 +19,8 @@ import json
 import os
 
 pag.PAUSE = SHORT_PAUSE
+
+# error handling
 
 # auxiliary 
 def on_click(x, y, button, pressed):
@@ -165,7 +167,7 @@ class AutoRun(object):
     def normal_activity(self, ind=0):
         ''' 日常任务 '''
         user_print('日常任务开始', ind=ind)
-        self.daily_checkin()
+        # self.daily_checkin()
         self.buy_bali()
         self.get_vip_gift()
         self.get_daily_gift()
@@ -1015,7 +1017,7 @@ class AutoRun(object):
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(to_test=False, to_reset=True)
+ar = AutoRun(to_test=False, to_reset=False)
 ar.run()
 # ar.tmp()
 # ar.bag()
