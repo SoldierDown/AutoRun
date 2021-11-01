@@ -1,7 +1,7 @@
 {
     "normal_activity": {
         "daily_checkin": 0,
-        "buy_bali": 1,
+        "buy_bali": 0,
         "get_vip_gift": 0,
         "get_daily_gift": {
             "mr": 0,
@@ -46,28 +46,27 @@
     "cross_servers": {
         "treasures": 0
     },
-    "boyos": {
+    "daily_tasks": {
         "train_boyo": {
             "done": 0,
-            "hz": "tt"
-        }
-    },
-    "lineup": {
+            "name": "luffy"
+        },
         "accessory_strengthen": {
             "done": 0,
-            "hz": "tt",
-            "sp": "lhzl"
+            "name": "lhzl"
         },
         "equipment_enchant": {
             "done": 0,
-            "hz": "tt",
-            "zb": "wzwt"
+            "name": "wzpx"
         }
     },
     "forest_adventure": 0,
     "assistance_punch": {
         "done": 0,
         "name": "qb"
+    },
+    "impel_down": {
+        "cur_fights": 1
     },
     "get_task_reward": 0
 }

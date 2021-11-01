@@ -50,7 +50,7 @@ class AutoRun(object):
             self.record = json.load(f)
         if to_reset:
             self.reset(self.record)
-    
+
     def reset(self, value):
         for key in value:
             val = value[key]
@@ -138,17 +138,18 @@ class AutoRun(object):
     def run(self):
         ''''''
         if HIGH_LEVEL:
-            self.normal_activity()
-            self.time_limited_activity()
-            self.union()
-            self.harbor()
-            self.game_assistant()
-            self.functions()
-            self.bag()
-            self.daily_tasks()
-            self.forest_adventure()
-            self.assistance_punch()
-            self.get_task_reward(is_final=True)
+            # self.time_limited_activity()              # looks good now
+            # self.game_assistant()                     # looks good now
+            # self.union()                              # looks good now
+            # self.harbor()                             # looks good now
+            # self.functions()                          # looks good now
+            # self.bag()                                # looks good now
+            # self.get_task_reward(is_final=True)       # looks good now
+            # self.boyos()                              # looks good now            
+            # self.lineup()                             # looks good now
+            # self.normal_activity()                    # not efficient
+            self.get_task_reward(is_final=True)       # looks good now
+            # exit()
         else:
             self.normal_activity()
             self.time_limited_activity()
@@ -156,7 +157,7 @@ class AutoRun(object):
             self.bag()
             self.get_task_reward()
     
-    def back_to_home(self, ind=0, n_clicks=N_CLICKS):
+    def back_to_home(self, ind=0, n_clicks=1):
         ''' 回到主页 '''
         self.find_and_click(img_path='./tasks/bth.png', name='主页', n_clicks=n_clicks, ind=ind)
 
@@ -337,7 +338,7 @@ class AutoRun(object):
     def time_limited_activity(self, ind=0):
         ''' 限时活动 '''
         user_print('限时活动开始', ind=ind)
-        # self.consecutive_logins()
+        self.consecutive_logins()
         self.sales_items()
         self.dollar_shop()
         user_print('限时活动完成', ind=ind)
@@ -450,70 +451,9 @@ class AutoRun(object):
         ''' 每日任务 '''
         user_print("每日任务开始", ind=ind)
         self.get_task_reward()
-        self.train_boyo()
-        self.accessory_strengthen()
-        self.equipment_enchant()
+        
 
-    def accessory_strengthen(self, ind=1):
-        ''' 饰品强化 '''
-        user_print('饰品强化开始', ind=ind)
-        done = self.record['daily_tasks']['accessory_strengthen']['done']
-        if self.test:
-            done = 0
-        name = self.record['daily_tasks']['accessory_strengthen']['name']
-        att = 0
-        while done != 1 and att < MAX_ATTEMPTS:
-            self.back_to_home(ind=ind+1)
-            f0, _, _ = self.find_and_click(img_path='./tasks/rw.png', name='任务', ind=ind+1)
-            f1, fpx, fpy = ar.find_and_click(img_path='./tasks/rw_cjrw.png', name='固定点', n_clicks=0, ind=ind+1)
-            f2, _, _ = ar.drag_find_and_click(fp=[fpx, fpy + 4 * DPM], dragto=[0, -2*DPM], img_path='./tasks/rw_spqh.png', name="饰品强化", offset=[4*DPM,0.5*DPM], ind=ind+1, n_clicks=1)
-            sp_path = './tasks/rw_spqh_' + name + '.png'
-            f3, _, _ = ar.drag_find_and_click(fp=[fpx, fpy + 4 * DPM], dragto=[0, -2*DPM], img_path=sp_path, name="饰品强化", offset=[3.7*DPM,0.1*DPM], ind=ind+1, n_clicks=1, extra_drag=True)
-            
-            f4, _, _ = self.find_and_click(img_path='./tasks/rw_spqh_qh.png', name='强化', ind=ind+1)
-            f5, _, _ = self.find_and_click(img_path='./tasks/rw_spqh_qh_zdtj.png', name='自动添加', ind=ind+1)
-            f6, _, _ = self.find_and_click(img_path='./tasks/rw_spqh_qh_zdtj_yjqh.png', name='一键强化', ind=ind+1)
-            finished = f1 and f2 and f3 and f4 and f5 and f6
-            if finished and not self.test:
-                self.record['daily_tasks']['accessory_strengthen']['done'] = 1
-                done = 1
-                self.save_to_json()
-        if done == 1:
-            user_print('饰品强化完成', ind=ind)
-        else:
-            user_print('饰品强化未完成', ind=ind)
-
-    def equipment_enchant(self, ind=1):
-        ''' 装备附魔 '''
-        user_print('装备附魔开始', ind=ind)
-        done = self.record['daily_tasks']['equipment_enchant']['done']
-        name = self.record['daily_tasks']['equipment_enchant']['name']
-        if self.test:
-            done = 0
-        att = 0
-        while done != 1 and att < MAX_ATTEMPTS:
-            self.back_to_home(ind=ind+1)
-            finished = False
-            f0, _, _ = self.find_and_click(img_path='./tasks/rw.png', name='任务', ind=ind+1)
-            f1, fpx, fpy = ar.find_and_click(img_path='./tasks/rw_cjrw.png', name='固定点', n_clicks=0, ind=ind+1)
-            f2, _, _ = ar.drag_find_and_click(fp=[fpx, fpy + 4 * DPM], dragto=[0, -2*DPM], img_path='./tasks/rw_zbfm.png', name="装备附魔", offset=[4*DPM,0.5*DPM], ind=ind+1, n_clicks=1)
-            sp_path = './tasks/rw_zbfm_' + name + '.png'
-            f3, _, _ = ar.drag_find_and_click(fp=[fpx, fpy + 4 * DPM], dragto=[0, -2*DPM], img_path=sp_path, name="武装皮靴", ind=ind+1, n_clicks=1, extra_drag=True)
-            
-            f4, _, _ = self.find_and_click(img_path='./tasks/rw_zbfm_fm.png', name='附魔', ind=ind+1)
-            f5, _, _ = self.find_and_click(img_path='./tasks/rw_zbfm_fm_yjfm.png', name='一键附魔', ind=ind+1)
-            f6, _, _ = self.find_and_click(img_path='./tasks/rw_zbfm_fm_yjfm_p10.png', name='+10', ind=ind+1)
-            f7, _, _ = self.find_and_click(img_path='./tasks/rw_zbfm_fm_yjfm_qd.png', name='确定', ind=ind+1)
-            finished = f1 and f2 and f3 and f4 and f5 and f6 and f7
-            if finished:
-                self.record['daily_tasks']['equipment_enchant']['done'] = 1
-                done = 1
-                self.save_to_json()
-        if done == 1:
-            user_print('装备附魔完成', ind=ind)
-        else:
-            user_print('装备附魔未完成', ind=ind)
-
+    
     def union(self, ind=0):
         ''' 工会活动 updated '''
         user_print('工会活动开始', ind=ind)
@@ -564,7 +504,7 @@ class AutoRun(object):
         while done != 1 and att < MAX_ATTEMPTS:
             self.back_to_home(ind=ind+1)
             finished = False
-            f0, _, _ = self.find_and_click(img_path='./tasks/gh.png', name='工会', pause=LONG_PAUSE, ind=ind+1)
+            f0, _, _ = self.find_and_click(img_path='./tasks/gh.png', name='工会', pause=MID_PAUSE, ind=ind+1)
             f1, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt.png', name='工会大厅', ind=ind+1)
             f2, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt_ptjs.png', name='普通建设', offset=[DPM/3, DPM*2.5], ind=ind+1)
             time.sleep(3)
@@ -592,7 +532,7 @@ class AutoRun(object):
         att = 0
         while done != 1 and att < MAX_ATTEMPTS:
             self.back_to_home(ind=ind+1)
-            self.find_and_click(img_path='./tasks/gh.png', name='工会', pause=LONG_PAUSE, ind=ind+1)
+            self.find_and_click(img_path='./tasks/gh.png', name='工会', pause=MID_PAUSE, ind=ind+1)
             self.find_and_click(img_path='./tasks/gh_hdxs.png', name='海盗悬赏', ind=ind+1)
             _, tzx, tzy = self.find_and_click(img_path='./tasks/gh_hdxs_tz.png', name='海盗悬赏挑战', ind=ind+1)
             pag.moveTo(tzx, tzy+DPM)
@@ -803,6 +743,42 @@ class AutoRun(object):
         else:
             user_print('援助招式未完成', ind=ind)
 
+    def boyos(self, ind=0):
+        ''' 伙伴 '''
+        user_print('伙伴开始', ind=ind)
+        self.train_boyo()
+        user_print('伙伴完成', ind=ind)
+    def train_boyo(self, ind=1):
+        ''' 伙伴培养 updated '''
+        user_print('伙伴培养开始', ind=ind)
+        done = self.record['boyos']['train_boyo']['done']
+        hz_name = self.record['boyos']['train_boyo']['hz']
+        if self.test:
+            done = 0
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            finished = False
+            f0, _, _ = self.find_and_click(img_path='./tasks/hb.png', name='伙伴', ind=ind+1)
+            hz_path = './tasks/hb_' + hz_name + '.png'
+            f1, _, _ = self.find_and_click(img_path=hz_path, name='待培养海贼', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./tasks/hb_py.png', name='培养', ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./tasks/hb_py_djpy.png', name='道具培养', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/hb_py_djpy_py.png', name='自动培养培养', ind=ind+1)
+            finished_partial = f0 and f1 and f2 and f3 and f4
+            if finished_partial: 
+                time.sleep(60)
+            f5, _, _ = self.find_and_click(img_path='./tasks/hb_pyhb_tc.png', name='结束培养', ind=ind+1)
+            finished = finished_partial and f5
+            if finished and not self.test:
+                self.record['boyos']['train_boyo']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('伙伴培养完成', ind=ind)
+        else:
+            user_print('伙伴培养未完成', ind=ind)
+
     def bag(self, ind=0):
         ''' 背包 '''
         user_print('背包开始', ind=ind)
@@ -866,6 +842,85 @@ class AutoRun(object):
         else:
             user_print('升级未完成', ind=ind)
 
+    def lineup(self, ind=0):
+        ''' 阵容 '''
+        user_print('阵容开始', ind=ind)
+        self.accessory_strengthen()             
+        self.equipment_enchant()                
+        user_print('阵容完成', ind=ind)
+    
+
+    def accessory_strengthen(self, ind=1):
+        ''' 饰品强化 '''
+        user_print('饰品强化开始', ind=ind)
+        done = self.record['lineup']['accessory_strengthen']['done']
+        if self.test:
+            done = 0
+        hz_name = self.record['lineup']['accessory_strengthen']['hz']
+        sp_name = self.record['lineup']['accessory_strengthen']['sp']
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            f0, _, _ = self.find_and_click(img_path='./tasks/zr.png', name='阵容', ind=ind+1)
+            # if it is the target already: no need to search for avatar
+            hz_text_path = './tasks/zr_text_' + hz_name + '.png'
+            f1, _, _ = self.find_and_click(img_path=hz_text_path, name='寻找海贼', ind=ind+1, n_clicks=0)
+
+            if not f1:
+                avatar_path = './tasks/zr_avatar_' + name + '.png'
+                f2, _, _ = self.find_and_click(img_path=avatar_path, name='选择海贼', ind=ind+1)
+            sp_path = './tasks/zr_sp_' + sp_name + '.png'
+            f3, _, _ = self.find_and_click(img_path=sp_path, name='选择饰品', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/zr_sp_spqh.png', name='强化', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./tasks/zr_sp_spqh_zdtj.png', name='自动添加', ind=ind+1)
+            f6, _, _ = self.find_and_click(img_path='./tasks/zr_sp_spqh_yjqh.png', name='一键强化', ind=ind+1)
+            
+            finished = f3 and f4 and f5 and f6
+            if finished and not self.test:
+                self.record['lineup']['accessory_strengthen']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('饰品强化完成', ind=ind)
+        else:
+            user_print('饰品强化未完成', ind=ind)
+
+    def equipment_enchant(self, ind=1):
+        ''' 装备附魔 '''
+        user_print('装备附魔开始', ind=ind)
+        done = self.record['lineup']['equipment_enchant']['done']
+        if self.test:
+            done = 0
+        hz_name = self.record['lineup']['equipment_enchant']['hz']
+        zb_name = self.record['lineup']['equipment_enchant']['zb']
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            f0, _, _ = self.find_and_click(img_path='./tasks/zr.png', name='阵容', ind=ind+1)
+            # if it is the target already: no need to search for avatar
+            hz_text_path = './tasks/zr_text_' + hz_name + '.png'
+            f1, _, _ = self.find_and_click(img_path=hz_text_path, name='寻找海贼', ind=ind+1, n_clicks=0)
+
+            if not f1:
+                avatar_path = './tasks/zr_avatar_' + name + '.png'
+                f2, _, _ = self.find_and_click(img_path=avatar_path, name='选择海贼', ind=ind+1)
+            zb_path = './tasks/zr_zb_' + zb_name + '.png'
+            f3, _, _ = self.find_and_click(img_path=zb_path, name='选择装备', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/zr_zb_fm.png', name='附魔', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./tasks/zr_zb_fm_yjfm.png', name='一键附魔', ind=ind+1)
+            f6, _, _ = self.find_and_click(img_path='./tasks/zr_zb_fm_yjfm_+10.png', name='+10', ind=ind+1)
+            f7, _, _ = self.find_and_click(img_path='./tasks/zr_zb_fm_yjfm_qd.png', name='确定', ind=ind+1)
+            
+            finished = f3 and f4 and f5 and f6
+            if finished and not self.test:
+                self.record['lineup']['equipment_enchant']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('装备附魔完成', ind=ind)
+        else:
+            user_print('装备附魔未完成', ind=ind)
+
 
     def save_to_json(self):
         ''' 保存 '''
@@ -890,38 +945,7 @@ class AutoRun(object):
                 time.sleep(3)
                 os.system('mv tmp.json checklist.json')
 
-    def train_boyo(self, ind=1):
-        ''' 伙伴培养 updated '''
-        user_print('伙伴培养开始', ind=ind)
-        done = self.record['daily_tasks']['train_boyo']['done']
-        name = self.record['daily_tasks']['train_boyo']['name']
-        if self.test:
-            done = 0
-        att = 0
-        while done != 1 and att < MAX_ATTEMPTS:
-            self.back_to_home(ind=ind+1)
-            finished = False
-            f0, _, _ = self.find_and_click(img_path='./tasks/rw.png', name='任务', ind=ind+1)
-            f1, fpx, fpy = self.find_and_click(img_path='./tasks/rw_cjrw.png', name='固定点', n_clicks=0, ind=ind+1)
-            f2, _, _ = self.drag_find_and_click(fp=[fpx, fpy + 4 * DPM], dragto=[0, -2*DPM], img_path='./tasks/rw_pyhb.png', name="培养伙伴", offset=[4*DPM,0.5*DPM], ind=ind+1, n_clicks=1)
-            char_path = './tasks/rw_pyhb_' + name + '.png'
-            f3, _, _ = self.find_and_click(img_path=char_path, name='路飞', offset=[4*DPM, 0], ind=ind+1)
-            f4, _, _ = self.find_and_click(img_path='./tasks/rw_pyhb_py.png', name='培养', ind=ind+1)
-            f5, _, _ = self.find_and_click(img_path='./tasks/rw_pyhb_py_djpy.png', name='道具培养', ind=ind+1)
-            f6, _, _ = self.find_and_click(img_path='./tasks/rw_pyhb_py_djpy_py.png', name='自动培养培养', ind=ind+1)
-            finished_partial = f0 and f1 and f2 and f3 and f4 and f5 and f6
-            if finished_partial: 
-                time.sleep(60)
-            f6, _, _ = self.find_and_click(img_path='./tasks/rw_pyhb_tc.png', name='结束培养', ind=ind+1)
-            finished = finished_partial and f6
-            if finished and not self.test:
-                self.record['daily_tasks']['train_boyo']['done'] = 1
-                done = 1
-                self.save_to_json()
-        if done == 1:
-            user_print('伙伴培养完成', ind=ind)
-        else:
-            user_print('伙伴培养未完成', ind=ind)
+    
 
     def cross_servers(self, ind=0):
         ''' 跨服 '''
@@ -1017,7 +1041,7 @@ class AutoRun(object):
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(to_test=False, to_reset=False)
+ar = AutoRun(to_test=False, to_reset=True)
 ar.run()
 # ar.tmp()
 # ar.bag()

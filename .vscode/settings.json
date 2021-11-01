@@ -1,5 +1,8 @@
 {
     "python.pythonPath": "C:\\Users\\dyhar\\Anaconda3\\envs\\GA\\python.exe",
+    "python.autoComplete.extraPaths": [
+        "${workspaceFolder}/customModule"
+      ],
     "python.linting.enabled": false,
     "python.linting.pylintArgs": ["--disable={C0111}"]
 }
