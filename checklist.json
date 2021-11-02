@@ -22,7 +22,8 @@
     "union": {
         "union_construction": 1,
         "pirate_wanted": 1,
-        "official_pirates": 0
+        "official_pirates": 0,
+        "get_coffee": 0
     },
     "functions": {
         "adventure_logs": {

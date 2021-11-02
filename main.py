@@ -139,8 +139,8 @@ class AutoRun(object):
         ''''''
         if HIGH_LEVEL:
             self.time_limited_activity()              # looks good now
-            self.game_assistant()                     # looks good now
             self.union()                              # looks good now
+            self.game_assistant()                     # looks good now
             self.harbor()                             # looks good now
             self.functions()                          # looks good now
             self.bag()                                # looks good now
@@ -459,6 +459,7 @@ class AutoRun(object):
         user_print('工会活动开始', ind=ind)
         self.union_construction()
         self.pirate_wanted()
+        self.get_coffee()
         # self.official_pirates()
         user_print('工会活动完成', ind=ind)
     def official_pirates(self, ind=1):
@@ -469,7 +470,7 @@ class AutoRun(object):
         while done != 1 and att < MAX_ATTEMPTS:
             self.back_to_home(ind=ind+1)
             finished = False
-            f0, _, _ = self.find_and_click(img_path='./tasks/gh.png', name='工会', pause=LONG_PAUSE, ind=ind+1)
+            f0, _, _ = self.find_and_click(img_path='./tasks/gh.png', name='工会', pause=MID_PAUSE, ind=ind+1)
             f1, _, _ = self.find_and_click(img_path='./tasks/gh_qwh.png', name='七武海', ind=ind+1)
             f2, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_jsjl.png', name='击杀奖励', ind=ind+1)
             f3, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_jsjl_yjlq.png', name='一键领取', ind=ind+1)
@@ -548,6 +549,31 @@ class AutoRun(object):
             user_print('海盗悬赏完成', ind=ind)
         else:
             user_print('海盗悬赏未完成', ind=ind)
+    def get_coffee(self, ind=1):
+        ''' 人鱼咖啡厅 '''
+        user_print('喝咖啡开始', ind=ind)
+        done = self.record['union']['get_coffee']
+        if self.test:
+            done = 0
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            f0, _, _ = self.find_and_click(img_path='./tasks/gh.png', name='工会', pause=MID_PAUSE, ind=ind+1)
+            f1, _, _ = self.find_and_click(img_path='./tasks/gh_rykft.png', name='人鱼咖啡厅', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./tasks/gh_rykft_hkf.png', name='喝咖啡', ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./tasks/gh_rykft_hkf_qd.png', name='确定', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/gh_rykft_fh.png', name='返回', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./tasks/gh_fh.png', name='退出工会', ind=ind+1)
+            att += 1
+            finished = f0 and f1 and f2 and f3 and f4 and f5
+            if finished and not self.test:
+                self.record['union']['pirate_wanted'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('喝咖啡完成', ind=ind)
+        else:
+            user_print('喝咖啡未完成', ind=ind)
 
 
 
@@ -1042,7 +1068,8 @@ class AutoRun(object):
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
 ar = AutoRun(to_test=False, to_reset=True)
-ar.run()
+# ar.run()
+ar.get_coffee()
 # ar.tmp()
 # ar.bag()
 
