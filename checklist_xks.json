@@ -40,10 +40,13 @@
     },
     "bag": {
         "pet": {
-            "play_with_pet": 1,
+            "play_with_pet": {
+                "pet_name": "ty",
+                "done": 0
+            },
             "pet_growing": {
                 "pet_name": "sy",
-                "done": 1
+                "done": 0
             }
         }
     },
@@ -53,25 +56,20 @@
     "boyos": {
         "train_boyo": {
             "done": 0,
-            "hz": "tt"
+            "hz": "lf"
         }
     },
     "lineup": {
         "accessory_strengthen": {
-            "done": 0,
-            "hz": "tt",
-            "sp": "lhzl"
+            "done": 1,
+            "hz": "as",
+            "sp": "slzj"
         },
         "equipment_enchant": {
-            "done": 0,
-            "hz": "tt",
-            "zb": "wzwt"
+            "done": 1,
+            "hz": "lf",
+            "zb": "bwwsd"
         }
-    },
-    "forest_adventure": 0,
-    "assistance_punch": {
-        "done": 0,
-        "name": "qb"
     },
     "get_task_reward": 0
 }

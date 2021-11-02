@@ -40,10 +40,10 @@ def user_print(txt='', ind=0):
     print(output)
 
 class AutoRun(object):
-    def __init__(self, to_test=False, to_reset=True):
+    def __init__(self, role='xl', to_test=False, to_reset=True):
         self.test = to_test
-        filename = ''
-        filename = 'checklist.json'
+        self.role = role
+        filename = 'checklist_' + self.role + '.json'
 
         # open and reset
         with open(filename, 'r') as f:
@@ -819,7 +819,8 @@ class AutoRun(object):
     def play_with_pet(self, ind=2):
         ''' 好感度 updated'''
         user_print('好感度开始', ind=ind)
-        done = self.record['bag']['pet']['play_with_pet']
+        done = self.record['bag']['pet']['play_with_pet']['done']
+        pet_name = self.record['bag']['pet']['play_with_pet']['pet_name']
         if self.test:
             done = 0
         att = 0
@@ -828,13 +829,14 @@ class AutoRun(object):
             finished = False
             f0, _, _ = self.find_and_click(img_path='./tasks/bag.png', name='背包', ind=ind+1)
             f1, _, _ = self.find_and_click(img_path='./tasks/bag_pet.png', name='宠物', ind=ind+1)
-            f2, _, _ = self.find_and_click(img_path='./tasks/bag_pet_sun.png', name='太阳', offset=[3.9*DPM,0.2*DPM], ind=ind+1)
-            f3, _, _ = self.find_and_click(img_path='./tasks/bag_pet_sun_hg.png', name='好感', ind=ind+1)
-            f4, _, _ = self.find_and_click(img_path='./tasks/bag_pet_sun_hg_yjwy.png', name='一键喂养', ind=ind+1)
+            pet_path = './tasks/bag_pet_' + pet_name + '.png'
+            f2, _, _ = self.find_and_click(img_path=pet_path, name='主宠', offset=[3.9*DPM,0.2*DPM], ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./tasks/bag_pet_hg.png', name='好感', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/bag_pet_hg_yjwy.png', name='一键喂养', ind=ind+1)
             att += 1
             finished = f0 and f1 and f2 and f3 and f4
             if finished and not self.test:
-                self.record['bag']['pet']['play_with_pet'] = 1
+                self.record['bag']['pet']['play_with_pet']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -844,7 +846,8 @@ class AutoRun(object):
     def pet_growing(self, ind=2):
         ''' 升级 updated '''
         user_print('升级开始', ind=ind)
-        done = self.record['bag']['pet']['pet_growing']
+        done = self.record['bag']['pet']['pet_growing']['done']
+        pet_name = self.record['bag']['pet']['pet_growing']['pet_name']
         if self.test:
             done = 0
         att = 0
@@ -853,14 +856,15 @@ class AutoRun(object):
             finished = False
             f0, _, _ = self.find_and_click(img_path='./tasks/bag.png', name='背包', ind=ind+1)
             f1, _, _ = self.find_and_click(img_path='./tasks/bag_pet.png', name='宠物', ind=ind+1)
-            f2, _, _ = self.find_and_click(img_path='./tasks/bag_pet_penguin.png', name='伽梅尔', offset=[3.9*DPM,0.2*DPM], ind=ind+1)
-            f3, _, _ = self.find_and_click(img_path='./tasks/bag_pet_penguin_sj.png', name='升级', ind=ind+1)
-            f4, _, _ = self.find_and_click(img_path='./tasks/bag_pet_penguin_sj_zdtj.png', name='自动添加', ind=ind+1)
-            f5, _, _ = self.find_and_click(img_path='./tasks/bag_pet_penguin_sj_yjsj.png', name='一键升级', ind=ind+1)
+            pet_path = './tasks/bag_pet_' + pet_name + '.png'
+            f2, _, _ = self.find_and_click(img_path=pet_path, name='副宠', offset=[3.9*DPM,0.2*DPM], ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./tasks/bag_pet_sj.png', name='升级', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/bag_pet_sj_zdtj.png', name='自动添加', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./tasks/bag_pet_sj_yjsj.png', name='一键升级', ind=ind+1)
             att += 1
             finished = f0 and f1 and f2 and f3 and f4 and f5
             if finished and not self.test:
-                self.record['bag']['pet']['pet_growing'] = 1
+                self.record['bag']['pet']['pet_growing']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -874,8 +878,6 @@ class AutoRun(object):
         self.accessory_strengthen()             
         self.equipment_enchant()                
         user_print('阵容完成', ind=ind)
-    
-
     def accessory_strengthen(self, ind=1):
         ''' 饰品强化 '''
         user_print('饰品强化开始', ind=ind)
@@ -893,15 +895,16 @@ class AutoRun(object):
             f1, _, _ = self.find_and_click(img_path=hz_text_path, name='寻找海贼', ind=ind+1, n_clicks=0)
 
             if not f1:
-                avatar_path = './tasks/zr_avatar_' + name + '.png'
+                avatar_path = './tasks/zr_avatar_' + hz_name + '.png'
                 f2, _, _ = self.find_and_click(img_path=avatar_path, name='选择海贼', ind=ind+1)
             sp_path = './tasks/zr_sp_' + sp_name + '.png'
             f3, _, _ = self.find_and_click(img_path=sp_path, name='选择饰品', ind=ind+1)
             f4, _, _ = self.find_and_click(img_path='./tasks/zr_sp_spqh.png', name='强化', ind=ind+1)
-            f5, _, _ = self.find_and_click(img_path='./tasks/zr_sp_spqh_zdtj.png', name='自动添加', ind=ind+1)
-            f6, _, _ = self.find_and_click(img_path='./tasks/zr_sp_spqh_yjqh.png', name='一键强化', ind=ind+1)
+            for i in range(5):
+                self.find_and_click(img_path='./tasks/zr_sp_spqh_zdtj.png', name='自动添加', ind=ind+1)
+                self.find_and_click(img_path='./tasks/zr_sp_spqh_yjqh.png', name='一键强化', ind=ind+1)
             
-            finished = f3 and f4 and f5 and f6
+            finished = f3 and f4
             if finished and not self.test:
                 self.record['lineup']['accessory_strengthen']['done'] = 1
                 done = 1
@@ -928,7 +931,7 @@ class AutoRun(object):
             f1, _, _ = self.find_and_click(img_path=hz_text_path, name='寻找海贼', ind=ind+1, n_clicks=0)
 
             if not f1:
-                avatar_path = './tasks/zr_avatar_' + name + '.png'
+                avatar_path = './tasks/zr_avatar_' + hz_name + '.png'
                 f2, _, _ = self.find_and_click(img_path=avatar_path, name='选择海贼', ind=ind+1)
             zb_path = './tasks/zr_zb_' + zb_name + '.png'
             f3, _, _ = self.find_and_click(img_path=zb_path, name='选择装备', ind=ind+1)
@@ -952,15 +955,13 @@ class AutoRun(object):
         ''' 保存 '''
         with open("tmp.json", "w") as jsonFile:
             json.dump(self.record, jsonFile, indent=4)
+        # if Windows
         if os.name == 'nt':
-            if HIGH_LEVEL:
-                os.system('del checklist.json')
-                time.sleep(3)
-                os.system('ren tmp.json checklist.json')
-            else:
-                os.system('del checklist.json')
-                time.sleep(3)
-                os.system('ren tmp.json checklist.json')
+            del_command = 'del ' + 'checklist_' + self.role + '.json'
+            os.system(del_command)
+            time.sleep(3)
+            rename_command = 'ren tmp.json checklist_' + self.role + '.json'
+            os.system(rename_command)
         else:
             if HIGH_LEVEL:
                 os.system('rm checklist.json')
@@ -1067,9 +1068,11 @@ class AutoRun(object):
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(to_test=False, to_reset=True)
+ar = AutoRun(role='xl',to_test=False, to_reset=True)
+ar.lineup()
 # ar.run()
-ar.get_coffee()
+# ar.boyos()
+# ar.get_coffee()
 # ar.tmp()
 # ar.bag()
 

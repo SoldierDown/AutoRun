@@ -40,10 +40,13 @@
     },
     "bag": {
         "pet": {
-            "play_with_pet": 1,
+            "play_with_pet": {
+                "pet_name": "ty",
+                "done": 0
+            },
             "pet_growing": {
-                "pet_name": "sy",
-                "done": 1
+                "pet_name": "qe",
+                "done": 0
             }
         }
     },
@@ -58,20 +61,15 @@
     },
     "lineup": {
         "accessory_strengthen": {
-            "done": 0,
+            "done": 1,
             "hz": "tt",
             "sp": "lhzl"
         },
         "equipment_enchant": {
-            "done": 0,
+            "done": 1,
             "hz": "tt",
             "zb": "wzwt"
         }
-    },
-    "forest_adventure": 0,
-    "assistance_punch": {
-        "done": 0,
-        "name": "qb"
     },
     "get_task_reward": 0
 }
