@@ -138,16 +138,16 @@ class AutoRun(object):
     def run(self):
         ''''''
         if HIGH_LEVEL:
-            # self.time_limited_activity()              # looks good now
-            # self.game_assistant()                     # looks good now
-            # self.union()                              # looks good now
-            # self.harbor()                             # looks good now
-            # self.functions()                          # looks good now
-            # self.bag()                                # looks good now
-            # self.get_task_reward(is_final=True)       # looks good now
-            # self.boyos()                              # looks good now            
-            # self.lineup()                             # looks good now
-            # self.normal_activity()                    # not efficient
+            self.time_limited_activity()              # looks good now
+            self.game_assistant()                     # looks good now
+            self.union()                              # looks good now
+            self.harbor()                             # looks good now
+            self.functions()                          # looks good now
+            self.bag()                                # looks good now
+            self.get_task_reward(is_final=False)       # looks good now
+            self.boyos()                              # looks good now            
+            self.lineup()                             # looks good now
+            self.normal_activity()                    # not efficient
             self.get_task_reward(is_final=True)       # looks good now
             # exit()
         else:
