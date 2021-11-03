@@ -61,15 +61,15 @@
     },
     "lineup": {
         "accessory_strengthen": {
-            "done": 1,
+            "done": 0,
             "hz": "as",
             "sp": "slzj"
         },
         "equipment_enchant": {
-            "done": 1,
+            "done": 0,
             "hz": "lf",
             "zb": "bwwsd"
         }
     },
-    "get_task_reward": 0
+    "get_task_reward": 1
 }

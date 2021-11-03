@@ -1,6 +1,6 @@
-cur_yellows = 13
-cur_purples = 23
-cur_blues = 95
+cur_yellows = 9
+cur_purples = 4
+cur_blues = 11
 
 
 

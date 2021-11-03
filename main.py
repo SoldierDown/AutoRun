@@ -510,10 +510,11 @@ class AutoRun(object):
             f2, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt_ptjs.png', name='普通建设', offset=[DPM/3, DPM*2.5], ind=ind+1)
             time.sleep(3)
             pag.click()
+            time.sleep(3)
             f3, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_lq.png', name='领取奖励', ind=ind+1)
             f4, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_lq_qd.png', name='确定领取', ind=ind+1)
             f5, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_fh.png', name='返回工会大厅', ind=ind+1)
-            f6, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_fh.png', name='退出公会', ind=ind+1)
+            f6, _, _ = self.find_and_click(img_path='./tasks/gh_fh.png', name='退出公会', ind=ind+1)
             att += 1
             finished = f0 and f1 and f2 and f3 and f4 and f5 and f6
             if finished:
@@ -539,7 +540,7 @@ class AutoRun(object):
             pag.moveTo(tzx, tzy+DPM)
             pag.click()
             self.find_and_click(img_path='./tasks/gh_hdxs_fh.png', name='退出海盗悬赏', ind=ind+1)
-            finished, _, _ = self.find_and_click(img_path='./tasks/gh_ghdt_qwlq_fh.png', name='退出工会', ind=ind+1)
+            finished, _, _ = self.find_and_click(img_path='./tasks/gh_fh.png', name='退出工会', ind=ind+1)
             att += 1
             if finished and not self.test:
                 self.record['union']['pirate_wanted'] = 1
@@ -1069,8 +1070,8 @@ class AutoRun(object):
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
 ar = AutoRun(role='xl',to_test=False, to_reset=True)
-ar.lineup()
-# ar.run()
+# ar.lineup()
+ar.run()
 # ar.boyos()
 # ar.get_coffee()
 # ar.tmp()
