@@ -71,5 +71,9 @@
             "zb": "bwwsd"
         }
     },
+    "assistance_punch":{
+        "name": "zlzj",
+        "done": 0
+    },
     "get_task_reward": 1
 }
