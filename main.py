@@ -160,6 +160,7 @@ class AutoRun(object):
             self.time_limited_activity()              # looks good now
             self.union()                              # looks good now
             self.game_assistant()                     # looks good now
+            self.adventure()
             self.harbor()                             # looks good now
             self.functions()                          # looks good now
             self.bag()                                # looks good now
@@ -187,7 +188,7 @@ class AutoRun(object):
     def normal_activity(self, ind=0):
         ''' 日常任务 '''
         user_print('日常任务开始', ind=ind)
-        # self.daily_checkin()
+        self.daily_checkin()
         self.buy_bali()
         self.get_vip_gift()
         self.get_daily_gift()
@@ -356,7 +357,7 @@ class AutoRun(object):
     def time_limited_activity(self, ind=0):
         ''' 限时活动 '''
         user_print('限时活动开始', ind=ind)
-        self.consecutive_logins()
+        # self.consecutive_logins()
         self.sales_items()
         self.dollar_shop()
         user_print('限时活动完成', ind=ind)
@@ -478,8 +479,48 @@ class AutoRun(object):
         self.union_construction()
         self.pirate_wanted()
         self.get_coffee()
+        self.get_union_bonus()
         self.official_pirates()
         user_print('工会活动完成', ind=ind)
+    def get_union_bonus(self, ind=1):
+        ''' 工会福利 '''
+        user_print('工会福利开始', ind=ind)
+        total_chances = 10
+        cur_chances = self.record['union']['get_union_bonus']['cur_chances']
+        done = self.record['union']['get_union_bonus']['done']
+        if cur_chances == total_chances:
+            done = 1
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            f0, _, _ = self.find_and_click(img_path='./tasks/gh.png', name='工会', pause=MID_PAUSE, ind=ind+1)
+            f1, _, _ = self.find_and_click(img_path='./tasks/gh_ghfl.png', name='工会福利', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./tasks/gh_ghfl_grhb.png', name='个人红包', ind=ind+1)
+
+            f3, _, _ = self.find_and_click(img_path='./tasks/gh_ghfl_grhb_hb.png', name='红包', ind=ind+1)
+            while f3 and cur_chances < total_chances:
+                f4, _, _ = self.find_and_click(img_path='./tasks/gh_ghfl_grhb_hb_dk.png', name='打开', ind=ind+1)
+                f5, _, _ = self.find_and_click(img_path='./tasks/gh_ghfl_grhb_hb_dk_qd.png', name='确定', ind=ind+1)
+                if f4 and f5:
+                    cur_chances += 1
+                f3, _, _ = self.find_and_click(img_path='./tasks/gh_ghfl_grhb_hb.png', name='红包', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/gh_ghfl_fh.png', name='返回', ind=ind+1)
+            # f3, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_jsjl_yjlq.png', name='一键领取', n_clicks=5, ind=ind+1)
+            # f4, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_jsjl_tc.png', name='退出', ind=ind+1)
+            time.sleep(2*MID_PAUSE)
+            # f7, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_sdqb_tc.png', name='退出', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./tasks/gh_fh.png', name='返回', ind=ind+1)
+
+            finished = f4 and f5
+            att += 1
+            if finished:
+                self.record['union']['official_pirates'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('七武海完成', ind=ind)
+        else:
+            user_print('七武海未完成', ind=ind)
     def official_pirates(self, ind=1):
         ''' 七武海 '''
         user_print('七武海开始', ind=ind)
@@ -489,16 +530,18 @@ class AutoRun(object):
             self.back_to_home(ind=ind+1)
             f0, _, _ = self.find_and_click(img_path='./tasks/gh.png', name='工会', pause=MID_PAUSE, ind=ind+1)
             f1, _, _ = self.find_and_click(img_path='./tasks/gh_qwh.png', name='七武海', ind=ind+1)
-            f2, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_jsjl.png', name='击杀奖励', ind=ind+1)
-            f3, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_jsjl_yjlq.png', name='一键领取', n_clicks=10, ind=ind+1)
-            f4, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_jsjl_tc.png', name='退出', ind=ind+1)
+            # f2, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_jsjl.png', name='击杀奖励', ind=ind+1)
+            # f3, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_jsjl_yjlq.png', name='一键领取', n_clicks=5, ind=ind+1)
+            # f4, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_jsjl_tc.png', name='退出', ind=ind+1)
             time.sleep(5)
-            f5, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_jsjl_yjlq_qd_tc.png', name='退出', ind=ind+1)
-            time.sleep(5)
-            # f6, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_sdqb.png', name='扫荡全部', ind=ind+1)
-            # time.sleep(30)
+            # f5, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_jsjl_yjlq_qd_tc.png', name='退出', ind=ind+1)
+
+            f6, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_sdqb.png', name='扫荡全部', ind=ind+1)
+            time.sleep(2*MID_PAUSE)
+            f7, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_sdwc.png', name='扫荡全部', ind=ind+1)
+            f7, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_fh.png', name='返回', ind=ind+1)
+            time.sleep(10)
             # f7, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_sdqb_tc.png', name='退出', ind=ind+1)
-            f8, _, _ = self.find_and_click(img_path='./tasks/gh_qwh_fh.png', name='返回', ind=ind+1)
             f9, _, _ = self.find_and_click(img_path='./tasks/gh_fh.png', name='返回', ind=ind+1)
 
             finished = f0 and f1 and f2 and f4 and f5 and f8 and f9
@@ -585,7 +628,7 @@ class AutoRun(object):
             att += 1
             finished = f0 and f1 and f2 and f3 and f4 and f5
             if finished and not self.test:
-                self.record['union']['pirate_wanted'] = 1
+                self.record['union']['get_coffee'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -798,7 +841,7 @@ class AutoRun(object):
         ''' 背包 '''
         user_print('背包开始', ind=ind)
         self.pet()
-        self.assistance_punch()
+        # self.assistance_punch()
         user_print('背包完成', ind=ind)
     def pet(self, ind=1):
         ''' 宠物 '''
@@ -1241,16 +1284,17 @@ class AutoRun(object):
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(role='xl',to_test=False, to_reset=True)
+ar = AutoRun(role='xl',to_test=False, to_reset=False)
+# ar.run()
 # ar.assistance_punch()
 # ar.lineup()
 # ar.bullfight()
-ar.elite_task()
+# ar.elite_task()
 # ar.boyos()
 # ar.get_coffee()
 # ar.tmp()
 # ar.bag()
-
+# ar.get_union_bonus()
 # todo: qwh
 
 # ar.get_task_reward()
