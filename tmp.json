@@ -4,7 +4,7 @@
         "buy_bali": 0,
         "get_vip_gift": 0,
         "get_daily_gift": {
-            "mr": 1,
+            "mr": 0,
             "mz": 0,
             "my": 0
         }
@@ -38,16 +38,12 @@
             }
         }
     },
-    "routine":{
+    "routine": {
         "bullfight": {
-            "todo": "true",
-            "done": 0,
+            "done": 1,
             "hz_name": "xl"
         },
-        "SOP": {
-            "todo": "true",
-            "done": 0
-        }
+        "SOP": 0
     },
     "bag": {
         "pet": {
@@ -67,26 +63,19 @@
     "boyos": {
         "train_boyo": {
             "done": 0,
-            "hz_name": "tt"
+            "hz": "tt"
         }
     },
     "lineup": {
         "accessory_strengthen": {
             "done": 0,
-            "hz_name": "xl",
-            "sp_name": "zzzh"
+            "hz": "tt",
+            "sp": "lhzl"
         },
         "equipment_enchant": {
             "done": 0,
-            "hz_name": "tt",
-            "zb_name": "wzwt"
-        }
-    },
-    "adventure":{
-        "elite_task": {
-            "done": 0,
-            "task_name": "wggg",
-            "hz_name": "lbk"
+            "hz": "tt",
+            "zb": "wzwt"
         }
     },
     "get_task_reward": 0

@@ -88,7 +88,7 @@ class AutoRun(object):
             time.sleep(3)
             return False, 0, 0
     
-    def drag(self, fp=[0, 0], dragto=[0, 0], dir=0, n_drags=1):
+    def drag(self, fp=[0, 0], dragto=[0, 0], dx=1, dir=0, n_drags=1):
         ctl = Controller()
         for iter in range(n_drags):
             pag.moveTo(fp[0], fp[1])
@@ -100,21 +100,21 @@ class AutoRun(object):
                 # ++
                 if dragto[dir] > 0:
                     if dir == 0:
-                        x += 1
+                        x += dx
                     else:
-                        y += 1
+                        y += dx
                 # --
                 else:
                     if dir == 0:
-                        x -= 1
+                        x -= dx
                     else:
-                        y -= 1 
+                        y -= dx 
                 time.sleep(0.01)                   
                 ctl.position = (x, y)
             ctl.release(Button.left)
 
 
-    def drag_find_and_click(self, fp=[0, 0], dir=0, dragto=[0, 0], img_path='', name='', offset=[0, 0], ind=1, n_clicks=1, n_drags=1, extra_drag=False):
+    def drag_find_and_click(self, fp=[0, 0], dir=0, dragto=[0, 0], dx=1, img_path='', name='', offset=[0, 0], ind=1, n_clicks=1, n_drags=1, extra_drag=False):
         if img_path == '':
             self.drag(fp=fp, dragto=dragto, dir=dir, n_drags=n_drags)
             return True, 0, 0
@@ -128,7 +128,7 @@ class AutoRun(object):
                 pos = pag.locateOnScreen(img_path, confidence=conf)
             if pos is None:
                 conf = MAX_CONF
-                self.drag(fp=fp, dir=dir, dragto=dragto, n_drags=1)
+                self.drag(fp=fp, dir=dir, dragto=dragto, dx=dx, n_drags=1)
                 pos = pag.locateOnScreen(img_path, confidence=conf)
         if pos is not None:
             # one more drag is applicable
@@ -767,7 +767,7 @@ class AutoRun(object):
         ''' 伙伴培养 updated '''
         user_print('伙伴培养开始', ind=ind)
         done = self.record['boyos']['train_boyo']['done']
-        hz_name = self.record['boyos']['train_boyo']['hz']
+        hz_name = self.record['boyos']['train_boyo']['hz_name']
         if self.test:
             done = 0
         att = 0
@@ -894,9 +894,7 @@ class AutoRun(object):
             f14, _, _ = self.find_and_click(img_path='./tasks/bag_zs_fh2.png', name='返回', ind=ind+1)
             f15, _, _ = self.find_and_click(img_path='./tasks/bag_zs_fh3.png', name='返回', ind=ind+1)
             att += 1
-            finished = f0 and f1 and f2 and f3 and f4 \ 
-                        and f5 and f6 and f7 and f8 and f9 \ 
-                        and f10 and f11 and f12 and f13 and f14 and f15
+            finished = f0 and f1 and f2 and f3 and f4 and f5 and f6 and f7 and f8 and f9 and f10 and f11 and f12 and f13 and f14 and f15
             if finished and not self.test:
                 self.record['assistance_punch']['done'] = 1
                 done = 1
@@ -905,7 +903,147 @@ class AutoRun(object):
             user_print('援助招式完成', ind=ind)
         else:
             user_print('援助招式未完成', ind=ind)
+    
+    def adventure(self, ind=0):
+        ''' 冒险 '''
+        user_print('日常开始', ind=ind)
+        self.elite_task()
+        user_print('日常完成', ind=ind)
+    def elite_task(self, ind=1):
+        ''' 精英副本 '''
+        user_print('精英副本开始', ind=ind)
+        done = self.record['adventure']['elite_task']['done']
+        hz_name = self.record['adventure']['elite_task']['hz_name']
+        task_name = self.record['adventure']['elite_task']['task_name']
+        if self.test:
+            done = 0
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            finished = False
+            f0, _, _ = self.find_and_click(img_path='./tasks/hb.png', name='背包', ind=ind+1)
+            f1, fpx, fpy = self.find_and_click(img_path='./tasks/hb_wzm.png', name='未招募', ind=ind+1)
+            fpx, fpy = fpx, fpy + 2 * DPM
+            hz_path = './tasks/hb_' + hz_name + '.png'
+            self.drag_find_and_click(fp=[fpx, fpy + 4 * DPM], dragto=[0, -2 * DPM], dir=1, dx=2, img_path=hz_path, name='海贼', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./tasks/hb_hqtj.png', name='获取途径', ind=ind+1)
+            f3, fpx, fpy = self.find_and_click(img_path='./tasks/hb_hqtj_fp.png', name='固定点', ind=ind+1)
+            fpx, fpy = fpx, fpy + 2 * DPM
+            elite_task_path = './tasks/adventure_elite_' + task_name + '.png'
+            self.drag_find_and_click(fp=[fpx, fpy], dragto=[0, -DPM], dir=1, dx=2, img_path=elite_task_path, offset=[3*DPM, 0], name='精英副本', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/adventure_elite_fight.png', name='开始副本', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./tasks/adventure_elite_fight_3times.png', name='扫荡三次', ind=ind+1)
+            time.sleep(5)
+            f6, _, _ = self.find_and_click(img_path='./tasks/adventure_elite_fight_end.png', name='扫荡结束', ind=ind+1)
+            att += 1
+            finished = f0 and f1 and f2 and f3 and f4 and f5 and f6
+            if finished and not self.test:
+                self.record['adventure']['elite_task']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('精英副本完成', ind=ind)
+        else:
+            user_print('精英副本未完成', ind=ind)
 
+    def routine(self, ind=0):
+        ''' 日常 '''
+        user_print('日常开始', ind=ind)
+        self.bullfight()
+        self.SOP()
+        user_print('日常完成', ind=ind)
+    def bullfight(self, ind=1):
+        todo = self.record['routine']['bullfight']['todo']
+        if todo != "true":
+            return
+        ''' 斗牛竞技场 '''
+        user_print('斗牛竞技场开始', ind=ind)
+        done = self.record['routine']['bullfight']['done']
+        hz_name = self.record['routine']['bullfight']['hz_name']
+        if self.test:
+            done = 0
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            f0, _, _ = self.find_and_click(img_path='./tasks/hb.png', name='伙伴', ind=ind+1)
+            hz_path = './tasks/hb_' + hz_name + '.png'
+            f1, _, _ = self.find_and_click(img_path=hz_path, name='海贼', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./tasks/hb_yz.png', name='意志', ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./tasks/hb_yz_yzjj.png', name='意志结晶', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/hb_yz_yzjj_qw.png', name='前往', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_cz.png', name='重置', ind=ind+1)
+            f6, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_cz_qr.png', name='重置确认', ind=ind+1)
+            finished1 = f1 and f2 and f3 and f4 and f5 and f6
+            fcs, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_tzcs.png', name='挑战次数', ind=ind+1, n_clicks=0)
+            while not fcs:
+                f7, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_sd.png', name='扫荡', ind=ind+1)
+                f8, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_sd_qd.png', name='确定', ind=ind+1)
+                time.sleep(5)
+                f9, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_sd_qd_sdjs.png', name='扫荡结束', ind=ind+1)
+                f10, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mfkq.png', name='免费开启', ind=ind+1)
+                f11, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mfkq_gb.png', name='关闭', ind=ind+1)
+                f12, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_xyg.png', name='下一关', ind=ind+1)
+                fcs, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_tzcs.png', name='挑战次数', ind=ind+1)
+            
+            if fcs:
+                f13, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx.png', name='每日宝箱', ind=ind+1)
+                f14, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx_yzjj.png', name='意志结晶', offset=[0, DPM], ind=ind+1)
+                if f14:
+                    f15, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx_qrkq.png', name='确认开启', ind=ind+1)
+                    f16, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx_qd.png', name='确定', ind=ind+1)
+                f17, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx_fh.png', name='返回', ind=ind+1)
+            f18, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_fh.png', name='返回', ind=ind+1)
+            f19, _, _ = self.find_and_click(img_path='./tasks/hb_yz_yzjj_fh', name='返回', ind=ind+1)
+            f20, _, _ = self.find_and_click(img_path='./tasks/hb_yz_fh', name='返回', ind=ind+1)
+            finished2 = fcs and f18 and f19 and f20
+            finished = finished1 and finished2
+            if finished and not self.test:
+                self.record['routine']['bullfight']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('斗牛竞技场完成', ind=ind)
+        else:
+            user_print('斗牛竞技场未完成', ind=ind)
+    def SOP(self, ind=1):
+        ''' SOP大作战 '''
+        todo = self.record['routine']['SOP']['todo']
+        if todo != "true":
+            return
+        user_print('SOP大作战开始', ind=ind)
+        done = self.record['routine']['SOP']
+        if self.test:
+            done = 0
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            self.back_to_home(ind=ind+1)
+            f0, _, _ = self.find_and_click(img_path='./tasks/gn.png', name='功能', ind=ind+1)
+            f1, _, _ = self.find_and_click(img_path='./tasks/gn_hjk.png', name='环境卡', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh.png', name='发射器强化', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_djsls.png', name='低级试炼石', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_djsls_qw.png', name='前往', ind=ind+1)
+            f6, _, _ = self.find_and_click(img_path='./tasks/routine_SOP_y.png', name='摇', ind=ind+1)
+            # todo
+            f7, _, _ = self.find_and_click(img_path='./tasks/routine_SOP_fh.png', name='返回', ind=ind+1)
+            f8, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_djsls_tc.png', name='退出', ind=ind+1)
+            f9, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_fh.png', name='返回', ind=ind+1)
+            f10, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fh.png', name='返回', ind=ind+1)
+            
+            self.back_to_home(ind=ind+1)
+            f11, _, _ = self.find_and_click(img_path='./tasks/gn.png', name='功能', ind=ind+1)
+            f12, _, _ = self.find_and_click(img_path='./tasks/gn_hjk.png', name='环境卡', ind=ind+1)
+            f13, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh.png', name='发射器强化', ind=ind+1)
+            f14, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_qbxh.png', name='全部消耗', ind=ind+1)
+
+            finished = f0 and f1 and f2 and f4 and f5 and f6 and f7 and f8 and f9 and f10 and f11 and f12 and f13 and f14
+            if finished and not self.test:
+                self.record['routine']['SOP'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('SOP大作战完成', ind=ind)
+        else:
+            user_print('SOP大作战未完成', ind=ind)
 
     def lineup(self, ind=0):
         ''' 阵容 '''
@@ -919,8 +1057,8 @@ class AutoRun(object):
         done = self.record['lineup']['accessory_strengthen']['done']
         if self.test:
             done = 0
-        hz_name = self.record['lineup']['accessory_strengthen']['hz']
-        sp_name = self.record['lineup']['accessory_strengthen']['sp']
+        hz_name = self.record['lineup']['accessory_strengthen']['hz_name']
+        sp_name = self.record['lineup']['accessory_strengthen']['sp_name']
         att = 0
         while done != 1 and att < MAX_ATTEMPTS:
             self.back_to_home(ind=ind+1)
@@ -955,8 +1093,8 @@ class AutoRun(object):
         done = self.record['lineup']['equipment_enchant']['done']
         if self.test:
             done = 0
-        hz_name = self.record['lineup']['equipment_enchant']['hz']
-        zb_name = self.record['lineup']['equipment_enchant']['zb']
+        hz_name = self.record['lineup']['equipment_enchant']['hz_name']
+        zb_name = self.record['lineup']['equipment_enchant']['zb_name']
         att = 0
         while done != 1 and att < MAX_ATTEMPTS:
             self.back_to_home(ind=ind+1)
@@ -1103,10 +1241,11 @@ class AutoRun(object):
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(role='xks',to_test=False, to_reset=True)
+ar = AutoRun(role='xl',to_test=False, to_reset=True)
 # ar.assistance_punch()
 # ar.lineup()
-ar.run()
+# ar.bullfight()
+ar.elite_task()
 # ar.boyos()
 # ar.get_coffee()
 # ar.tmp()
