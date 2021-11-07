@@ -1,6 +1,6 @@
 {
     "normal_activity": {
-        "daily_checkin": 1,
+        "daily_checkin": 0,
         "buy_bali": 1,
         "get_vip_gift": 1,
         "get_daily_gift": {
@@ -24,9 +24,9 @@
         "pirate_wanted": 1,
         "official_pirates": 1,
         "get_coffee": 1,
-        "get_union_bonus":{
+        "get_union_bonus": {
             "cur_chances": 0,
-            "done": 0
+            "done": 1
         }
     },
     "functions": {
@@ -71,6 +71,7 @@
     "boyos": {
         "train_boyo": {
             "done": 1,
+            "timed": "false",
             "hz_name": "tt"
         }
     },
@@ -83,7 +84,7 @@
         "equipment_enchant": {
             "done": 1,
             "hz_name": "tt",
-            "zb_name": "wzwt"
+            "zb_name": "cylgy"
         }
     },
     "adventure": {
@@ -93,5 +94,74 @@
             "hz_name": "lbk"
         }
     },
-    "get_task_reward": 1
+    "get_task_reward": 1,
+    "shop": {
+        "bwshop": {
+            "todo": "true",
+            "wishlist": [
+                "wnbw",
+                "hsbwjh"
+            ],
+            "done": 1,
+            "cur_chances": 0
+        },
+        "hbshop": {
+            "wishlist": [
+                "nls",
+                "jjs",
+                "jyjz",
+                "jyyz",
+                "qzjh",
+                "xmxl"
+            ],
+            "done": 1,
+            "cur_chances": 0
+        },
+        "cwshop": {
+            "wishlist": [
+                "gjcwsl",
+                "zjcwsl",
+                "djcwsl"
+            ],
+            "done": 1,
+            "cur_chances": 0
+        },
+        "xzshop": {
+            "wishlist": [
+                "cz",
+                "jjw",
+                "hx",
+                "xls",
+                "xzzh",
+                "zjjc",
+                "djjc"
+            ],
+            "done": 1,
+            "cur_chances": 0
+        }
+    },
+    "assistance_punch": {
+        "todo": "false",
+        "name": "zlzj",
+        "done": 0
+    },
+    "cabin": {
+        "cruise": {
+            "todo": "true",
+            "zone": "dhhy",
+            "done": 0
+        }
+    },
+    "recruit":{
+        "rc_recruit":{
+            "bw": {
+                "todo": true,
+                "done": 0
+            },
+            "qw": {
+                "todo": "true",
+                "done": 0
+            }
+        }
+    }
 }
