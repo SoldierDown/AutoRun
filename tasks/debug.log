@@ -1,0 +1,24 @@
+[1101/014200.431:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: browser
+[1101/014200.473:INFO:gpu_process_host.cc(941)] [XWEB_LOG_GPU]  GPU process laucnched multi-process mode SUCCESS!!! gpu-process-pid:3456 gpu-process-sandbox:1
+[1101/014200.506:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: gpu-process
+[1101/014200.622:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: utility
+[1101/014400.518:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: gpu-process
+[1105/030107.095:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: browser
+[1105/030107.132:INFO:gpu_process_host.cc(941)] [XWEB_LOG_GPU]  GPU process laucnched multi-process mode SUCCESS!!! gpu-process-pid:12536 gpu-process-sandbox:1
+[1105/030107.166:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: gpu-process
+[1105/030107.305:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: utility
+[1105/030307.166:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: gpu-process
+[1105/122846.487:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: browser
+[1105/122846.584:INFO:gpu_process_host.cc(941)] [XWEB_LOG_GPU]  GPU process laucnched multi-process mode SUCCESS!!! gpu-process-pid:3528 gpu-process-sandbox:1
+[1105/122846.659:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: gpu-process
+[1105/122846.870:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: utility
+[1105/123046.760:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: gpu-process
+[1107/111424.648:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: browser
+[1107/111424.677:INFO:gpu_process_host.cc(941)] [XWEB_LOG_GPU]  GPU process laucnched multi-process mode SUCCESS!!! gpu-process-pid:2640 gpu-process-sandbox:1
+[1107/111424.701:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: gpu-process
+[1107/111424.831:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: utility
+[1107/111624.719:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: gpu-process
+[1107/144231.245:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1107/144236.253:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1107/144244.142:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1107/144249.147:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
