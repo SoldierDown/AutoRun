@@ -22,7 +22,7 @@
     "union": {
         "union_construction": 1,
         "pirate_wanted": 1,
-        "official_pirates": 1,
+        "official_pirates": 0,
         "get_coffee": 1,
         "get_union_bonus": {
             "cur_chances": 0,
@@ -44,12 +44,12 @@
     },
     "routine": {
         "bullfight": {
-            "todo": "true",
+            "todo": "false",
             "done": 0,
             "hz_name": "xl"
         },
         "SOP": {
-            "todo": "true",
+            "todo": "false",
             "done": 0
         }
     },
@@ -60,7 +60,7 @@
                 "done": 1
             },
             "pet_growing": {
-                "pet_name": "qe",
+                "pet_name": "sy",
                 "done": 1
             }
         }
@@ -72,27 +72,27 @@
         "train_boyo": {
             "done": 1,
             "timed": "false",
-            "hz_name": "tt"
+            "hz_name": "xlf"
         }
     },
     "lineup": {
         "accessory_strengthen": {
-            "quality": "high",
             "done": 1,
-            "hz_name": "xl",
-            "sp_name": "zzzh"
+            "hz_name": "as",
+            "sp_name": "slzj"
         },
         "equipment_enchant": {
+            "quality": "high",
             "done": 1,
-            "hz_name": "tt",
-            "zb_name": "cylgy"
+            "hz_name": "xlf",
+            "zb_name": "bwwsd"
         }
     },
     "adventure": {
         "elite_task": {
             "done": 1,
-            "task_name": "wggg",
-            "hz_name": "lbk"
+            "task_name": "hjx",
+            "hz_name": "btlma"
         }
     },
     "get_task_reward": 1,
@@ -108,6 +108,7 @@
         },
         "hbshop": {
             "wishlist": [
+                "l",
                 "nls",
                 "jjs",
                 "jyjz",
@@ -132,6 +133,8 @@
                 "cz",
                 "jjw",
                 "hx",
+                "xzm",
+                "jjw",
                 "xls",
                 "xzzh",
                 "zjjc",
@@ -142,9 +145,9 @@
         }
     },
     "assistance_punch": {
-        "todo": "false",
+        "todo": "true",
         "name": "zlzj",
-        "done": 0
+        "done": 1
     },
     "cabin": {
         "cruise": {

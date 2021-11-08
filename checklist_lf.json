@@ -36,20 +36,20 @@
                 "current_chances": 3
             },
             "adventure_fights": {
-                "current_fights": 3,
-                "current_changes": 3,
+                "current_fights": 0,
+                "current_changes": 0,
                 "done": 1
             }
         }
     },
     "routine": {
         "bullfight": {
-            "todo": "true",
+            "todo": "false",
             "done": 0,
             "hz_name": "xl"
         },
         "SOP": {
-            "todo": "true",
+            "todo": "false",
             "done": 0
         }
     },
@@ -60,7 +60,7 @@
                 "done": 1
             },
             "pet_growing": {
-                "pet_name": "qe",
+                "pet_name": "ty",
                 "done": 1
             }
         }
@@ -71,28 +71,28 @@
     "boyos": {
         "train_boyo": {
             "done": 1,
-            "timed": "false",
-            "hz_name": "tt"
+            "timed": "true",
+            "hz_name": "mhk"
         }
     },
     "lineup": {
         "accessory_strengthen": {
-            "quality": "high",
+            "quality": "low",
             "done": 1,
-            "hz_name": "xl",
-            "sp_name": "zzzh"
+            "hz_name": "xlf",
+            "sp_name": "sheh"
         },
         "equipment_enchant": {
             "done": 1,
-            "hz_name": "tt",
-            "zb_name": "cylgy"
+            "hz_name": "xlf",
+            "zb_name": "bwwsd"
         }
     },
     "adventure": {
         "elite_task": {
             "done": 1,
-            "task_name": "wggg",
-            "hz_name": "lbk"
+            "task_name": "rlpms",
+            "hz_name": "bmz"
         }
     },
     "get_task_reward": 1,
@@ -116,7 +116,7 @@
                 "xmxl"
             ],
             "done": 1,
-            "cur_chances": 0
+            "cur_chances": 2
         },
         "cwshop": {
             "wishlist": [
@@ -129,7 +129,6 @@
         },
         "xzshop": {
             "wishlist": [
-                "cz",
                 "jjw",
                 "hx",
                 "xls",
