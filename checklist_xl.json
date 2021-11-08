@@ -1,6 +1,6 @@
 {
     "normal_activity": {
-        "daily_checkin": 0,
+        "daily_checkin": 1,
         "buy_bali": 1,
         "get_vip_gift": 1,
         "get_daily_gift": {
@@ -10,7 +10,7 @@
         }
     },
     "time_limited_activity": {
-        "consecutive_logins": 0,
+        "consecutive_logins": 1,
         "sales_items": 1,
         "dollar_shop": 1
     },
@@ -77,6 +77,7 @@
     },
     "lineup": {
         "accessory_strengthen": {
+            "quality": "high",
             "done": 1,
             "hz_name": "xl",
             "sp_name": "zzzh"
@@ -149,13 +150,18 @@
         "cruise": {
             "todo": "true",
             "zone": "dhhy",
-            "done": 0
+            "done": 1
+        },
+        "factory": {
+            "todo": "true",
+            "zone": "gc",
+            "done": 1
         }
     },
-    "recruit":{
-        "rc_recruit":{
+    "recruit": {
+        "rc_recruit": {
             "bw": {
-                "todo": true,
+                "todo": "true",
                 "done": 0
             },
             "qw": {
