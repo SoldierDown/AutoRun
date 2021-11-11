@@ -10,6 +10,7 @@ DPM = 100
 MAX_ATTEMPTS = 10
 TOTAL_CHANCES = 3
 from PIL.Image import FASTOCTREE
+from numpy import copysign, true_divide
 import pyautogui as pag
 from pynput import mouse
 from pynput.mouse import Button, Controller
@@ -159,8 +160,15 @@ class AutoRun(object):
                 self.drag(fp=fp, dir=dir, dragto=dragto, dx=dx, n_drags=1)
                 pos = pag.locateOnScreen(img_path, confidence=conf)
         if pos is not None:
-            # pos = pag.locateOnScreen(img_path, confidence=conf)
-            pag.moveTo(pos.left + offset[0], pos.top + offset[1])
+            print(pos)
+            time.sleep(MID_PAUSE)
+            found = False
+            while not found:
+                pos = pag.locateOnScreen(img_path, confidence=conf)
+                print(pos)
+                if pos != None:
+                    found = True
+            pag.moveTo(pos[0] + offset[0], pos[1] + offset[1])
             for iter in range(n_clicks):
                 pag.click()
             time.sleep(3)
@@ -176,7 +184,8 @@ class AutoRun(object):
 
     def run(self):
         ''''''
-        self.recruit(is_final=False)
+        # self.recruit(is_final=False)
+        self.dbf()
         self.time_limited_activity()              # looks good now
         self.cabin()
         self.union()                              # looks good now
@@ -186,26 +195,63 @@ class AutoRun(object):
         self.adventure()
         self.harbor()                             # looks good now
         self.functions()                          # looks good now
+        self.recruit(is_final=False)
         self.shop()
         self.get_task_reward(is_final=False)       # looks good now
         self.boyos()                              # looks good now            
         self.normal_activity()                    # not efficient
         self.recruit(is_final=True)
         self.get_task_reward(is_final=True)       # looks good now
+        self.reward_center()
+
     
     def back_to_home(self, ind=0, n_clicks=1):
         ''' 回到主页 '''
+        self.find_and_click(img_path='./tasks/error_fh3.png', name='返回', mute=True, n_clicks=n_clicks, ind=ind)
         return self.find_and_click(img_path='./tasks/bth.png', name='主页', n_clicks=n_clicks, ind=ind)
 
+
+
+    def dbf(self, ind=0):
+        ''' DBF '''
+        user_print('DBF开始', ind=ind)
+        done = self.record['DBF']
+        if self.test:
+            done = 0
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            att += 1
+            f0, _, _ = self.back_to_home(ind=ind+1)
+            if not f0: continue
+            f1, _, _ = self.find_and_click(img_path='./tasks/rc.png', name='日常', ind=ind+1)
+            if not f1: continue
+            f2, _, _ = self.find_and_click(img_path='./tasks/rc_dbf.png', name='DBF', ind=ind+1)
+            if not f2: continue
+            f3, _, _ = self.find_and_click(img_path='./tasks/rc_dbf_+.png', name='+', ind=ind+1)
+            if not f3: continue
+            f4 = False
+            while not f4:
+                f4, _, _ = self.find_and_click(img_path='./tasks/rc_dbf_+_qd.png', name='确定', ind=ind+1)
+            f5 = False
+            while not f5:
+                f5, _, _ = self.find_and_click(img_path='./tasks/rc_dbf_fh.png', name='返回', ind=ind+1)
+            if not self.test:
+                self.record['DBF'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('DBF完成', ind=ind)
+        else:
+            user_print('DBF未完成', ind=ind)
 
 
     def normal_activity(self, ind=0):
         ''' 日常任务 '''
         user_print('日常任务开始', ind=ind)
-        self.daily_checkin()
+        # self.daily_checkin()
         self.buy_bali()
         self.get_vip_gift()
-        self.get_daily_gift()
+        # self.get_daily_gift()
         user_print('日常任务完成', ind=ind)
 
     # TODO
@@ -698,13 +744,47 @@ class AutoRun(object):
         
 
     
+    def reward_center(self, ind=0):
+        ''' 奖励中心 '''
+        user_print('奖励中心开始', ind=ind)
+        done = self.record['reward_center']
+        if self.test:
+            done = 0
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            att += 1
+            f0, _, _ = self.back_to_home(ind=ind+1)
+            if not f0: continue
+            f1, _, _ = self.find_and_click(img_path='./tasks/rewardcenter.png', name='奖励中心', ind=ind+1)
+            if not f1:
+                self.record['reward_center'] = 1
+                done = 1
+                self.save_to_json()
+                continue
+            f2 = False
+            while not f2:
+                f2, _, _ = self.find_and_click(img_path='./tasks/rewardcenter_qblq.png', name='全部领取', ind=ind+1)
+            f3 = False
+            while not f3:
+                f3, _, _ = self.find_and_click(img_path='./tasks/rewardcenter_qblq_qd.png', name='确定', ind=ind+1)
+            if not self.test:
+                # self.record['reward_center'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('奖励中心完成', ind=ind)
+        else:
+            user_print('奖励中心未完成', ind=ind)
+
+
+
     def union(self, ind=0):
         ''' 工会活动 '''
         user_print('工会活动开始', ind=ind)
         self.union_construction()
         self.pirate_wanted()
         self.get_coffee()
-        self.get_union_bonus()
+        # self.get_union_bonus()
         self.official_pirates()
         user_print('工会活动完成', ind=ind)
     def union_construction(self, ind=1):
@@ -1021,9 +1101,12 @@ class AutoRun(object):
             user_print('扭蛋机未完成', ind=ind)
 
     def adventure_fights(self, ind=2):
-        # TODO
         ''' 冒险挑战 '''
         user_print('冒险挑战开始', ind=ind)
+        todo = self.record['functions']['adventure_logs']['adventure_fights']['todo']
+        if todo != 'true':
+            user_print('冒险挑战跳过', ind=ind)
+            return
         att = 0
         total_changes = 3
         total_fights = 3
@@ -1182,7 +1265,7 @@ class AutoRun(object):
         ''' 日常招募 '''
         user_print('日常招募开始', ind=ind)
         self.bw_recruit(is_final=is_final)
-        self.qw_recruit()
+        # self.qw_recruit()
         user_print('日常招募完成', ind=ind)
         
 
@@ -1257,7 +1340,7 @@ class AutoRun(object):
     def cabin(self, ind=0):
         ''' 船舱 '''
         user_print('船舱开始', ind=ind)
-        self.cruise()
+        # self.cruise()
         self.factory()
         user_print('船舱完成', ind=ind)
 
@@ -1387,6 +1470,7 @@ class AutoRun(object):
             if not f1: continue
             f2, _, _ = self.find_and_click(img_path='./tasks/bag_pet.png', name='宠物', ind=ind+1)
             if not f2: continue
+            self.find_and_click(img_path='./tasks/bag_pet_qd.png', name='确定', mute=True, ind=ind+1)
             pet_path = './tasks/bag_pet_' + pet_name + '.png'
             f3, _, _ = self.find_and_click(img_path=pet_path, name='主宠', offset=[3.9*DPM,0.2*DPM], ind=ind+1)
             if not f3: continue
@@ -1420,6 +1504,7 @@ class AutoRun(object):
             if not f1: continue
             f2, _, _ = self.find_and_click(img_path='./tasks/bag_pet.png', name='宠物', ind=ind+1)
             if not f2: continue
+            self.find_and_click(img_path='./tasks/bag_pet_qd.png', name='确定', mute=True, ind=ind+1)
             pet_path = './tasks/bag_pet_' + pet_name + '.png'
             f3, _, _ = self.find_and_click(img_path=pet_path, name='副宠', offset=[3.9*DPM,0.2*DPM], ind=ind+1)
             if not f3: continue
@@ -1527,6 +1612,7 @@ class AutoRun(object):
         ''' 冒险 '''
         user_print('日常开始', ind=ind)
         self.elite_task()
+        self.awaken_task()
         user_print('日常完成', ind=ind)
     def elite_task(self, ind=1):
         ''' 精英副本 '''
@@ -1579,6 +1665,53 @@ class AutoRun(object):
         else:
             user_print('精英副本未完成', ind=ind)
 
+
+    def awaken_task(self, ind=1):
+        ''' 觉醒副本 '''
+        user_print('觉醒副本开始', ind=ind)
+        done = self.record['adventure']['awaken_task']['done']
+        item_name = self.record['adventure']['awaken_task']['item_name']
+        if self.test:
+            done = 0
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            att += 1
+            f0, _, _ = self.back_to_home(ind=ind+1)
+            if not f0: continue
+            f1, _, _ = self.find_and_click(img_path='./tasks/bag.png', name='背包', ind=ind+1)
+            if not f1: continue
+            f2, _, _ = self.find_and_click(img_path='./tasks/bag_jx.png', name='觉醒', ind=ind+1)
+            if not f2: continue
+            f3, fpx, fpy = self.find_and_click(img_path='./tasks/bag_jx_fp.png', name='固定点', n_clicks=0, ind=ind+1)
+            if not f3: continue
+            fpx, fpy = fpx, fpy + 6 * DPM
+            item_path = './tasks/bag_jx_' + item_name + '.png'
+            f4, _, _ = self.drag_find_and_click(fp=[fpx, fpy], dragto=[0, -2 * DPM], dir=1, dx=1, img_path=item_path, offset=[4*DPM, 0], name='觉醒材料', ind=ind+1)
+            if not f4: continue
+            f5 = False
+            while not f5:
+                f5, _, _ = self.find_and_click(img_path='./tasks/bag_jx_yjsd.png', name='一键扫荡', ind=ind+1)
+            f6 = False
+            while not f6:
+                f6, _, _ = self.find_and_click(img_path='./tasks/bag_jx_yjsd_-10.png', name='-10', n_clicks=10, ind=ind+1)
+            f7 = False
+            while not f7:
+                f7, _, _ = self.find_and_click(img_path='./tasks/bag_jx_yjsd_+.png', name='+', n_clicks=4, ind=ind+1)
+            f8 = False
+            while not f8:
+                f8, _, _ = self.find_and_click(img_path='./tasks/bag_jx_yjsd_qd.png', name='确定', ind=ind+1)
+            f9 = False
+            while not f9:
+                f9, _, _ = self.find_and_click(img_path='./tasks/bag_jx_yjsd_sdjs.png', name='扫荡结束', ind=ind+1)
+            
+            if not self.test:
+                self.record['adventure']['awaken_task']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('精英副本完成', ind=ind)
+        else:
+            user_print('精英副本未完成', ind=ind)
 
 
     def routine(self, ind=0):
@@ -1961,19 +2094,17 @@ class AutoRun(object):
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(role='lf',to_test=False, to_reset=False)
+ar = AutoRun(role='lf',to_test=False, to_reset=True)
 ar.run()
 # ar.bw_shop()
 # ar.hb_shop()
 
 
 # todo:  xunhang
-# ar.run()
 # output = list(pag.locateAllOnScreen('./tasks/shop_hbshop_nls.png', confidence=0.9))
 # if len(output) > 0:
 #     for pos in output:
 #         print(pos)
-# ar.run()
 # ar.assistance_punch()
 # ar.lineup()
 # ar.bullfight()

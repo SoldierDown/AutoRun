@@ -1,10 +1,10 @@
 {
     "normal_activity": {
-        "daily_checkin": 1,
+        "daily_checkin": 0,
         "buy_bali": 1,
         "get_vip_gift": 1,
         "get_daily_gift": {
-            "mr": 1,
+            "mr": 0,
             "mz": 0,
             "my": 0
         }
@@ -15,7 +15,7 @@
         "dollar_shop": 1
     },
     "game_assistant": 1,
-    "reward_center": 0,
+    "reward_center": 1,
     "harbor": {
         "harbor_reward": 1
     },
@@ -26,7 +26,7 @@
         "get_coffee": 1,
         "get_union_bonus": {
             "cur_chances": 0,
-            "done": 1
+            "done": 0
         }
     },
     "functions": {
@@ -36,9 +36,10 @@
                 "current_chances": 3
             },
             "adventure_fights": {
+                "todo": "false",
                 "current_fights": 0,
                 "current_changes": 0,
-                "done": 1
+                "done": 0
             }
         }
     },
@@ -60,7 +61,7 @@
                 "done": 1
             },
             "pet_growing": {
-                "pet_name": "ty",
+                "pet_name": "sy",
                 "done": 1
             }
         }
@@ -85,7 +86,7 @@
         "equipment_enchant": {
             "done": 1,
             "hz_name": "xlf",
-            "zb_name": "bwwsd"
+            "zb_name": "cylgq"
         }
     },
     "adventure": {
@@ -93,6 +94,10 @@
             "done": 1,
             "task_name": "rlpms",
             "hz_name": "bmz"
+        },
+        "awaken_task": {
+            "done": 1,
+            "item_name": "sz"
         }
     },
     "get_task_reward": 1,
@@ -108,15 +113,17 @@
         },
         "hbshop": {
             "wishlist": [
+                "sheh",
+                "slzj",
+                "zyjgz",
                 "nls",
                 "jjs",
                 "jyjz",
                 "jyyz",
-                "qzjh",
-                "xmxl"
+                "qzjh"
             ],
             "done": 1,
-            "cur_chances": 2
+            "cur_chances": 0
         },
         "cwshop": {
             "wishlist": [
@@ -161,12 +168,13 @@
         "rc_recruit": {
             "bw": {
                 "todo": "true",
-                "done": 0
+                "done": 1
             },
             "qw": {
                 "todo": "true",
                 "done": 0
             }
         }
-    }
+    },
+    "DBF": 1
 }

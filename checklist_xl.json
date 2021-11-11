@@ -1,10 +1,10 @@
 {
     "normal_activity": {
-        "daily_checkin": 1,
+        "daily_checkin": 0,
         "buy_bali": 1,
         "get_vip_gift": 1,
         "get_daily_gift": {
-            "mr": 1,
+            "mr": 0,
             "mz": 0,
             "my": 0
         }
@@ -15,7 +15,7 @@
         "dollar_shop": 1
     },
     "game_assistant": 1,
-    "reward_center": 0,
+    "reward_center": 1,
     "harbor": {
         "harbor_reward": 1
     },
@@ -36,6 +36,7 @@
                 "current_chances": 3
             },
             "adventure_fights": {
+                "todo": "true",
                 "current_fights": 3,
                 "current_changes": 3,
                 "done": 1
@@ -93,6 +94,10 @@
             "done": 1,
             "task_name": "wggg",
             "hz_name": "lbk"
+        },
+        "awaken_task": {
+            "done": 1,
+            "item_name": "sz"
         }
     },
     "get_task_reward": 1,
@@ -106,14 +111,19 @@
             "done": 1,
             "cur_chances": 0
         },
+        "need_lhzl": 0,
         "hbshop": {
             "wishlist": [
+                "lyez",
+                "zzzh",
+                "xmxl",
+                "zyjgz",
+                "lhzl",
                 "nls",
                 "jjs",
                 "jyjz",
                 "jyyz",
-                "qzjh",
-                "xmxl"
+                "qzjh"
             ],
             "done": 1,
             "cur_chances": 0
@@ -148,26 +158,27 @@
     },
     "cabin": {
         "cruise": {
-            "todo": "true",
+            "todo": "false",
             "zone": "dhhy",
-            "done": 1
+            "done": 0
         },
         "factory": {
-            "todo": "true",
+            "todo": "false",
             "zone": "gc",
-            "done": 1
+            "done": 0
         }
     },
     "recruit": {
         "rc_recruit": {
             "bw": {
                 "todo": "true",
-                "done": 0
+                "done": 1
             },
             "qw": {
                 "todo": "true",
                 "done": 0
             }
         }
-    }
+    },
+    "DBF": 1
 }
