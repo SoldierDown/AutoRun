@@ -26,7 +26,7 @@
         "get_coffee": 1,
         "get_union_bonus": {
             "cur_chances": 0,
-            "done": 1
+            "done": 0
         }
     },
     "functions": {
@@ -45,12 +45,18 @@
     },
     "routine": {
         "bullfight": {
-            "todo": "false",
+            "todo": "true",
             "done": 0,
             "hz_name": "xl"
         },
         "SOP": {
-            "todo": "false",
+            "todo": "true",
+            "done": 0
+        },
+        "DBF": 0,
+        "prison":{
+            "todo": "true",
+            "current_chances": 2,
             "done": 0
         }
     },
@@ -99,6 +105,17 @@
         "awaken_task": {
             "done": 1,
             "item_name": "sz"
+        },
+        "nightmare_task": {
+            "done": 1,
+            "hz_names": [
+                "btlma",
+                "ww"
+            ],
+            "times": [
+                3,
+                2
+            ]
         }
     },
     "get_task_reward": 1,
@@ -163,12 +180,12 @@
         "cruise": {
             "todo": "true",
             "zone": "dhhy",
-            "done": 1
+            "done": 0
         },
         "factory": {
             "todo": "true",
             "zone": "gc",
-            "done": 1
+            "done": 0
         }
     },
     "recruit": {
@@ -182,6 +199,5 @@
                 "done": 0
             }
         }
-    },
-    "DBF": 1
+    }
 }

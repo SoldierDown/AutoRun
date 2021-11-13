@@ -26,7 +26,7 @@
         "get_coffee": 1,
         "get_union_bonus": {
             "cur_chances": 0,
-            "done": 1
+            "done": 0
         }
     },
     "functions": {
@@ -51,6 +51,12 @@
         },
         "SOP": {
             "todo": "true",
+            "done": 0
+        },
+        "DBF": 0,
+        "prison":{
+            "todo": "true",
+            "current_chances": 0,
             "done": 0
         }
     },
@@ -91,13 +97,24 @@
     },
     "adventure": {
         "elite_task": {
-            "done": 1,
+            "done": 0,
             "task_name": "wggg",
             "hz_name": "lbk"
         },
         "awaken_task": {
-            "done": 1,
+            "done": 0,
             "item_name": "sz"
+        },
+        "nightmare_task": {
+            "done": 0,
+            "hz_names": [
+                "lbk",
+                "lf"
+            ],
+            "times": [
+                4,
+                1
+            ]
         }
     },
     "get_task_reward": 1,
@@ -179,6 +196,5 @@
                 "done": 0
             }
         }
-    },
-    "DBF": 1
+    }
 }

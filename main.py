@@ -184,15 +184,16 @@ class AutoRun(object):
 
     def run(self):
         ''''''
-        # self.recruit(is_final=False)
-        self.dbf()
+        self.recruit(is_final=False)
+        self.routine()
         self.time_limited_activity()              # looks good now
         self.cabin()
         self.union()                              # looks good now
         self.game_assistant()                     # looks good now
+        self.prison(is_final=True)
         self.lineup()                             # looks good now
         self.bag()                                # looks good now
-        self.adventure()
+        # self.adventure()
         self.harbor()                             # looks good now
         self.functions()                          # looks good now
         self.recruit(is_final=False)
@@ -211,8 +212,155 @@ class AutoRun(object):
         return self.find_and_click(img_path='./tasks/bth.png', name='主页', n_clicks=n_clicks, ind=ind)
 
 
+    def routine(self, ind=0):
+        ''' 日常 '''
+        user_print('日常开始', ind=ind)
+        self.dbf()
+        self.prison(is_final=False)
+        user_print('日常完成', ind=ind)
+    
 
-    def dbf(self, ind=0):
+    def prison(self, ind=1, is_final=False):
+        ''' 推进城 '''
+        user_print('推进城开始', ind=ind)
+        done = self.record['routine']['prison']['done']
+        cur_chances = self.record['routine']['prison']['current_chances']
+        total_chances = 5
+        if self.test:
+            done = 0
+        dx1, dy1 = 0.7*DPM, 2.5*DPM
+        dx2, dy2 = 2.2*DPM, 3.5*DPM
+        dx3, dy3 = 3.7*DPM, 4.5*DPM
+        dxdys = [[dx1, dy1], [dx2, dy2], [dx3, dy3]]
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            att += 1
+            f0, _, _ = self.back_to_home(ind=ind+1)
+            if not f0: continue
+            f1, _, _ = self.find_and_click(img_path='./tasks/rc.png', name='日常', ind=ind+1)
+            if not f1: continue
+            f2, _, _ = self.find_and_click(img_path='./tasks/rc_tjc.png', name='推进城', ind=ind+1)
+            if not f2: continue
+            f3, fpx, fpy = self.find_and_click(img_path='./tasks/rc_tjc_zbsd.png', name='装备商店', n_clicks=0, ind=ind+1)
+            if not f3: continue
+            while cur_chances < total_chances:
+                for dxdy in dxdys:
+                    self.move_and_click(pos=[fpx, fpy], offset=dxdy)
+                    time.sleep(5)
+                    f2, tgx, tgy = self.find_and_click(img_path='./tasks/rc_tjc_tg.png', name='跳过', ind=ind+1)
+                    if f2:
+                        self.move_and_click(pos=[tgx, tgy], offset=[-2*DPM, -0.5*DPM])
+                        cur_chances += 1
+                    if cur_chances == total_chances:
+                        done = 1
+                        break
+            if not self.test and is_final:
+                self.record['routine']['prison']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('推进城完成', ind=ind)
+        else:
+            user_print('推进城未完成', ind=ind)
+
+    def bullfight(self, ind=1):
+        ''' 斗牛竞技场 '''
+        user_print('斗牛竞技场开始', ind=ind)
+        todo = self.record['routine']['bullfight']['todo']
+        if todo != "true":
+            user_print('斗牛竞技场跳过', ind=ind)
+            return
+        done = self.record['routine']['bullfight']['done']
+        hz_name = self.record['routine']['bullfight']['hz_name']
+        if self.test:
+            done = 0
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            att += 1
+            f0, _, _ = self.back_to_home(ind=ind+1)
+            f1, _, _ = self.find_and_click(img_path='./tasks/hb.png', name='伙伴', ind=ind+1)
+            hz_path = './tasks/hb_' + hz_name + '.png'
+            f2, _, _ = self.find_and_click(img_path=hz_path, name='海贼', ind=ind+1)
+            f3, _, _ = self.find_and_click(img_path='./tasks/hb_yz.png', name='意志', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/hb_yz_yzjj.png', name='意志结晶', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./tasks/hb_yz_yzjj_qw.png', name='前往', ind=ind+1)
+            f6, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_cz.png', name='重置', ind=ind+1)
+            f7, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_cz_qr.png', name='重置确认', ind=ind+1)
+            finished1 = f1 and f2 and f3 and f4 and f5 and f6
+            fcs, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_tzcs.png', name='挑战次数', ind=ind+1, n_clicks=0)
+            while not fcs:
+                f8, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_sd.png', name='扫荡', ind=ind+1)
+                f9, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_sd_qd.png', name='确定', ind=ind+1)
+                time.sleep(5)
+                f10, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_sd_qd_sdjs.png', name='扫荡结束', ind=ind+1)
+                f11, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mfkq.png', name='免费开启', ind=ind+1)
+                f12, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mfkq_gb.png', name='关闭', ind=ind+1)
+                f13, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_xyg.png', name='下一关', ind=ind+1)
+                fcs, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_tzcs.png', name='挑战次数', ind=ind+1)
+            
+            if fcs:
+                f14, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx.png', name='每日宝箱', ind=ind+1)
+                f15, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx_yzjj.png', name='意志结晶', offset=[0, DPM], ind=ind+1)
+                if f15:
+                    f16, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx_qrkq.png', name='确认开启', ind=ind+1)
+                    f17, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx_qd.png', name='确定', ind=ind+1)
+                f18, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx_fh.png', name='返回', ind=ind+1)
+            f19, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_fh.png', name='返回', ind=ind+1)
+            f20, _, _ = self.find_and_click(img_path='./tasks/hb_yz_yzjj_fh', name='返回', ind=ind+1)
+            f21, _, _ = self.find_and_click(img_path='./tasks/hb_yz_fh', name='返回', ind=ind+1)
+            finished2 = fcs and f19 and f20 and f21
+            finished = finished1 and finished2
+            if finished and not self.test:
+                self.record['routine']['bullfight']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('斗牛竞技场完成', ind=ind)
+        else:
+            user_print('斗牛竞技场未完成', ind=ind)
+    # NOT YET
+    def SOP(self, ind=1):
+        ''' SOP大作战 '''
+        todo = self.record['routine']['SOP']['todo']
+        if todo != "true":
+            return
+        user_print('SOP大作战开始', ind=ind)
+        done = self.record['routine']['SOP']
+        if self.test:
+            done = 0
+        att = 0
+        while done != 1 and att < MAX_ATTEMPTS:
+            att += 1
+            self.back_to_home(ind=ind+1)
+            f0, _, _ = self.find_and_click(img_path='./tasks/gn.png', name='功能', ind=ind+1)
+            f1, _, _ = self.find_and_click(img_path='./tasks/gn_hjk.png', name='环境卡', ind=ind+1)
+            f2, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh.png', name='发射器强化', ind=ind+1)
+            f4, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_djsls.png', name='低级试炼石', ind=ind+1)
+            f5, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_djsls_qw.png', name='前往', ind=ind+1)
+            f6, _, _ = self.find_and_click(img_path='./tasks/routine_SOP_y.png', name='摇', ind=ind+1)
+            # todo
+            f7, _, _ = self.find_and_click(img_path='./tasks/routine_SOP_fh.png', name='返回', ind=ind+1)
+            f8, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_djsls_tc.png', name='退出', ind=ind+1)
+            f9, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_fh.png', name='返回', ind=ind+1)
+            f10, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fh.png', name='返回', ind=ind+1)
+            
+            self.back_to_home(ind=ind+1)
+            f11, _, _ = self.find_and_click(img_path='./tasks/gn.png', name='功能', ind=ind+1)
+            f12, _, _ = self.find_and_click(img_path='./tasks/gn_hjk.png', name='环境卡', ind=ind+1)
+            f13, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh.png', name='发射器强化', ind=ind+1)
+            f14, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_qbxh.png', name='全部消耗', ind=ind+1)
+
+            finished = f0 and f1 and f2 and f4 and f5 and f6 and f7 and f8 and f9 and f10 and f11 and f12 and f13 and f14
+            if finished and not self.test:
+                self.record['routine']['SOP'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('SOP大作战完成', ind=ind)
+        else:
+            user_print('SOP大作战未完成', ind=ind)
+
+    def dbf(self, ind=1):
         ''' DBF '''
         user_print('DBF开始', ind=ind)
         done = self.record['DBF']
@@ -1255,6 +1403,7 @@ class AutoRun(object):
 
 
     def recruit(self, is_final=False, ind=0):
+        # return
         ''' 招募 '''
         user_print('招募开始', ind=ind)
         self.rc_recruit(is_final=is_final)
@@ -1341,7 +1490,7 @@ class AutoRun(object):
         ''' 船舱 '''
         user_print('船舱开始', ind=ind)
         # self.cruise()
-        self.factory()
+        # self.factory()
         user_print('船舱完成', ind=ind)
 
     
@@ -1613,6 +1762,7 @@ class AutoRun(object):
         user_print('日常开始', ind=ind)
         self.elite_task()
         self.awaken_task()
+        self.nightmare_task()
         user_print('日常完成', ind=ind)
     def elite_task(self, ind=1):
         ''' 精英副本 '''
@@ -1713,112 +1863,61 @@ class AutoRun(object):
         else:
             user_print('精英副本未完成', ind=ind)
 
-
-    def routine(self, ind=0):
-        ''' 日常 '''
-        user_print('日常开始', ind=ind)
-        self.bullfight()
-        self.SOP()
-        user_print('日常完成', ind=ind)
-    # NOT YET
-    def bullfight(self, ind=1):
-        ''' 斗牛竞技场 '''
-        user_print('斗牛竞技场开始', ind=ind)
-        todo = self.record['routine']['bullfight']['todo']
-        if todo != "true":
-            user_print('斗牛竞技场跳过', ind=ind)
-            return
-        done = self.record['routine']['bullfight']['done']
-        hz_name = self.record['routine']['bullfight']['hz_name']
+    def nightmare_task(self, ind=1):
+        ''' 噩梦副本 '''
+        user_print('噩梦副本开始', ind=ind)
+        done = self.record['adventure']['nightmare_task']['done']
+        hz_names = self.record['adventure']['nightmare_task']['hz_names']
+        times = self.record['adventure']['nightmare_task']['times']
         if self.test:
             done = 0
-        att = 0
-        while done != 1 and att < MAX_ATTEMPTS:
-            att += 1
-            f0, _, _ = self.back_to_home(ind=ind+1)
-            f1, _, _ = self.find_and_click(img_path='./tasks/hb.png', name='伙伴', ind=ind+1)
-            hz_path = './tasks/hb_' + hz_name + '.png'
-            f2, _, _ = self.find_and_click(img_path=hz_path, name='海贼', ind=ind+1)
-            f3, _, _ = self.find_and_click(img_path='./tasks/hb_yz.png', name='意志', ind=ind+1)
-            f4, _, _ = self.find_and_click(img_path='./tasks/hb_yz_yzjj.png', name='意志结晶', ind=ind+1)
-            f5, _, _ = self.find_and_click(img_path='./tasks/hb_yz_yzjj_qw.png', name='前往', ind=ind+1)
-            f6, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_cz.png', name='重置', ind=ind+1)
-            f7, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_cz_qr.png', name='重置确认', ind=ind+1)
-            finished1 = f1 and f2 and f3 and f4 and f5 and f6
-            fcs, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_tzcs.png', name='挑战次数', ind=ind+1, n_clicks=0)
-            while not fcs:
-                f8, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_sd.png', name='扫荡', ind=ind+1)
-                f9, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_sd_qd.png', name='确定', ind=ind+1)
-                time.sleep(5)
-                f10, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_sd_qd_sdjs.png', name='扫荡结束', ind=ind+1)
-                f11, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mfkq.png', name='免费开启', ind=ind+1)
-                f12, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mfkq_gb.png', name='关闭', ind=ind+1)
-                f13, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_xyg.png', name='下一关', ind=ind+1)
-                fcs, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_tzcs.png', name='挑战次数', ind=ind+1)
-            
-            if fcs:
-                f14, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx.png', name='每日宝箱', ind=ind+1)
-                f15, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx_yzjj.png', name='意志结晶', offset=[0, DPM], ind=ind+1)
-                if f15:
-                    f16, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx_qrkq.png', name='确认开启', ind=ind+1)
-                    f17, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx_qd.png', name='确定', ind=ind+1)
-                f18, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_mrbx_fh.png', name='返回', ind=ind+1)
-            f19, _, _ = self.find_and_click(img_path='./tasks/routine_bullfight_fh.png', name='返回', ind=ind+1)
-            f20, _, _ = self.find_and_click(img_path='./tasks/hb_yz_yzjj_fh', name='返回', ind=ind+1)
-            f21, _, _ = self.find_and_click(img_path='./tasks/hb_yz_fh', name='返回', ind=ind+1)
-            finished2 = fcs and f19 and f20 and f21
-            finished = finished1 and finished2
-            if finished and not self.test:
-                self.record['routine']['bullfight']['done'] = 1
-                done = 1
-                self.save_to_json()
-        if done == 1:
-            user_print('斗牛竞技场完成', ind=ind)
-        else:
-            user_print('斗牛竞技场未完成', ind=ind)
-    # NOT YET
-    def SOP(self, ind=1):
-        ''' SOP大作战 '''
-        todo = self.record['routine']['SOP']['todo']
-        if todo != "true":
-            return
-        user_print('SOP大作战开始', ind=ind)
-        done = self.record['routine']['SOP']
-        if self.test:
+        for i in range(len(hz_names)):
+            att = 0 
+            hz_name = hz_names[i]
+            cur_times = times[i]
             done = 0
-        att = 0
-        while done != 1 and att < MAX_ATTEMPTS:
-            att += 1
-            self.back_to_home(ind=ind+1)
-            f0, _, _ = self.find_and_click(img_path='./tasks/gn.png', name='功能', ind=ind+1)
-            f1, _, _ = self.find_and_click(img_path='./tasks/gn_hjk.png', name='环境卡', ind=ind+1)
-            f2, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh.png', name='发射器强化', ind=ind+1)
-            f4, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_djsls.png', name='低级试炼石', ind=ind+1)
-            f5, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_djsls_qw.png', name='前往', ind=ind+1)
-            f6, _, _ = self.find_and_click(img_path='./tasks/routine_SOP_y.png', name='摇', ind=ind+1)
-            # todo
-            f7, _, _ = self.find_and_click(img_path='./tasks/routine_SOP_fh.png', name='返回', ind=ind+1)
-            f8, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_djsls_tc.png', name='退出', ind=ind+1)
-            f9, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_fh.png', name='返回', ind=ind+1)
-            f10, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fh.png', name='返回', ind=ind+1)
-            
-            self.back_to_home(ind=ind+1)
-            f11, _, _ = self.find_and_click(img_path='./tasks/gn.png', name='功能', ind=ind+1)
-            f12, _, _ = self.find_and_click(img_path='./tasks/gn_hjk.png', name='环境卡', ind=ind+1)
-            f13, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh.png', name='发射器强化', ind=ind+1)
-            f14, _, _ = self.find_and_click(img_path='./tasks/gn_hjk_fsqqh_qbxh.png', name='全部消耗', ind=ind+1)
-
-            finished = f0 and f1 and f2 and f4 and f5 and f6 and f7 and f8 and f9 and f10 and f11 and f12 and f13 and f14
-            if finished and not self.test:
-                self.record['routine']['SOP'] = 1
+            while done != 1 and att < MAX_ATTEMPTS:
+                att += 1
+                f0, _, _ = self.back_to_home(ind=ind+1)
+                if not f0: continue
+                f1, _, _ = self.find_and_click(img_path='./tasks/hb.png', name='伙伴', ind=ind+1)
+                if not f1: continue
+                f2, fpx, fpy = self.find_and_click(img_path='./tasks/hb_wzm.png', name='未招募', ind=ind+1)
+                if not f2: continue
+                fpx, fpy = fpx, fpy + 2 * DPM
+                hz_path = './tasks/hb_' + hz_name + '.png'
+                f3, _, _ = self.drag_find_and_click(fp=[fpx, fpy + 4 * DPM], dragto=[0, -2 * DPM], dir=1, dx=2, img_path=hz_path, name='海贼', ind=ind+1)
+                if not f3: continue
+                f4 = False
+                while not f4:
+                    f4, _, _ = self.find_and_click(img_path='./tasks/hb_hqtj.png', name='获取途径', ind=ind+1)
+                f5 = False
+                while not f5:
+                    f5, _, _ = self.find_and_click(img_path='./tasks/hb_hqtj_yjsd.png', name='一键扫荡', ind=ind+1)
+                f6 = False
+                while not f6:
+                    f6, _, _ = self.find_and_click(img_path='./tasks/hb_hqtj_yjsd_-10.png', name='-10', n_clicks=6, ind=ind+1)
+                f6 = False
+                while not f6:
+                    f6, _, _ = self.find_and_click(img_path='./tasks/hb_hqtj_yjsd_+.png', name='+', n_clicks=cur_times-1, ind=ind+1)
+                f7 = False
+                while not f7:
+                    f7, _, _ = self.find_and_click(img_path='./tasks/hb_hqtj_yjsd_qd.png', name='确定', ind=ind+1)
+                f8 = False
+                while not f8:
+                    f8, _, _ = self.find_and_click(img_path='./tasks/hb_hqtj_yjsd_sdjs.png', name='扫荡结束', ind=ind+1)
+                f9 = False
+                while not f9:
+                    f9, _, _ = self.find_and_click(img_path='./tasks/hb_fh.png', name='返回', ind=ind+1)
                 done = 1
-                self.save_to_json()
+        self.record['adventure']['nightmare_task']['done'] = 1
+        self.save_to_json()
         if done == 1:
-            user_print('SOP大作战完成', ind=ind)
+            user_print('噩梦副本完成', ind=ind)
         else:
-            user_print('SOP大作战未完成', ind=ind)
+            user_print('噩梦副本未完成', ind=ind)
 
-
+    
 
     def lineup(self, ind=0):
         ''' 阵容 '''
@@ -2088,13 +2187,20 @@ class AutoRun(object):
             time.sleep(3)
             pag.click()
 
+    def tmp(self):
+        dx1, dy1 = 0.7*DPM, 2.5*DPM
+        dx2, dy2 = 2.2*DPM, 3.5*DPM
+        dx3, dy3 = 3.7*DPM, 4.5*DPM
+        self.find_and_click(img_path='./tasks/rc_Tjc_zbsd.png', offset=[dx3, dy3], name='', n_clicks=0)
+        
+        exit()
 
 
 # import win32gui, win32con
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(role='lf',to_test=False, to_reset=True)
+ar = AutoRun(role='xks',to_test=False, to_reset=False)
 ar.run()
 # ar.bw_shop()
 # ar.hb_shop()

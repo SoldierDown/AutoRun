@@ -36,21 +36,27 @@
                 "current_chances": 3
             },
             "adventure_fights": {
-                "todo": "false",
-                "current_fights": 0,
-                "current_changes": 0,
-                "done": 0
+                "todo": "true",
+                "current_fights": 3,
+                "current_changes": 3,
+                "done": 1
             }
         }
     },
     "routine": {
         "bullfight": {
-            "todo": "false",
+            "todo": "true",
             "done": 0,
             "hz_name": "xl"
         },
         "SOP": {
-            "todo": "false",
+            "todo": "true",
+            "done": 0
+        },
+        "DBF": 0,
+        "prison":{
+            "todo": "true",
+            "current_chances": 4,
             "done": 0
         }
     },
@@ -98,6 +104,19 @@
         "awaken_task": {
             "done": 1,
             "item_name": "sz"
+        },
+        "nightmare_task": {
+            "done": 1,
+            "hz_names": [
+                "ddnj",
+                "dq",
+                "fddkjs"
+            ],
+            "times": [
+                1,
+                2,
+                2
+            ]
         }
     },
     "get_task_reward": 1,
@@ -156,12 +175,12 @@
         "cruise": {
             "todo": "true",
             "zone": "dhhy",
-            "done": 1
+            "done": 0
         },
         "factory": {
             "todo": "true",
             "zone": "gc",
-            "done": 1
+            "done": 0
         }
     },
     "recruit": {
@@ -175,6 +194,5 @@
                 "done": 0
             }
         }
-    },
-    "DBF": 1
+    }
 }
