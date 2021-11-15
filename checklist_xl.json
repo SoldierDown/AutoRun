@@ -54,10 +54,10 @@
             "done": 0
         },
         "DBF": 0,
-        "prison":{
+        "prison": {
             "todo": "true",
             "current_chances": 0,
-            "done": 0
+            "done": 1
         }
     },
     "bag": {
@@ -97,16 +97,16 @@
     },
     "adventure": {
         "elite_task": {
-            "done": 0,
+            "done": 1,
             "task_name": "wggg",
             "hz_name": "lbk"
         },
         "awaken_task": {
-            "done": 0,
+            "done": 1,
             "item_name": "sz"
         },
         "nightmare_task": {
-            "done": 0,
+            "done": 1,
             "hz_names": [
                 "lbk",
                 "lf"
@@ -189,6 +189,7 @@
         "rc_recruit": {
             "bw": {
                 "todo": "true",
+                "times": 0,
                 "done": 1
             },
             "qw": {
@@ -196,5 +197,6 @@
                 "done": 0
             }
         }
-    }
+    },
+    "DBF": 1
 }

@@ -15,7 +15,7 @@
         "dollar_shop": 1
     },
     "game_assistant": 1,
-    "reward_center": 1,
+    "reward_center": 0,
     "harbor": {
         "harbor_reward": 1
     },
@@ -53,11 +53,12 @@
             "todo": "true",
             "done": 0
         },
-        "DBF": 0,
-        "prison":{
+        "DBF": 1,
+        "prison": {
             "todo": "true",
-            "current_chances": 2,
-            "done": 0
+            "current_chances": 0,
+            "times": 1,
+            "done": 1
         }
     },
     "bag": {
@@ -192,12 +193,14 @@
         "rc_recruit": {
             "bw": {
                 "todo": "true",
-                "done": 1
+                "times": 3,
+                "done": 0
             },
             "qw": {
                 "todo": "true",
                 "done": 0
             }
         }
-    }
+    },
+    "DBF": 1
 }

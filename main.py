@@ -184,7 +184,9 @@ class AutoRun(object):
 
     def run(self):
         ''''''
-        self.recruit(is_final=False)
+        times = self.record['recruit']['rc_recruit']['bw']['times']
+        if times == 0:
+            self.recruit(is_final=False)
         self.routine()
         self.time_limited_activity()              # looks good now
         self.cabin()
@@ -193,15 +195,19 @@ class AutoRun(object):
         self.prison(is_final=True)
         self.lineup()                             # looks good now
         self.bag()                                # looks good now
-        # self.adventure()
+        self.adventure()
         self.harbor()                             # looks good now
         self.functions()                          # looks good now
-        self.recruit(is_final=False)
+        times = self.record['recruit']['rc_recruit']['bw']['times']
+        if times == 1:
+            self.recruit(is_final=False)
         self.shop()
         self.get_task_reward(is_final=False)       # looks good now
         self.boyos()                              # looks good now            
         self.normal_activity()                    # not efficient
-        self.recruit(is_final=True)
+        times = self.record['recruit']['rc_recruit']['bw']['times']
+        if times == 2:
+            self.recruit(is_final=True)
         self.get_task_reward(is_final=True)       # looks good now
         self.reward_center()
 
@@ -216,7 +222,7 @@ class AutoRun(object):
         ''' 日常 '''
         user_print('日常开始', ind=ind)
         self.dbf()
-        self.prison(is_final=False)
+        # self.prison(is_final=False)
         user_print('日常完成', ind=ind)
     
 
@@ -363,7 +369,7 @@ class AutoRun(object):
     def dbf(self, ind=1):
         ''' DBF '''
         user_print('DBF开始', ind=ind)
-        done = self.record['DBF']
+        done = self.record['routine']['DBF']
         if self.test:
             done = 0
         att = 0
@@ -1422,6 +1428,10 @@ class AutoRun(object):
         ''' 百万招募 '''
         user_print('百万招募开始', ind=ind)
         done = self.record['recruit']['rc_recruit']['bw']['done']
+        times = self.record['recruit']['rc_recruit']['bw']['times']
+        total_times = 3
+        if times == total_times:
+            return
         if self.test:
             done = 0
         att = 0
@@ -1444,13 +1454,11 @@ class AutoRun(object):
             self.find_and_click(img_path='./tasks/recruit_dj_qd.png', name='确定', mute=True, ind=ind+1)
             
             done = 1
-            if not self.test and is_final:
-                self.record['recruit']['rc_recruit']['bw']['done'] = 1
-                self.save_to_json()
-        if done == 1:
-            user_print('百万招募完成', ind=ind)
-        else:
-            user_print('百万招募未完成', ind=ind)
+            times += 1
+            self.record['recruit']['rc_recruit']['bw']['times'] = times
+            self.save_to_json()
+        user_print('百万招募完成', ind=ind)
+
     def qw_recruit(self, ind=2):
         ''' 千万招募 '''
         user_print('千万招募开始', ind=ind)
@@ -1871,6 +1879,8 @@ class AutoRun(object):
         times = self.record['adventure']['nightmare_task']['times']
         if self.test:
             done = 0
+        if done == 1:
+            return
         for i in range(len(hz_names)):
             att = 0 
             hz_name = hz_names[i]
