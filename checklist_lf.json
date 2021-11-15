@@ -1,8 +1,8 @@
 {
     "normal_activity": {
         "daily_checkin": 0,
-        "buy_bali": 1,
-        "get_vip_gift": 1,
+        "buy_bali": 0,
+        "get_vip_gift": 0,
         "get_daily_gift": {
             "mr": 0,
             "mz": 0,
@@ -14,16 +14,16 @@
         "sales_items": 1,
         "dollar_shop": 1
     },
-    "game_assistant": 1,
-    "reward_center": 1,
+    "game_assistant": 0,
+    "reward_center": 0,
     "harbor": {
-        "harbor_reward": 1
+        "harbor_reward": 0
     },
     "union": {
         "union_construction": 1,
-        "pirate_wanted": 1,
-        "official_pirates": 1,
-        "get_coffee": 1,
+        "pirate_wanted": 0,
+        "official_pirates": 0,
+        "get_coffee": 0,
         "get_union_bonus": {
             "cur_chances": 0,
             "done": 0
@@ -32,14 +32,14 @@
     "functions": {
         "adventure_logs": {
             "gumball_machine": {
-                "done": 1,
-                "current_chances": 3
+                "done": 0,
+                "current_chances": 0
             },
             "adventure_fights": {
                 "todo": "true",
-                "current_fights": 3,
-                "current_changes": 3,
-                "done": 1
+                "current_fights": 0,
+                "current_changes": 0,
+                "done": 0
             }
         }
     },
@@ -54,9 +54,9 @@
             "done": 0
         },
         "DBF": 0,
-        "prison":{
+        "prison": {
             "todo": "true",
-            "current_chances": 4,
+            "current_chances": 0,
             "done": 0
         }
     },
@@ -64,11 +64,11 @@
         "pet": {
             "play_with_pet": {
                 "pet_name": "ty",
-                "done": 1
+                "done": 0
             },
             "pet_growing": {
                 "pet_name": "sy",
-                "done": 1
+                "done": 0
             }
         }
     },
@@ -77,7 +77,7 @@
     },
     "boyos": {
         "train_boyo": {
-            "done": 1,
+            "done": 0,
             "timed": "true",
             "hz_name": "mhk"
         }
@@ -85,28 +85,28 @@
     "lineup": {
         "accessory_strengthen": {
             "quality": "low",
-            "done": 1,
+            "done": 0,
             "hz_name": "xlf",
             "sp_name": "sheh"
         },
         "equipment_enchant": {
-            "done": 1,
+            "done": 0,
             "hz_name": "xlf",
             "zb_name": "cylgq"
         }
     },
     "adventure": {
         "elite_task": {
-            "done": 1,
+            "done": 0,
             "task_name": "rlpms",
             "hz_name": "bmz"
         },
         "awaken_task": {
-            "done": 1,
+            "done": 0,
             "item_name": "sz"
         },
         "nightmare_task": {
-            "done": 1,
+            "done": 0,
             "hz_names": [
                 "ddnj",
                 "dq",
@@ -119,7 +119,7 @@
             ]
         }
     },
-    "get_task_reward": 1,
+    "get_task_reward": 0,
     "shop": {
         "bwshop": {
             "todo": "true",
@@ -127,7 +127,7 @@
                 "wnbw",
                 "hsbwjh"
             ],
-            "done": 1,
+            "done": 0,
             "cur_chances": 0
         },
         "hbshop": {
@@ -141,7 +141,7 @@
                 "jyyz",
                 "qzjh"
             ],
-            "done": 1,
+            "done": 0,
             "cur_chances": 0
         },
         "cwshop": {
@@ -150,7 +150,7 @@
                 "zjcwsl",
                 "djcwsl"
             ],
-            "done": 1,
+            "done": 0,
             "cur_chances": 0
         },
         "xzshop": {
@@ -162,7 +162,7 @@
                 "zjjc",
                 "djjc"
             ],
-            "done": 1,
+            "done": 0,
             "cur_chances": 0
         }
     },
@@ -187,7 +187,8 @@
         "rc_recruit": {
             "bw": {
                 "todo": "true",
-                "done": 1
+                "times": 0,
+                "done": 0
             },
             "qw": {
                 "todo": "true",

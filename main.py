@@ -2210,8 +2210,9 @@ class AutoRun(object):
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(role='xks',to_test=False, to_reset=False)
-ar.run()
+ar = AutoRun(role='lf',to_test=False, to_reset=True)
+ar.save_to_json()
+# ar.run()
 # ar.bw_shop()
 # ar.hb_shop()
 
