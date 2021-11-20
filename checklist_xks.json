@@ -4,13 +4,13 @@
         "buy_bali": 1,
         "get_vip_gift": 1,
         "get_daily_gift": {
-            "mr": 0,
+            "mr": 1,
             "mz": 0,
             "my": 0
         }
     },
     "time_limited_activity": {
-        "consecutive_logins": 1,
+        "consecutive_logins": 0,
         "sales_items": 1,
         "dollar_shop": 1
     },
@@ -36,28 +36,33 @@
                 "current_chances": 3
             },
             "adventure_fights": {
-                "todo": "true",
+                "todo": true,
                 "current_fights": 3,
                 "current_changes": 3,
                 "done": 1
             }
+        },
+        "secret_treasures": {
+            "done": 1,
+            "todo": true
         }
     },
     "routine": {
         "bullfight": {
-            "todo": "true",
+            "todo": true,
             "done": 0,
             "hz_name": "xl"
         },
         "SOP": {
-            "todo": "true",
+            "todo": true,
             "done": 0
         },
-        "DBF": 1,
+        "DBF": {
+            "todo": true,
+            "done": 1
+        },
         "prison": {
-            "todo": "true",
-            "current_chances": 0,
-            "times": 1,
+            "todo": true,
             "done": 1
         }
     },
@@ -79,7 +84,7 @@
     "boyos": {
         "train_boyo": {
             "done": 1,
-            "timed": "false",
+            "timed": false,
             "hz_name": "xlf"
         }
     },
@@ -99,15 +104,18 @@
     },
     "adventure": {
         "elite_task": {
+            "todo": true,
             "done": 1,
             "task_name": "hjx",
             "hz_name": "btlma"
         },
         "awaken_task": {
+            "todo": true,
             "done": 1,
             "item_name": "sz"
         },
         "nightmare_task": {
+            "todo": true,
             "done": 1,
             "hz_names": [
                 "btlma",
@@ -122,7 +130,7 @@
     "get_task_reward": 1,
     "shop": {
         "bwshop": {
-            "todo": "true",
+            "todo": true,
             "wishlist": [
                 "wnbw",
                 "hsbwjh"
@@ -133,7 +141,7 @@
         "need_hleh": 0,
         "hbshop": {
             "wishlist": [
-                "l",
+                "lyez",
                 "ygzx",
                 "sheh",
                 "slzj",
@@ -158,6 +166,7 @@
         },
         "xzshop": {
             "wishlist": [
+                "swwkys",
                 "cz",
                 "jjw",
                 "hx",
@@ -173,18 +182,18 @@
         }
     },
     "assistance_punch": {
-        "todo": "true",
+        "todo": true,
         "name": "zlzj",
         "done": 1
     },
     "cabin": {
         "cruise": {
-            "todo": "true",
+            "todo": true,
             "zone": "dhhy",
             "done": 0
         },
         "factory": {
-            "todo": "true",
+            "todo": true,
             "zone": "gc",
             "done": 0
         }
@@ -192,15 +201,14 @@
     "recruit": {
         "rc_recruit": {
             "bw": {
-                "todo": "true",
+                "todo": true,
                 "times": 3,
                 "done": 0
             },
             "qw": {
-                "todo": "true",
+                "todo": true,
                 "done": 0
             }
         }
-    },
-    "DBF": 1
+    }
 }
