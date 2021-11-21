@@ -10,7 +10,7 @@
         }
     },
     "time_limited_activity": {
-        "consecutive_logins": 1,
+        "consecutive_logins": 0,
         "sales_items": 1,
         "dollar_shop": 1
     },
@@ -43,7 +43,7 @@
             }
         },
         "secret_treasures": {
-            "done": 0,
+            "done": 1,
             "todo": true
         }
     },
@@ -63,7 +63,7 @@
         },
         "prison": {
             "todo": true,
-            "current_chances": 5,
+            "current_chances": 0,
             "done": 1
         }
     },
@@ -92,7 +92,7 @@
     "lineup": {
         "accessory_strengthen": {
             "quality": "high",
-            "done": 1,
+            "done": 0,
             "hz_name": "xl",
             "sp_name": "zzzh"
         },
@@ -175,7 +175,7 @@
                 "djjc"
             ],
             "done": 1,
-            "cur_chances": 1
+            "cur_chances": 0
         }
     },
     "assistance_punch": {

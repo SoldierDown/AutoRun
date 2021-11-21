@@ -50,7 +50,6 @@ class AutoRun(object):
             self.record = json.load(f)
         if to_reset:
             self.reset(self.record)
-            self.save_to_json()
 
 
 
@@ -106,7 +105,7 @@ class AutoRun(object):
     
     
     
-    def click_and_confirm(self, pos=[0, 0], offset=[0, 0], img_path='', n_clicks=1, pause=0):
+    def click_and_confirm(self, pos=[0, 0], offset=[0, 0], img_path='', n_clicks=1, pause=0, once=False):
         px, py = pos[0], pos[1]
         ox, oy = offset[0], offset[1]
         found = False
@@ -115,6 +114,7 @@ class AutoRun(object):
             time.sleep(pause)
             found, tpx, tpy = self.find(img_path=img_path)
             if found: px, py = tpx, tpy
+            if once: return px, py
         return px, py
 
 
@@ -180,6 +180,7 @@ class AutoRun(object):
         conf = MAX_CONF
         pos = pag.locateOnScreen(img_path, confidence=conf)
         while pos is None and cnt_drags < N_DRAGS:
+            # for current pos
             while pos is None and conf > MIN_CONF:
                 conf += DCONF
                 pos = pag.locateOnScreen(img_path, confidence=conf)
@@ -188,11 +189,13 @@ class AutoRun(object):
                 self.drag(fp=fp, dir=dir, dragto=dragto, dx=dx, n_drags=1)
                 pos = pag.locateOnScreen(img_path, confidence=conf)
         if pos is not None:
+            print('under {}'.format(conf))
             print(pos)
             time.sleep(MID_PAUSE)
             found = False
             while not found:
                 pos = pag.locateOnScreen(img_path, confidence=conf)
+                print('not found')
                 print(pos)
                 if pos != None:
                     found = True
@@ -1637,9 +1640,14 @@ class AutoRun(object):
                 f0, tpx, tpy = self.find(img_path='./tasks/bag.png')
                 if f0: px, py = tpx, tpy
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_pet.png')
-            self.find_and_click(img_path='./tasks/bag_pet_qd.png', mute=True, ind=ind+1)
+            tpx, tpy = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_pet_qd.png', once=True)
             pet_path = './tasks/bag_pet_' + pet_name + '.png'
-            px, py = self.click_and_confirm(pos=[px, py], img_path=pet_path)
+            # qd not found
+            if tpx == px and tpy == py:
+                px, py = self.click_and_confirm(pos=[px, py], n_clicks=0, img_path=pet_path)
+            else:
+                px, py = self.click_and_confirm(pos=[tpx, tpy], img_path=pet_path)
+
             px, py = self.click_and_confirm(pos=[px, py], offset=[3.9*DPM,0.2*DPM], img_path='./tasks/bag_pet_hg.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_pet_hg_yjwy.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_pet_hg_yjwy.png', n_clicks=3)
@@ -2087,7 +2095,7 @@ class AutoRun(object):
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(role='lf',to_test=False, to_reset=False)
+ar = AutoRun(role='xl',to_test=False, to_reset=False)
 ar.run()
 '''
 add error handling
