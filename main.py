@@ -215,6 +215,7 @@ class AutoRun(object):
 
     def run(self):
         ''''''
+        self.get_space()
         times = self.record['recruit']['rc_recruit']['bw']['times']
         if times == 0:
             self.recruit(is_final=False)
@@ -240,8 +241,8 @@ class AutoRun(object):
         times = self.record['recruit']['rc_recruit']['bw']['times']
         if times == 2:
             self.recruit(is_final=True)
+        self.get_space()
         self.get_task_reward(is_final=True)       # looks good now
-        exit()
         self.reward_center()
 
     
@@ -1730,6 +1731,7 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_zs_fh.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_zs_fh2.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_zs_fh3.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
             if not self.test:
                 self.record['assistance_punch']['done'] = 1
                 done = 1
@@ -2090,12 +2092,43 @@ class AutoRun(object):
     def tmp(self, ind=0):
         self.find_and_click(img_path='./tasks/na_bb_bl.png', n_clicks=0)
 
+    def get_space(self, ind=0):
+        ''' 清理空间 '''
+        user_print('清理空间开始', ind=ind)
+        self.test=True
+        self.equipment_enchant()
+        self.pet()
+        self.test=False
+        done = 0
+        while done != 1:
+            px, py = 0, 0
+            f0 = False
+            while not f0:
+                self.back_to_home(ind=ind+1)
+                f0, tpx, tpy = self.find(img_path='./tasks/bag.png')
+                if f0: px, py = tpx, tpy
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dj.png')
+            found, px, py = self.find(img_path='./tasks/bag_dj_dhzgsc.png')
+            if found:
+                px, py = self.click_and_confirm(pos=[px, py], offset=[4*DPM, 0], n_clicks=0, img_path='./tasks/bag_dj_qd.png')
+                px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dj.png')
+            found, px, py = self.find(img_path='./tasks/bag_dj_dhsc.png')
+            if found:
+                px, py = self.click_and_confirm(pos=[px, py], offset=[4*DPM, 0], n_clicks=0, img_path='./tasks/bag_dj_+10.png')
+                px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dhsc_qd.png')
+                px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_qd.png')
+                px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dj.png')
+            done = 1    
+        user_print('清理空间完成', ind=ind)
 
 # import win32gui, win32con
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
 ar = AutoRun(role='xl',to_test=False, to_reset=False)
+ar.get_space()
+exit()
 ar.run()
 '''
 add error handling
