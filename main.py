@@ -193,10 +193,19 @@ class AutoRun(object):
             print(pos)
             time.sleep(MID_PAUSE)
             found = False
+            unit_drag = [0, 0]
+            unit_drag[dir] = 10*dx
+            cnt = 0
             while not found:
-                pos = pag.locateOnScreen(img_path, confidence=conf)
                 print('not found')
-                print(pos)
+                if cnt % 2 == 0:
+                    print(unit_drag)
+                    unit_drag[dir] = -1 * unit_drag[dir]
+                    print(unit_drag)
+                cnt += 1
+                self.drag(fp=fp, dir=dir, dragto=unit_drag, dx=dx, n_drags=1)
+                pos = pag.locateOnScreen(img_path, confidence=conf)
+
                 if pos != None:
                     found = True
             pag.moveTo(pos[0] + offset[0], pos[1] + offset[1])
@@ -215,7 +224,7 @@ class AutoRun(object):
 
     def run(self):
         ''''''
-        self.get_space()
+        # self.get_space()
         times = self.record['recruit']['rc_recruit']['bw']['times']
         if times == 0:
             self.recruit(is_final=False)
@@ -1652,9 +1661,9 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], offset=[3.9*DPM,0.2*DPM], img_path='./tasks/bag_pet_hg.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_pet_hg_yjwy.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_pet_hg_yjwy.png', n_clicks=3)
+            done = 1
             if not self.test:
                 self.record['bag']['pet']['play_with_pet']['done'] = 1
-                done = 1
                 self.save_to_json()
         if done == 1:
             user_print('好感度完成', ind=ind)
@@ -1683,9 +1692,9 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_pet_sj_zdtj.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_pet_sj_yjsj.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_pet_sj_yjsj.png')
+            done = 1
             if not self.test:
                 self.record['bag']['pet']['pet_growing']['done'] = 1
-                done = 1
                 self.save_to_json()
         if done == 1:
             user_print('升级完成', ind=ind)
@@ -1972,6 +1981,7 @@ class AutoRun(object):
 
     def equipment_enchant(self, ind=1):
         ''' 装备附魔 '''
+        return
         user_print('装备附魔开始', ind=ind)
         done = self.record['lineup']['equipment_enchant']['done']
         if self.test:
@@ -1994,9 +2004,9 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_zb_fm_yjfm_+10.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_zb_fm_yjfm_qd.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_zb_fm_arrow.png')
+            done = 1
             if not self.test:
                 self.record['lineup']['equipment_enchant']['done'] = 1
-                done = 1
                 self.save_to_json()
         if done == 1:
             user_print('装备附魔完成', ind=ind)
@@ -2126,9 +2136,7 @@ class AutoRun(object):
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(role='xl',to_test=False, to_reset=False)
-ar.get_space()
-exit()
+ar = AutoRun(role='xks',to_test=False, to_reset=True)
 ar.run()
 '''
 add error handling

@@ -1,8 +1,8 @@
 {
     "normal_activity": {
         "daily_checkin": 0,
-        "buy_bali": 0,
-        "get_vip_gift": 0,
+        "buy_bali": 1,
+        "get_vip_gift": 1,
         "get_daily_gift": {
             "mr": 0,
             "mz": 0,
@@ -17,7 +17,7 @@
     "game_assistant": 1,
     "reward_center": 0,
     "harbor": {
-        "harbor_reward": 0
+        "harbor_reward": 1
     },
     "union": {
         "union_construction": 1,
@@ -32,19 +32,19 @@
     "functions": {
         "adventure_logs": {
             "gumball_machine": {
-                "done": 0,
-                "current_chances": 0
+                "done": 1,
+                "current_chances": 3
             },
             "adventure_fights": {
                 "todo": true,
-                "current_fights": 0,
-                "current_changes": 0,
-                "done": 0
-            },
-            "secret_treasures": {
-                "done": 0,
-                "todo": true
+                "current_fights": 3,
+                "current_changes": 3,
+                "done": 1
             }
+        },
+        "secret_treasures": {
+            "done": 1,
+            "todo": true
         }
     },
     "routine": {
@@ -84,7 +84,7 @@
     },
     "boyos": {
         "train_boyo": {
-            "done": 0,
+            "done": 1,
             "timed": true,
             "hz_name": "mhk"
         }
@@ -111,12 +111,12 @@
         },
         "awaken_task": {
             "todo": true,
-            "done": 0,
+            "done": 1,
             "item_name": "sz"
         },
         "nightmare_task": {
             "todo": true,
-            "done": 0,
+            "done": 1,
             "hz_names": [
                 "ddnj",
                 "dq",
@@ -137,7 +137,7 @@
                 "wnbw",
                 "hsbwjh"
             ],
-            "done": 0,
+            "done": 1,
             "cur_chances": 0
         },
         "hbshop": {
@@ -151,7 +151,7 @@
                 "jyyz",
                 "qzjh"
             ],
-            "done": 0,
+            "done": 1,
             "cur_chances": 0
         },
         "cwshop": {
@@ -160,7 +160,7 @@
                 "zjcwsl",
                 "djcwsl"
             ],
-            "done": 0,
+            "done": 1,
             "cur_chances": 0
         },
         "xzshop": {
@@ -172,7 +172,7 @@
                 "zjjc",
                 "djjc"
             ],
-            "done": 0,
+            "done": 1,
             "cur_chances": 0
         }
     },
@@ -197,7 +197,7 @@
         "rc_recruit": {
             "bw": {
                 "todo": true,
-                "times": 1,
+                "times": 2,
                 "done": 0
             },
             "qw": {

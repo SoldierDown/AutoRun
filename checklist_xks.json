@@ -15,7 +15,7 @@
         "dollar_shop": 1
     },
     "game_assistant": 1,
-    "reward_center": 0,
+    "reward_center": 1,
     "harbor": {
         "harbor_reward": 1
     },
@@ -97,7 +97,7 @@
         },
         "equipment_enchant": {
             "quality": "high",
-            "done": 1,
+            "done": 0,
             "hz_name": "xlf",
             "zb_name": "cylgq"
         }
