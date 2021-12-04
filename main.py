@@ -224,7 +224,7 @@ class AutoRun(object):
 
     def run(self):
         ''''''
-        # self.get_space()
+        self.get_space()
         times = self.record['recruit']['rc_recruit']['bw']['times']
         if times == 0:
             self.recruit(is_final=False)
@@ -271,6 +271,10 @@ class AutoRun(object):
     def prison(self, ind=1):
         ''' 推进城 '''
         user_print('推进城开始', ind=ind)
+        todo = self.record['routine']['prison']['todo']
+        if not todo:
+            user_print('推进城跳过', ind=ind)
+            return
         done = self.record['routine']['prison']['done']
         if self.test:
             done = 0
@@ -412,7 +416,11 @@ class AutoRun(object):
     def daily_checkin(self, ind=1):
         ''' 每日签到 '''
         user_print('每日签到开始', ind=ind)
-        done = self.record['normal_activity']['daily_checkin']
+        todo = self.record['normal_activity']['daily_checkin']['todo']
+        if not todo:
+            user_print('推进城跳过', ind=ind)
+            return
+        done = self.record['normal_activity']['daily_checkin']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -436,7 +444,7 @@ class AutoRun(object):
                     f5, _, _ = self.find_and_click(img_path='./tasks/na_dci_lq_b.png', name='领取', ind=ind+1)
             self.back_to_home(ind=ind+1)
             if not self.test:
-                self.record['normal_activity']['daily_checkin'] = 1
+                self.record['normal_activity']['daily_checkin']['done']= 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -448,7 +456,11 @@ class AutoRun(object):
     def buy_bali(self, ind=1):
         ''' 购买贝里 '''
         user_print('购买贝里开始', ind=ind)
-        done = self.record['normal_activity']['buy_bali']
+        todo = self.record['normal_activity']['buy_bali']['todo']
+        if not todo:
+            user_print('购买贝里开始', ind=ind)
+            return
+        done = self.record['normal_activity']['buy_bali']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -472,7 +484,7 @@ class AutoRun(object):
                 if f3: px, py = tpx, tpy
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/na_bb_bl.png')
             if not self.test:
-                self.record['normal_activity']['buy_bali'] = 1
+                self.record['normal_activity']['buy_bali']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -484,7 +496,11 @@ class AutoRun(object):
     def get_vip_gift(self, ind=1):
         ''' VIP礼物 '''
         user_print('VIP礼物开始', ind=ind)
-        done = self.record['normal_activity']['get_vip_gift']
+        todo = self.record['normal_activity']['get_vip_gift']['todo']
+        if not todo:
+            user_print('VIP礼物开始', ind=ind)
+            return
+        done = self.record['normal_activity']['get_vip_gift']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -511,7 +527,7 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/na_vipg_mrg_ylq.png')
             if not self.test:
                 self.back_to_home(ind=ind+1, n_clicks=1)
-                self.record['normal_activity']['get_vip_gift'] = 1
+                self.record['normal_activity']['get_vip_gift']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -529,7 +545,11 @@ class AutoRun(object):
     def get_mr_gift(self, ind=2):
         ''' 每日礼包 '''
         user_print('每日礼包开始', ind=ind)
-        done = self.record['normal_activity']['get_daily_gift']['mr']
+        todo = self.record['normal_activity']['get_daily_gift']['mr']['todo']
+        if not todo:
+            user_print('每日礼包开始', ind=ind)
+            return
+        done = self.record['normal_activity']['get_daily_gift']['mr']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -555,7 +575,7 @@ class AutoRun(object):
             self.move_and_click(pos=[px, py])
             if not self.test:
                 self.back_to_home(ind=ind+1, n_clicks=1)
-                self.record['normal_activity']['get_daily_gift']['mr'] = 1
+                self.record['normal_activity']['get_daily_gift']['mr']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -637,6 +657,10 @@ class AutoRun(object):
     def hb_shop(self, ind=1):
         ''' 伙伴商店 '''
         user_print('伙伴商店开始', ind=ind)
+        todo = self.record['shop']['hbshop']['todo']
+        if not todo:
+            user_print('伙伴商店开始', ind=ind)
+            return
         done = self.record['shop']['hbshop']['done']
         total_chances = TOTAL_CHANCES
         cur_chances = self.record['shop']['hbshop']['cur_chances']
@@ -694,6 +718,10 @@ class AutoRun(object):
     def cw_shop(self, ind=1):
         ''' 宠物商店 '''
         user_print('宠物商店开始', ind=ind)
+        todo = self.record['shop']['cwshop']['todo']
+        if not todo:
+            user_print('宠物商店开始', ind=ind)
+            return
         done = self.record['shop']['cwshop']['done']
         total_chances = TOTAL_CHANCES
         cur_chances = self.record['shop']['cwshop']['cur_chances']
@@ -746,6 +774,10 @@ class AutoRun(object):
     def xz_shop(self, ind=1):
         ''' 勋章商店 '''
         user_print('勋章商店开始', ind=ind)
+        todo = self.record['shop']['xzshop']['todo']
+        if not todo:
+            user_print('勋章商店开始', ind=ind)
+            return
         done = self.record['shop']['xzshop']['done']
         total_chances = TOTAL_CHANCES
         cur_chances = self.record['shop']['xzshop']['cur_chances']
@@ -793,14 +825,18 @@ class AutoRun(object):
     def time_limited_activity(self, ind=0):
         ''' 限时活动 '''
         user_print('限时活动开始', ind=ind)
-        # self.consecutive_logins()
+        self.consecutive_logins()
         self.sales_items()
         self.dollar_shop()
         user_print('限时活动完成', ind=ind)
     def consecutive_logins(self, ind=1):
         ''' 累计登录 '''
         user_print('累计登录开始', ind=ind)
-        done = self.record['time_limited_activity']['consecutive_logins']
+        todo = self.record['time_limited_activity']['consecutive_logins']['todo']
+        if not todo:
+            user_print('累计登录开始', ind=ind)
+            return
+        done = self.record['time_limited_activity']['consecutive_logins']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -824,7 +860,7 @@ class AutoRun(object):
             self.move_and_click(offset=[0, 2*DPM], n_clicks=4)
             # todo: add offset
             if not self.test:
-                self.record['time_limited_activity']['consecutive_logins'] = 1
+                self.record['time_limited_activity']['consecutive_logins']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -834,7 +870,11 @@ class AutoRun(object):
     def dollar_shop(self, ind=1):
         ''' 福利商店 '''
         user_print('福利商店开始', ind=ind)
-        done = self.record['time_limited_activity']['dollar_shop']
+        todo = self.record['time_limited_activity']['dollar_shop']['todo']
+        if not todo:
+            user_print('福利商店开始', ind=ind)
+            return
+        done = self.record['time_limited_activity']['dollar_shop']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -862,7 +902,7 @@ class AutoRun(object):
                 f4, _, _ = self.find(img_path='./tasks/la_dj_tl_ysq.png')
             if not self.test:
                 self.back_to_home(ind=ind+1, n_clicks=1)
-                self.record['time_limited_activity']['dollar_shop'] = 1
+                self.record['time_limited_activity']['dollar_shop']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -872,7 +912,11 @@ class AutoRun(object):
     def sales_items(self, ind=1):
         ''' 道具折扣 '''
         user_print('道具折扣开始', ind=ind)
-        done = self.record['time_limited_activity']['sales_items']
+        todo = self.record['time_limited_activity']['sales_items']['todo']
+        if not todo:
+            user_print('道具折扣开始', ind=ind)
+            return
+        done = self.record['time_limited_activity']['sales_items']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -900,7 +944,7 @@ class AutoRun(object):
                 f4, _, _ = self.find(img_path='./tasks/la_dj_tl_ysq.png')
             if not self.test:
                 self.back_to_home(ind=ind+1, n_clicks=1)
-                self.record['time_limited_activity']['sales_items'] = 1
+                self.record['time_limited_activity']['sales_items']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -913,7 +957,11 @@ class AutoRun(object):
     def game_assistant(self, ind=0):
         ''' 游戏助手 '''
         user_print('游戏助手开始', ind=ind)
-        done = self.record['game_assistant']
+        todo = self.record['game_assistant']['todo']
+        if not todo:
+            user_print('游戏助手开始', ind=ind)
+            return
+        done = self.record['game_assistant']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -929,7 +977,7 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/ga_da_back_back.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
             if not self.test:
-                self.record['game_assistant'] = 1
+                self.record['game_assistant']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -942,7 +990,11 @@ class AutoRun(object):
     def reward_center(self, ind=0):
         ''' 奖励中心 '''
         user_print('奖励中心开始', ind=ind)
-        done = self.record['reward_center']
+        todo = self.record['reward_center']['todo']
+        if not todo:
+            user_print('奖励中心开始', ind=ind)
+            return
+        done = self.record['reward_center']['done']
         if self.test:
             done = 0
         att = 0
@@ -963,7 +1015,6 @@ class AutoRun(object):
             while not f3:
                 f3, _, _ = self.find_and_click(img_path='./tasks/rewardcenter_qblq_qd.png', name='确定', ind=ind+1)
             if not self.test:
-                # self.record['reward_center'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -985,7 +1036,11 @@ class AutoRun(object):
     def union_construction(self, ind=1):
         ''' 工会建设 '''
         user_print('工会建设开始', ind=ind)
-        done = self.record['union']['union_construction']
+        todo = self.record['union']['union_construction']['todo']
+        if not todo:
+            user_print('工会建设开始', ind=ind)
+            return
+        done = self.record['union']['union_construction']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -1011,7 +1066,7 @@ class AutoRun(object):
             self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
             
             if not self.test:
-                self.record['union']['union_construction'] = 1
+                self.record['union']['union_construction']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -1021,7 +1076,12 @@ class AutoRun(object):
     def pirate_wanted(self, ind=1):
         ''' 海盗悬赏 tbc '''
         user_print('海盗悬赏开始', ind=ind)
-        done = self.record['union']['pirate_wanted']
+        todo = self.record['union']['pirate_wanted']['todo']
+        if not todo:
+            user_print('海盗悬赏开始', ind=ind)
+            return
+        done = self.record['union']['pirate_wanted']['done']
+        
         if self.test:
             done = 0
         while done != 1:
@@ -1044,7 +1104,7 @@ class AutoRun(object):
                 f5, px, py = self.find(img_path='./tasks/gh_fh.png')
             self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
             if not self.test:
-                self.record['union']['pirate_wanted'] = 1
+                self.record['union']['pirate_wanted']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -1054,7 +1114,11 @@ class AutoRun(object):
     def get_coffee(self, ind=1):
         ''' 人鱼咖啡厅 '''
         user_print('喝咖啡开始', ind=ind)
-        done = self.record['union']['get_coffee']
+        todo = self.record['union']['get_coffee']['todo']
+        if not todo:
+            user_print('喝咖啡开始', ind=ind)
+            return
+        done = self.record['union']['get_coffee']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -1077,7 +1141,7 @@ class AutoRun(object):
                 f5, px, py = self.find(img_path='./tasks/gh_fh.png')
             self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
             if not self.test:
-                self.record['union']['get_coffee'] = 1
+                self.record['union']['get_coffee']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -1087,6 +1151,10 @@ class AutoRun(object):
     def get_union_bonus(self, ind=1):
         ''' 工会福利 '''
         user_print('工会福利开始', ind=ind)
+        todo = self.record['union']['get_union_bonus']['todo']
+        if not todo:
+            user_print('工会福利开始', ind=ind)
+            return
         total_bonus = 10
         cur_chances = self.record['union']['get_union_bonus']['cur_chances']
         done = self.record['union']['get_union_bonus']['done']
@@ -1140,7 +1208,11 @@ class AutoRun(object):
     def official_pirates(self, ind=1):
         ''' 七武海 '''
         user_print('七武海开始', ind=ind)
-        done = self.record['union']['official_pirates']
+        todo = self.record['union']['official_pirates']['todo']
+        if not todo:
+            user_print('七武海开始', ind=ind)
+            return
+        done = self.record['union']['official_pirates']['done']
         while done != 1:
             px, py = 0, 0
             f0 = False
@@ -1164,7 +1236,7 @@ class AutoRun(object):
                 f5, px, py = self.find(img_path='./tasks/gh_fh.png')
             self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
             if not self.test:
-                self.record['union']['official_pirates'] = 1
+                self.record['union']['official_pirates']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -1181,7 +1253,11 @@ class AutoRun(object):
     def harbor_reward(self, ind=1):
         ''' 港口领奖 '''
         user_print('港口领奖开始', ind=ind)
-        done = self.record['harbor']['harbor_reward']
+        todo = self.record['harbor']['harbor_reward']['todo']
+        if not todo:
+            user_print('港口领奖开始', ind=ind)
+            return
+        done = self.record['harbor']['harbor_reward']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -1196,7 +1272,7 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gk_fh.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
             if not self.test:
-                self.record['harbor']['harbor_reward'] = 1
+                self.record['harbor']['harbor_reward']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -1256,6 +1332,10 @@ class AutoRun(object):
     def gumball_machine(self, ind=2):
         ''' 扭蛋机 '''
         user_print('扭蛋机开始', ind=ind)
+        todo = self.record['functions']['adventure_logs']['gumball_machine']['todo']
+        if not todo:
+            user_print('扭蛋机开始', ind=ind)
+            return
         cur_chances = self.record['functions']['adventure_logs']['gumball_machine']['current_chances']
         done = self.record['functions']['adventure_logs']['gumball_machine']['done']
         total_chances = TOTAL_CHANCES
@@ -1348,7 +1428,11 @@ class AutoRun(object):
     def forest_adventure(self, ind=0):
         ''' 密林冒险 '''
         user_print('密林冒险开始')
-        done = self.record['forest_adventure']
+        todo = self.record['forest_adventure']['todo']
+        if not todo:
+            user_print('密林冒险开始')
+            return
+        done = self.record['forest_adventure']['done']
         if self.test:
             done = 0
         att = 0
@@ -1375,7 +1459,7 @@ class AutoRun(object):
             f13, _, _ = self.find_and_click(img_path='./tasks/rc_mlmx_fh.png', name='退出密林', ind=ind+1)
             finished = f0 and f1 and f2 and f3 and f4 and f5 and f6 and f7 and f8 and f9 and f10 and f11 and f12 and f13
             if finished and not self.test:
-                self.record['forest_adventure'] = 1
+                self.record['forest_adventure']['done'] = 1
                 done = 1
                 self.save_to_json()
         if done == 1:
@@ -1392,6 +1476,10 @@ class AutoRun(object):
     def train_boyo(self, ind=1):
         ''' 伙伴培养 '''
         user_print('伙伴培养开始', ind=ind)
+        todo = self.record['boyos']['train_boyo']['todo']
+        if not todo:
+            user_print('伙伴培养开始', ind=ind)
+            return
         done = self.record['boyos']['train_boyo']['done']
         hz_name = self.record['boyos']['train_boyo']['hz_name']
         timed = self.record['boyos']['train_boyo']['timed']
@@ -1455,6 +1543,10 @@ class AutoRun(object):
     def bw_recruit(self, is_final=False, ind=2):
         ''' 百万招募 '''
         user_print('百万招募开始', ind=ind)
+        todo = self.record['recruit']['rc_recruit']['bw']['todo']
+        if not todo:
+            user_print('百万招募开始', ind=ind)
+            return
         done = self.record['recruit']['rc_recruit']['bw']['done']
         times = self.record['recruit']['rc_recruit']['bw']['times']
         total_times = 3
@@ -1486,6 +1578,10 @@ class AutoRun(object):
     def qw_recruit(self, ind=2):
         ''' 千万招募 '''
         user_print('千万招募开始', ind=ind)
+        todo = self.record['recruit']['rc_recruit']['qw']['todo']
+        if not todo:
+            user_print('千万招募开始', ind=ind)
+            return
         done = self.record['recruit']['rc_recruit']['qw']['done']
         if self.test:
             done = 0
@@ -1638,6 +1734,10 @@ class AutoRun(object):
     def play_with_pet(self, ind=2):
         ''' 好感度 updated'''
         user_print('好感度开始', ind=ind)
+        todo = self.record['bag']['pet']['play_with_pet']['todo']
+        if not todo:
+            user_print('好感度开始', ind=ind)
+            return
         done = self.record['bag']['pet']['play_with_pet']['done']
         pet_name = self.record['bag']['pet']['play_with_pet']['pet_name']
         if self.test:
@@ -1673,6 +1773,10 @@ class AutoRun(object):
     def pet_growing(self, ind=2):
         ''' 升级 '''
         user_print('升级开始', ind=ind)
+        todo = self.record['bag']['pet']['pet_growing']['todo']
+        if not todo:
+            user_print('升级开始', ind=ind)
+            return
         done = self.record['bag']['pet']['pet_growing']['done']
         pet_name = self.record['bag']['pet']['pet_growing']['pet_name']
         if self.test:
@@ -1909,6 +2013,10 @@ class AutoRun(object):
     def accessory_strengthen(self, ind=1):
         ''' 饰品强化 '''
         user_print('饰品强化开始', ind=ind)
+        todo = self.record['lineup']['accessory_strengthen']['todo']
+        if not todo:
+            user_print('饰品强化开始', ind=ind)
+            return
         done = self.record['lineup']['accessory_strengthen']['done']
         if self.test:
             done = 0
@@ -1981,8 +2089,11 @@ class AutoRun(object):
 
     def equipment_enchant(self, ind=1):
         ''' 装备附魔 '''
-        return
         user_print('装备附魔开始', ind=ind)
+        todo = self.record['lineup']['equipment_enchant']['todo']
+        if not todo:
+            user_print('装备附魔开始', ind=ind)
+            return
         done = self.record['lineup']['equipment_enchant']['done']
         if self.test:
             done = 0
@@ -2046,7 +2157,11 @@ class AutoRun(object):
     def treasures(self, ind=1):
         ''' 宝藏争夺 '''
         user_print('宝藏争夺开始', ind=ind)
-        done = self.record['cross_servers']['treasures']
+        todo = self.record['cross_servers']['treasures']['todo']
+        if not todo:
+            user_print('宝藏争夺开始', ind=ind)
+            return
+        done = self.record['cross_servers']['treasures']['done']
         att = 0
         while done != 1 and att < MAX_ATTEMPTS:
             att += 1
@@ -2059,7 +2174,7 @@ class AutoRun(object):
             f4, _, _ = self.find_and_click(img_path='./tasks/kf_bzzd_fh.png', name='返回', ind=ind+1)
             finished = f0 and f1 and f2 and f3 and f4
             if finished:
-                self.record['cross_servers']['treasures'] = 1
+                self.record['cross_servers']['treasures']['done'] = 1
                 done = 1
                 self.save_to_json()
             else:
@@ -2074,7 +2189,11 @@ class AutoRun(object):
     def get_task_reward(self, is_final=False, ind=0):
         ''' 任务领奖 '''
         user_print('任务领奖开始', ind=ind)
-        done = self.record['get_task_reward']
+        todo = self.record['get_task_reward']['todo']
+        if not todo:
+            user_print('任务领奖开始', ind=ind)
+            return
+        done = self.record['get_task_reward']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -2090,15 +2209,14 @@ class AutoRun(object):
                 f2, _, _ = self.find_and_click(img_path='./tasks/rw_ljl.png', name='任务领奖', mute=True, ind=ind+1)
             done = 1
             if is_final:
-                self.record['get_task_reward'] = 1
+                self.record['get_task_reward']['done'] = 1
                 self.save_to_json()
         if done == 1:
             user_print('任务领奖完成', ind=ind)
         else:
             user_print('任务领奖未完成', ind=ind)
-    def test(self):
-        found, _, _ = self.find_and_click(img_path='./tasks/gn_mxrz_mxtz_jf10.png', name='低分海贼', n_clicks=0, ind=2)
 
+    
     def tmp(self, ind=0):
         self.find_and_click(img_path='./tasks/na_bb_bl.png', n_clicks=0)
 
@@ -2131,13 +2249,39 @@ class AutoRun(object):
                 px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dj.png')
             done = 1    
         user_print('清理空间完成', ind=ind)
-
+    
+    def debug(self):
+        ''''''
+        self.time_limited_activity()              # looks good now
+        self.cabin()
+        self.union()                              # looks good now
+        self.game_assistant()                     # looks good now
+        self.prison()
+        self.lineup()                             # looks good now
+        
+        self.bag()                                # looks good now
+        self.adventure()
+        self.harbor()                             # looks good now
+        self.functions()                          # looks good now
+        times = self.record['recruit']['rc_recruit']['bw']['times']
+        if times == 1:
+            self.recruit(is_final=False)
+        self.shop()
+        # self.get_task_reward(is_final=False)       # looks good now
+        self.boyos()                              # looks good now 
+        self.normal_activity()                    # not efficient
+        times = self.record['recruit']['rc_recruit']['bw']['times']
+        if times == 2:
+            self.recruit(is_final=True)
+        self.get_space()
+        self.get_task_reward(is_final=True)       # looks good now
+        self.reward_center()
 # import win32gui, win32con
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(role='xks',to_test=False, to_reset=True)
-ar.run()
+ar = AutoRun(role='lf',to_test=False, to_reset=False)
+ar.debug()
 '''
 add error handling
 '''
