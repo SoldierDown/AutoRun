@@ -10,7 +10,7 @@ DPM = 100
 MAX_ATTEMPTS = 10
 TOTAL_CHANCES = 3
 from PIL.Image import FASTOCTREE
-from numpy import copysign, true_divide
+from numpy import copysign, fabs, true_divide
 import pyautogui as pag
 from pynput import mouse
 from pynput.mouse import Button, Controller
@@ -224,7 +224,9 @@ class AutoRun(object):
 
     def run(self):
         ''''''
-        self.get_space()
+        times = self.record['get_space']['times']
+        if times == 0:
+            self.get_space()
         times = self.record['recruit']['rc_recruit']['bw']['times']
         if times == 0:
             self.recruit(is_final=False)
@@ -235,7 +237,8 @@ class AutoRun(object):
         self.game_assistant()                     # looks good now
         self.prison()
         self.lineup()                             # looks good now
-        
+        # self.fight_center()
+        # self.lost_and_found()
         self.bag()                                # looks good now
         self.adventure()
         self.harbor()                             # looks good now
@@ -244,13 +247,15 @@ class AutoRun(object):
         if times == 1:
             self.recruit(is_final=False)
         self.shop()
-        # self.get_task_reward(is_final=False)       # looks good now
+        self.get_task_reward(is_final=False)       # looks good now
         self.boyos()                              # looks good now 
         self.normal_activity()                    # not efficient
         times = self.record['recruit']['rc_recruit']['bw']['times']
         if times == 2:
             self.recruit(is_final=True)
-        self.get_space()
+        times = self.record['get_space']['times']
+        if times == 1:
+            self.get_space()
         self.get_task_reward(is_final=True)       # looks good now
         self.reward_center()
 
@@ -259,14 +264,89 @@ class AutoRun(object):
         ''' 回到主页 '''
         self.find_and_click(img_path='./tasks/error_fh3.png', name='返回', mute=True, n_clicks=n_clicks, ind=ind)
         return self.find_and_click(img_path='./tasks/bth.png', name='主页', n_clicks=n_clicks, ind=ind)
+        
 
+    def lost_and_found(self, ind=0):
+        user_print('资源找回开始', ind=ind)
+        todo = self.record['lost_and_found']['todo']
+        if not todo:
+            user_print('资源找回跳过', ind=ind)
+            return
+        done = self.record['lost_and_found']['done']
+        if self.test:
+            done = 0
+        while done != 1:
+            px, py = 0, 0
+            f0 = False
+            while not f0:
+                self.back_to_home(ind=ind+1)
+                f0, tpx, tpy = self.find(img_path='./tasks/lnf.png')
+                if f0: px, py = tpx, tpy
+            
+            # 激战海王类
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/lnf_jzhwl.png')
+            px, py = self.click_and_confirm(pos=[px, py], offset=[3*DPM, 0.5*DPM], img_path='./tasks/lnf_qd.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/lnf_zhyc.png')
+
+            # 可乐
+            f1, px, py = self.find(img_path='./tasks/lnf_hkl.png')
+            while f1:
+                px, py = self.click_and_confirm(pos=[px, py], offset=[3*DPM, 0.5*DPM], img_path='./tasks/lnf_qd.png')
+                f1, px, py = self.find(img_path='./tasks/lnf_hkl.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/lnf_tc.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
+
+            if not self.test:
+                self.record['lost_and_found']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('资源找回完成', ind=ind)
+        else:
+            user_print('资源找回未完成', ind=ind)
+    
+    def fight_center(self, ind=0):
+        user_print('竞技场开始', ind=ind)
+        todo = self.record['routine']['fight_center']['todo']
+        if not todo:
+            user_print('竞技场跳过', ind=ind)
+            return
+        done = self.record['routine']['fight_center']['done']
+        if self.test:
+            done = 0
+        while done != 1:
+            px, py = 0, 0
+            f0 = False
+            while not f0:
+                self.back_to_home(ind=ind+1)
+                f0, tpx, tpy = self.find(img_path='./tasks/rc.png')
+                if f0: px, py = tpx, tpy
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_jjc.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_jjc_fp.png')
+            enermy_name = self.record['routine']['fight_center']['enermy_name']
+            enermy_path = './tasks/rc_jjc_' + enermy_name + '.png'
+            _, px, py = self.drag_find_and_click(fp=[px - 0.5 * DPM, py + 2 * DPM], dragto=[0, -2*DPM], dir=1, img_path=enermy_path, name='日常礼包', n_clicks=0, ind=ind+1)
+            self.move_and_click(pos=[px, py+DPM])
+            px, py = self.find(img_path='./tasks/rc_jjc_tzwc.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path=enermy_path)
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_jjc_tzwc.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path=enermy_path)
+            
+            if not self.test:
+                self.record['routine']['fight_center']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('竞技场完成', ind=ind)
+        else:
+            user_print('竞技场未完成', ind=ind)
 
     def routine(self, ind=0):
         ''' 日常 '''
         user_print('日常开始', ind=ind)
         self.dbf()
         user_print('日常完成', ind=ind)
-    
+        
 
     def prison(self, ind=1):
         ''' 推进城 '''
@@ -282,6 +362,7 @@ class AutoRun(object):
         dx2, dy2 = 2.2*DPM, 3.5*DPM
         dx3, dy3 = 3.7*DPM, 4.5*DPM
         dxdys = [[dx1, dy1], [dx2, dy2], [dx3, dy3]]
+        cur_id = 0
         while done != 1:
             fpx, fpy = 0, 0
             f0 = False
@@ -289,19 +370,23 @@ class AutoRun(object):
                 self.back_to_home(ind=ind+1)
                 f0, tpx, tpy = self.find(img_path='./tasks/rc.png')
                 if f0: fpx, fpy = tpx, tpy
-            
             fpx, fpy = self.click_and_confirm(pos=[fpx, fpy], img_path='./tasks/rc_tjc.png')
             fpx, fpy = self.click_and_confirm(pos=[fpx, fpy], img_path='./tasks/rc_tjc_zbsd.png')
             to_stop = False
             while not to_stop:
-                for dxdy in dxdys:
-                    self.move_and_click(pos=[fpx, fpy], offset=dxdy)
-                    time.sleep(5)
-                    f2, tgx, tgy = self.find_and_click(img_path='./tasks/rc_tjc_tg.png', name='跳过', ind=ind+1)
-                    if f2:
-                        self.move_and_click(pos=[tgx, tgy], offset=[-2*DPM, -0.5*DPM])
-                    to_stop, _, _ = self.find_and_click(img_path='./tasks/rc_tjc_qx.png', mute=True)
-                    if to_stop: break
+                dxdy = dxdys[cur_id%3]
+                self.move_and_click(pos=[fpx, fpy], offset=dxdy)
+                time.sleep(5)
+                f2, tgx, tgy = self.find_and_click(img_path='./tasks/rc_tjc_tg.png', name='跳过', ind=ind+1)
+                if f2:
+                    f3, _, _ = self.find_and_click(img_path='./tasks/rc_tjc_sb.png', name='失败', n_clicks=0, ind=ind+1)
+                    if not f3:
+                        cur_id += 1
+                    self.move_and_click(pos=[tgx, tgy], offset=[-2*DPM, -0.5*DPM])
+                else:
+                    cur_id += 1
+                to_stop, _, _ = self.find_and_click(img_path='./tasks/rc_tjc_qx.png', mute=True)
+                if to_stop: break
             if not self.test:
                 self.record['routine']['prison']['done'] = 1
                 done = 1
@@ -569,7 +654,7 @@ class AutoRun(object):
                 pag.move(-0.5*DPM, 0)
                 pag.click()
                 self.find_and_click(img_path='./tasks/na_rcg.png', name='日常礼包', ind=ind+1)
-                f3, tpx, tpy = self.find(img_path='./tasks/na_vipg_mrg.png')
+                f3, tpx, tpy = self.find(img_path='./tasks/na_rcg_mrg_mf.png')
                 if f3: px, py = tpx, tpy
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/na_vipg_mrg_lq_qd.png')
             self.move_and_click(pos=[px, py])
@@ -850,7 +935,7 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/la_fl.png')
             f2, _, _ = self.find_and_click(img_path='./tasks/la_lj.png', name='累计登录', ind=ind+1)
             if not f2:
-                self.record['time_limited_activity']['consecutive_logins'] = 1
+                self.record['time_limited_activity']['consecutive_logins']['done'] = 1
                 done = 1
                 self.save_to_json()
                 break
@@ -1004,7 +1089,7 @@ class AutoRun(object):
             if not f0: continue
             f1, _, _ = self.find_and_click(img_path='./tasks/rewardcenter.png', name='奖励中心', ind=ind+1)
             if not f1:
-                self.record['reward_center'] = 1
+                self.record['reward_center']['done'] = 1
                 done = 1
                 self.save_to_json()
                 continue
@@ -1226,8 +1311,12 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_qwh_jsjl_yjlq.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_qwh_jsjl_tc.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_qwh_sdqb.png')
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_qwh_sdqb_sdwc.png')
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_qwh_sdqb_tc.png')
+            self.move_and_click(pos=[px, py])
+            f1 = False
+            while not f1:
+                f1, px, py = self.find(img_path='./tasks/gh_qwh_sdqb_sdwc.png')
+                if not f1:
+                    f1, px, py = self.find(img_path='./tasks/gh_qwh_sdqb_tzsd.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_qwh_fh.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_qwh.png')
             time.sleep(MID_PAUSE)
@@ -2005,8 +2094,8 @@ class AutoRun(object):
     def lineup(self, ind=0):
         ''' 阵容 '''
         user_print('阵容开始', ind=ind)
-        # self.accessory_strengthen()    
-        self.equipment_enchant()
+        self.accessory_strengthen()    
+        # self.equipment_enchant()
         user_print('阵容完成', ind=ind)
 
 
@@ -2236,18 +2325,20 @@ class AutoRun(object):
                 f0, tpx, tpy = self.find(img_path='./tasks/bag.png')
                 if f0: px, py = tpx, tpy
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj.png')
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dj.png')
+            self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dj.png')
             found, px, py = self.find(img_path='./tasks/bag_dj_dhzgsc.png')
             if found:
-                px, py = self.click_and_confirm(pos=[px, py], offset=[4*DPM, 0], n_clicks=0, img_path='./tasks/bag_dj_qd.png')
+                px, py = self.click_and_confirm(pos=[px, py], offset=[4*DPM, 0], img_path='./tasks/bag_dj_qd.png')
                 px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dj.png')
             found, px, py = self.find(img_path='./tasks/bag_dj_dhsc.png')
             if found:
-                px, py = self.click_and_confirm(pos=[px, py], offset=[4*DPM, 0], n_clicks=0, img_path='./tasks/bag_dj_+10.png')
+                px, py = self.click_and_confirm(pos=[px, py], offset=[4*DPM, 0], img_path='./tasks/bag_dj_+10.png')
                 px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dhsc_qd.png')
                 px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_qd.png')
                 px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dj.png')
             done = 1    
+        self.record['get_space']['times'] += 1
+        self.save_to_json()
         user_print('清理空间完成', ind=ind)
     
     def debug(self):
@@ -2273,15 +2364,20 @@ class AutoRun(object):
         times = self.record['recruit']['rc_recruit']['bw']['times']
         if times == 2:
             self.recruit(is_final=True)
-        self.get_space()
+        # self.get_space()
         self.get_task_reward(is_final=True)       # looks good now
         self.reward_center()
 # import win32gui, win32con
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(role='lf',to_test=False, to_reset=False)
-ar.debug()
+ar = AutoRun(role='xl',to_test=False, to_reset=True)
+ar.run()
 '''
 add error handling
 '''
+
+# arr = ["a", "b", "c"]
+# cur_id = 1
+# for iter in range(3):
+#     print(arr[(iter+cur_id)%3])

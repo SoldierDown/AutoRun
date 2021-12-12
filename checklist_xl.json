@@ -4,18 +4,18 @@
             "todo": true,
             "done": 0
         },
-        "buy_bali":{
+        "buy_bali": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "get_vip_gift": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "get_daily_gift": {
             "mr": {
                 "todo": true,
-                "done": 0
+                "done": 1
             },
             "mz": {
                 "todo": false,
@@ -29,21 +29,21 @@
     },
     "time_limited_activity": {
         "consecutive_logins": {
-            "todo": true,
+            "todo": false,
             "done": 0
         },
         "sales_items": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "dollar_shop": {
             "todo": true,
-            "done": 0
+            "done": 1
         }
     },
     "game_assistant": {
         "todo": true,
-        "done": 0
+        "done": 1
     },
     "reward_center": {
         "todo": true,
@@ -52,25 +52,25 @@
     "harbor": {
         "harbor_reward": {
             "todo": true,
-            "done": 0
+            "done": 1
         }
     },
     "union": {
         "union_construction": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "pirate_wanted": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "official_pirates": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "get_coffee": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "get_union_bonus": {
             "todo": true,
@@ -149,15 +149,15 @@
         "accessory_strengthen": {
             "todo": true,
             "quality": "high",
-            "done": 0,
+            "done": 1,
             "hz_name": "xl",
-            "sp_name": "zzzh"
+            "sp_name": "lyez"
         },
         "equipment_enchant": {
             "todo": true,
             "done": 0,
             "hz_name": "tt",
-            "zb_name": "cylgy"
+            "zb_name": "bwwsx"
         }
     },
     "adventure": {
@@ -168,16 +168,16 @@
             "hz_name": "lbk"
         },
         "awaken_task": {
-            "todo": true,
-            "done": 1,
-            "item_name": "sz"
+            "todo": false,
+            "done": 0,
+            "item_name": "gj"
         },
         "nightmare_task": {
             "todo": true,
             "done": 1,
             "hz_names": [
                 "lbk",
-                "lf"
+                "jd"
             ],
             "times": [
                 4,
@@ -185,7 +185,10 @@
             ]
         }
     },
-    "get_task_reward": 1,
+    "get_task_reward": {
+        "todo": true,
+        "done": 1
+    },
     "shop": {
         "bwshop": {
             "todo": true,
@@ -269,5 +272,8 @@
             }
         }
     },
-    "test": true
+    "get_space": {
+        "todo": true,
+        "times": 2
+    }
 }
