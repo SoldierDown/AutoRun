@@ -2371,8 +2371,7 @@ class AutoRun(object):
 # hwnd = win32gui.GetForegroundWindow()
 # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-ar = AutoRun(role='xl',to_test=False, to_reset=True)
-ar.run()
+
 '''
 add error handling
 '''
@@ -2381,3 +2380,18 @@ add error handling
 # cur_id = 1
 # for iter in range(3):
 #     print(arr[(iter+cur_id)%3])
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('-hz')
+parser.add_argument('-reset')
+args = parser.parse_args()
+
+role = args.hz
+to_reset = False
+if args.reset == 'true':
+    to_reset = True
+    
+print('Working on {}'.format(role))
+print('Reset: {}'.format(to_reset))
+ar = AutoRun(role=role, to_test=False, to_reset=to_reset)
+ar.run()

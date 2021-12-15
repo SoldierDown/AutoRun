@@ -157,7 +157,7 @@
             "todo": true,
             "done": 0,
             "hz_name": "tt",
-            "zb_name": "bwwsx"
+            "zb_name": "bwwsk"
         }
     },
     "adventure": {
@@ -201,7 +201,7 @@
         },
         "need_lhzl": 0,
         "hbshop": {
-            "todo": true,
+            "todo": false,
             "wishlist": [
                 "lyez",
                 "zzzh",
@@ -214,7 +214,7 @@
                 "jyyz",
                 "qzjh"
             ],
-            "done": 1,
+            "done": 0,
             "cur_chances": 0
         },
         "cwshop": {
@@ -228,7 +228,7 @@
             "cur_chances": 0
         },
         "xzshop": {
-            "todo": true,
+            "todo": false,
             "wishlist": [
                 "cz",
                 "jjw",
@@ -238,7 +238,7 @@
                 "zjjc",
                 "djjc"
             ],
-            "done": 1,
+            "done": 0,
             "cur_chances": 0
         }
     },
