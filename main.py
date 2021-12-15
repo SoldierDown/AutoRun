@@ -224,6 +224,7 @@ class AutoRun(object):
 
     def run(self):
         ''''''
+        self.awesome_activities()
         times = self.record['get_space']['times']
         if times == 0:
             self.get_space()
@@ -265,7 +266,61 @@ class AutoRun(object):
         self.find_and_click(img_path='./tasks/error_fh3.png', name='返回', mute=True, n_clicks=n_clicks, ind=ind)
         return self.find_and_click(img_path='./tasks/bth.png', name='主页', n_clicks=n_clicks, ind=ind)
         
-
+    def awesome_activities(self, ind=0):
+        ''' 精彩活动 '''
+        user_print('精彩活动开始', ind=ind)
+        self.lucky_pet()
+        user_print('精彩活动完成', ind=ind)
+    
+    
+    def lucky_pet(self, ind=1):
+        ''' 砸蛋领宠 '''
+        user_print('砸蛋领宠开始', ind=ind)
+        todo = self.record['awesome_activities']['lucky_pet']['todo']
+        if not todo:
+            user_print('砸蛋领宠跳过', ind=ind)
+            return
+        done = self.record['awesome_activities']['lucky_pet']['done']
+        if self.test:
+            done = 0
+        total_chances = 5
+        while done != 1:
+            px, py = 0, 0
+            f0 = False
+            self.back_to_home(ind=ind+1)
+            f0, tpx, tpy = self.find(img_path='./tasks/jchd.png')
+            if f0: 
+                px, py = tpx, tpy
+            else:
+                user_print('砸蛋领宠跳过', ind=ind)
+                return
+            self.move_and_click(pos=[px, py])
+            f1, tpx, tpy = self.find(img_path='./tasks/jchd_zdlc.png')
+            if f1:
+                px, py = tpx, tpy
+            else:
+                user_print('砸蛋领宠跳过', ind=ind)
+                return
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/jchd_zdlc_zyc.png')
+            
+            for i in range(total_chances):
+                px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/jchd_zdlc_zyc_qd.png')
+                px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/jchd_zdlc_zyc.png')
+            
+            f2, px, py = self.find('./tasks/jchd_zdlc_fh.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
+            
+            
+            if not self.test:
+                self.record['awesome_activities']['lucky_pet']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('砸蛋领宠完成', ind=ind)
+        else:
+            user_print('砸蛋领宠未完成', ind=ind)
+    
+    
     def lost_and_found(self, ind=0):
         user_print('资源找回开始', ind=ind)
         todo = self.record['lost_and_found']['todo']
@@ -345,9 +400,48 @@ class AutoRun(object):
         ''' 日常 '''
         user_print('日常开始', ind=ind)
         self.dbf()
+        self.coin()
         user_print('日常完成', ind=ind)
-        
 
+        
+    def coin(self, ind=1):
+        ''' 硬币 '''
+        user_print('硬币开始', ind=ind)
+        todo = self.record['routine']['coin']['todo']
+        if not todo:
+            user_print('硬币跳过', ind=ind)
+            return
+        done = self.record['routine']['coin']['done']
+        if self.test:
+            done = 0
+        while done != 1:
+            px, py = 0, 0
+            f0 = False
+            while not f0:
+                self.back_to_home(ind=ind+1)
+                f0, tpx, tpy = self.find(img_path='./tasks/bag.png')
+                if f0: px, py = tpx, tpy
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb_sp.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb_sp_hqtj.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb_sp_hqtj_hhlx.png')
+            px, py = self.click_and_confirm(pos=[px, py], offset=[3*DPM, 0], img_path='./tasks/rc_hhlx_sd.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_hhlx_sd_sd.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_hhlx_tbd.png')
+            time.sleep(2*MID_PAUSE)
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_hhlx_fh.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb_sp_hqtj_tc.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb_sp.png')
+            if not self.test:
+                self.record['routine']['coin']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('硬币完成', ind=ind)
+        else:
+            user_print('硬币未完成', ind=ind)
+    
+    
     def prison(self, ind=1):
         ''' 推进城 '''
         user_print('推进城开始', ind=ind)

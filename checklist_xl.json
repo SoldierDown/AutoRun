@@ -115,6 +115,10 @@
             "todo": true,
             "current_chances": 0,
             "done": 1
+        },
+        "coin":{
+            "todo": true,
+            "done": 0
         }
     },
     "bag": {
@@ -275,5 +279,11 @@
     "get_space": {
         "todo": true,
         "times": 2
+    },
+    "awesome_activities": {
+        "lucky_pet": {
+            "todo": true,
+            "done": 1
+        }
     }
 }
