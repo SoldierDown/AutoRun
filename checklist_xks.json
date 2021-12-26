@@ -115,7 +115,7 @@
             "todo": true,
             "done": 1
         },
-        "coin":{
+        "coin": {
             "todo": false,
             "done": 0
         }
@@ -285,7 +285,7 @@
     "awesome_activities": {
         "lucky_pet": {
             "todo": true,
-            "done": 1
+            "done": 0
         }
     }
 }

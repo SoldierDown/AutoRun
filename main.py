@@ -427,8 +427,7 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb_sp_hqtj_hhlx.png')
             px, py = self.click_and_confirm(pos=[px, py], offset=[3*DPM, 0], img_path='./tasks/rc_hhlx_sd.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_hhlx_sd_sd.png')
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_hhlx_tbd.png')
-            time.sleep(2*MID_PAUSE)
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_hhlx_sd_sd_sdjs.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_hhlx_fh.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb_sp_hqtj_tc.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb_sp.png')
@@ -1452,6 +1451,7 @@ class AutoRun(object):
                 if f0: px, py = tpx, tpy
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gk_lj.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gk_lj_qd.png')
+            time.sleep(5*SHORT_PAUSE)
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gk_fh.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
             if not self.test:
