@@ -50,6 +50,7 @@ class AutoRun(object):
             self.record = json.load(f)
         if to_reset:
             self.reset(self.record)
+            self.save_to_json()
 
 
 
@@ -2435,6 +2436,37 @@ class AutoRun(object):
         self.save_to_json()
         user_print('清理空间完成', ind=ind)
     
+
+    def loop_prison(self, ind=0):
+        ''' 小监狱自动脚本 '''
+        user_print('小监狱自动脚本开始', ind=ind)
+        done = 0
+        while done != 1:
+            px, py = 0, 0
+            f0 = False
+            while not f0:
+                self.back_to_home(ind=ind+1)
+                f0, tpx, tpy = self.find(img_path='./tasks/rc.png')
+                if f0: px, py = tpx, tpy
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_jytz.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_jytz_tz.png')
+            tz = True
+            while tz:
+                tgx, tgy = self.click_and_confirm(pos=[px, py], pause=SHORT_PAUSE*3, img_path='./tasks/rc_tjc_jytz_tz_tg.png')
+                self.move_and_click(pos=[tgx, tgy])
+                failed, _, _ = self.find(img_path='./tasks/rc_tjc_jytz_tz_tg_sb.png')
+                if failed:
+                    self.move_and_click(pos=[tgx, tgy], offset=[-2*DPM, -0.5*DPM])
+                else:
+                    input('Win!')
+                    done = 1
+                tz, px, py = self.find(img_path='./tasks/rc_tjc_jytz_tz.png')
+
+
+            
+            done = 1
+        user_print('小监狱自动脚本完成', ind=ind)
     def debug(self):
         ''''''
         self.time_limited_activity()              # looks good now
@@ -2489,3 +2521,4 @@ print('Working on {}'.format(role))
 print('Reset: {}'.format(to_reset))
 ar = AutoRun(role=role, to_test=False, to_reset=to_reset)
 ar.run()
+# ar.loop_prison()
