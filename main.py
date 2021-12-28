@@ -2442,15 +2442,7 @@ class AutoRun(object):
         user_print('小监狱自动脚本开始', ind=ind)
         done = 0
         while done != 1:
-            px, py = 0, 0
-            f0 = False
-            while not f0:
-                self.back_to_home(ind=ind+1)
-                f0, tpx, tpy = self.find(img_path='./tasks/rc.png')
-                if f0: px, py = tpx, tpy
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc.png')
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_jytz.png')
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_jytz_tz.png')
+            px, py = self.click_and_confirm(pos=[100, 100], img_path='./tasks/rc_tjc_jytz_tz.png')
             tz = True
             while tz:
                 tgx, tgy = self.click_and_confirm(pos=[px, py], pause=SHORT_PAUSE*3, img_path='./tasks/rc_tjc_jytz_tz_tg.png')
@@ -2459,8 +2451,20 @@ class AutoRun(object):
                 if failed:
                     self.move_and_click(pos=[tgx, tgy], offset=[-2*DPM, -0.5*DPM])
                 else:
-                    input('Win!')
-                    done = 1
+                    tg, _, _ = self.find(img_path='./tasks/rc_tjc_jytz_tz_tg.png')
+                    if tg:
+                        while tg:
+                            tg, _, _ = self.find_and_click(img_path='./tasks/rc_tjc_jytz_tz_tg.png')
+                        time.sleep(3*SHORT_PAUSE)
+                        failed, _, _ = self.find(img_path='./tasks/rc_tjc_jytz_tz_tg_sb.png')
+                        if failed:
+                            self.move_and_click(pos=[tgx, tgy], offset=[-2*DPM, -0.5*DPM])
+                        else:
+                            input('Win!')
+                            done = 1
+                    else:
+                        input('Win!')
+                        done = 1
                 tz, px, py = self.find(img_path='./tasks/rc_tjc_jytz_tz.png')
 
 

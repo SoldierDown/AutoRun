@@ -1,7 +1,7 @@
 {
     "normal_activity": {
         "daily_checkin": {
-            "todo": true,
+            "todo": false,
             "done": 0
         },
         "buy_bali": {
@@ -73,7 +73,7 @@
             "done": 0
         },
         "get_union_bonus": {
-            "todo": true,
+            "todo": false,
             "cur_chances": 0,
             "done": 0
         }
@@ -93,18 +93,18 @@
             }
         },
         "secret_treasures": {
-            "todo": true,
+            "todo": false,
             "done": 0
         }
     },
     "routine": {
         "bullfight": {
-            "todo": true,
+            "todo": false,
             "done": 0,
             "hz_name": "xl"
         },
         "SOP": {
-            "todo": true,
+            "todo": false,
             "done": 0
         },
         "DBF": {
@@ -113,6 +113,7 @@
         },
         "prison": {
             "todo": true,
+            "current_chances": 0,
             "done": 0
         },
         "coin": {
@@ -136,7 +137,7 @@
     },
     "cross_servers": {
         "treasures": {
-            "todo": true,
+            "todo": false,
             "done": 0
         }
     },
@@ -145,7 +146,7 @@
             "todo": true,
             "done": 0,
             "timed": false,
-            "hz_name": "xks"
+            "hz_name": "xlf"
         }
     },
     "lineup": {
@@ -153,39 +154,38 @@
             "todo": false,
             "quality": "high",
             "done": 0,
-            "hz_name": "as",
-            "sp_name": "slzj"
+            "hz_name": "xlf",
+            "sp_name": "xmxl"
         },
         "equipment_enchant": {
             "todo": true,
-            "quality": "high",
             "done": 0,
-            "hz_name": "xks",
-            "zb_name": "cylgm"
+            "hz_name": "lf",
+            "zb_name": "bwwsq"
         }
     },
     "adventure": {
         "elite_task": {
-            "todo": true,
+            "todo": false,
             "done": 0,
-            "task_name": "hjx",
-            "hz_name": "btlma"
+            "task_name": "wggg",
+            "hz_name": "lbk"
         },
         "awaken_task": {
             "todo": false,
             "done": 0,
-            "item_name": "sz"
+            "item_name": "gj"
         },
         "nightmare_task": {
-            "todo": true,
+            "todo": false,
             "done": 0,
             "hz_names": [
-                "btlma",
-                "ww"
+                "lbk",
+                "jd"
             ],
             "times": [
-                3,
-                2
+                4,
+                1
             ]
         }
     },
@@ -203,25 +203,26 @@
             "done": 0,
             "cur_chances": 0
         },
+        "need_lhzl": 0,
         "hbshop": {
             "todo": false,
             "wishlist": [
                 "lyez",
-                "ygzx",
-                "sheh",
-                "slzj",
+                "zzzh",
+                "xmxl",
+                "zyjgz",
+                "lhzl",
                 "nls",
                 "jjs",
                 "jyjz",
                 "jyyz",
-                "qzjh",
-                "xmxl"
+                "qzjh"
             ],
             "done": 0,
             "cur_chances": 0
         },
         "cwshop": {
-            "todo": true,
+            "todo": false,
             "wishlist": [
                 "gjcwsl",
                 "zjcwsl",
@@ -233,12 +234,9 @@
         "xzshop": {
             "todo": false,
             "wishlist": [
-                "swwkys",
                 "cz",
                 "jjw",
                 "hx",
-                "xzm",
-                "jjw",
                 "xls",
                 "xzzh",
                 "zjjc",
@@ -249,18 +247,18 @@
         }
     },
     "assistance_punch": {
-        "todo": true,
+        "todo": false,
         "name": "zlzj",
         "done": 0
     },
     "cabin": {
         "cruise": {
-            "todo": true,
+            "todo": false,
             "zone": "dhhy",
             "done": 0
         },
         "factory": {
-            "todo": true,
+            "todo": false,
             "zone": "gc",
             "done": 0
         }
