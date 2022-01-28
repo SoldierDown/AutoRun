@@ -33,12 +33,12 @@
             "done": 0
         },
         "sales_items": {
-            "todo": true,
-            "done": 1
+            "todo": false,
+            "done": 0
         },
         "dollar_shop": {
-            "todo": true,
-            "done": 1
+            "todo": false,
+            "done": 0
         }
     },
     "game_assistant": {
@@ -130,7 +130,7 @@
             },
             "pet_growing": {
                 "todo": true,
-                "pet_name": "qe",
+                "pet_name": "ty",
                 "done": 1
             }
         }
@@ -155,19 +155,19 @@
             "quality": "high",
             "done": 1,
             "hz_name": "xl",
-            "sp_name": "xmxl"
+            "sp_name": "zzzh"
         },
         "equipment_enchant": {
             "todo": true,
             "done": 0,
             "hz_name": "tt",
-            "zb_name": "bwwsk"
+            "zb_name": "bwwsq"
         }
     },
     "adventure": {
         "elite_task": {
-            "todo": true,
-            "done": 1,
+            "todo": false,
+            "done": 0,
             "task_name": "wggg",
             "hz_name": "lbk"
         },
@@ -177,8 +177,8 @@
             "item_name": "gj"
         },
         "nightmare_task": {
-            "todo": true,
-            "done": 1,
+            "todo": false,
+            "done": 0,
             "hz_names": [
                 "lbk",
                 "jd"

@@ -93,7 +93,7 @@
             }
         },
         "secret_treasures": {
-            "todo": false,
+            "todo": true,
             "done": 0
         }
     },
@@ -109,7 +109,7 @@
         },
         "DBF": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "prison": {
             "todo": true,
@@ -130,7 +130,7 @@
             },
             "pet_growing": {
                 "todo": true,
-                "pet_name": "sy",
+                "pet_name": "ty",
                 "done": 0
             }
         }
@@ -160,8 +160,8 @@
         "equipment_enchant": {
             "todo": true,
             "done": 0,
-            "hz_name": "lf",
-            "zb_name": "bwwsq"
+            "hz_name": "xlf",
+            "zb_name": "cylgy"
         }
     },
     "adventure": {
@@ -247,7 +247,7 @@
         }
     },
     "assistance_punch": {
-        "todo": false,
+        "todo": true,
         "name": "zlzj",
         "done": 0
     },
@@ -267,7 +267,7 @@
         "rc_recruit": {
             "bw": {
                 "todo": true,
-                "times": 0,
+                "times": 1,
                 "done": 0
             },
             "qw": {
@@ -278,7 +278,7 @@
     },
     "get_space": {
         "todo": true,
-        "times": 0
+        "times": 1
     },
     "awesome_activities": {
         "lucky_pet": {

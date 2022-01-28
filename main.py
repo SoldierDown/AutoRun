@@ -467,6 +467,7 @@ class AutoRun(object):
             fpx, fpy = self.click_and_confirm(pos=[fpx, fpy], img_path='./tasks/rc_tjc.png')
             fpx, fpy = self.click_and_confirm(pos=[fpx, fpy], img_path='./tasks/rc_tjc_zbsd.png')
             to_stop = False
+            reset_times = 0
             while not to_stop:
                 dxdy = dxdys[cur_id%3]
                 self.move_and_click(pos=[fpx, fpy], offset=dxdy)
@@ -480,7 +481,19 @@ class AutoRun(object):
                 else:
                     cur_id += 1
                 to_stop, _, _ = self.find_and_click(img_path='./tasks/rc_tjc_qx.png', mute=True)
-                if to_stop: break
+                if to_stop: 
+                    if reset_times == 0:
+                        to_stop = False
+                        reset_times = 1
+                        px, py = 0, 0
+                        _, px, py = self.find(img_path='./tasks/rc_tjc_cz.png')
+                        px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_cz_qd.png')
+                        px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_sd.png')
+                        px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_cz_qd.png')
+                        px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_cz_qd.png')
+                        self.move_and_click(pos=[px, py])
+                    else:
+                        break
             if not self.test:
                 self.record['routine']['prison']['done'] = 1
                 done = 1
@@ -2524,5 +2537,6 @@ if args.reset == 'true':
 print('Working on {}'.format(role))
 print('Reset: {}'.format(to_reset))
 ar = AutoRun(role=role, to_test=False, to_reset=to_reset)
+# ar.prison()
 ar.run()
 # ar.loop_prison()
