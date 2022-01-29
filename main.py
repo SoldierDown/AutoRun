@@ -2309,9 +2309,13 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path=zb_path)
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_zb_fm.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_zb_fm_yjfm.png')
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_zb_fm_yjfm_+10.png')
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_zb_fm_yjfm_qd.png')
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_zb_fm_arrow.png')
+            self.move_and_click(pos=[px, py])
+            found, px, py = self.find(img_path='./tasks/zr_zb_fm_yjfm_+10.png')
+            if found:
+                px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_zb_fm_yjfm_qd.png')
+                px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_zb_fm_arrow.png')
+            else:
+                pass
             done = 1
             if not self.test:
                 self.record['lineup']['equipment_enchant']['done'] = 1
@@ -2416,6 +2420,47 @@ class AutoRun(object):
     
     def tmp(self, ind=0):
         self.find_and_click(img_path='./tasks/na_bb_bl.png', n_clicks=0)
+
+    def add_kdb(self, ind=1):
+        ''' 空岛贝 '''
+        user_print('空岛贝开始', ind=ind)
+        todo = self.record['lineup']['kdb']['todo']
+        if not todo:
+            user_print('空岛贝开始', ind=ind)
+            return
+        done = self.record['lineup']['kdb']['done']
+        if self.test:
+            done = 0
+        hz_name = self.record['lineup']['kdb']['hz_name']
+        kdb_name = self.record['lineup']['kdb']['kdb_name']
+        while done != 1:
+            px, py = 0, 0
+            f0 = False
+            while not f0:
+                self.back_to_home(ind=ind+1)
+                print('here')
+                f0, tpx, tpy = self.find(img_path='./tasks/zr.png')
+                if f0: px, py = tpx, tpy
+                else: print('not found')
+            avatar_path = './tasks/zr_avatar_' + hz_name + '.png'
+            px, py = self.click_and_confirm(pos=[px, py], img_path=avatar_path)
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_kdb.png')
+            kdb_path = './tasks/zr_kdb_' + kdb_name + '.png'
+            px, py = self.click_and_confirm(pos=[px, py], img_path=kdb_path)
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_kdb_kssj.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_kdb_kssj_+10.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_kdb_kssj_qd.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_kdb_fh.png')
+            done = 1
+            if not self.test:
+                self.record['lineup']['kdb']['done'] = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('空岛贝完成', ind=ind)
+        else:
+            user_print('空岛贝未完成', ind=ind)
+        
+        
 
     def get_space(self, ind=0):
         ''' 清理空间 '''
@@ -2538,5 +2583,6 @@ print('Working on {}'.format(role))
 print('Reset: {}'.format(to_reset))
 ar = AutoRun(role=role, to_test=False, to_reset=to_reset)
 # ar.prison()
-ar.run()
+# ar.run()
+ar.add_kdb()
 # ar.loop_prison()
