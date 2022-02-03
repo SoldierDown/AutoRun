@@ -1524,7 +1524,6 @@ class AutoRun(object):
             user_print('东塔塔秘宝完成', ind=ind)
         else:
             user_print('东塔塔秘宝未完成', ind=ind)
-        pass
 
     def gumball_machine(self, ind=2):
         ''' 扭蛋机 '''
@@ -2438,7 +2437,6 @@ class AutoRun(object):
             f0 = False
             while not f0:
                 self.back_to_home(ind=ind+1)
-                print('here')
                 f0, tpx, tpy = self.find(img_path='./tasks/zr.png')
                 if f0: px, py = tpx, tpy
                 else: print('not found')
@@ -2451,6 +2449,7 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_kdb_kssj_+10.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_kdb_kssj_qd.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/zr_kdb_fh.png')
+            self.move_and_click(pos=[px, py])
             done = 1
             if not self.test:
                 self.record['lineup']['kdb']['done'] = 1
@@ -2460,7 +2459,34 @@ class AutoRun(object):
         else:
             user_print('空岛贝未完成', ind=ind)
         
-        
+    def env_card(self, ind=1):
+        ''' 环境卡 '''
+        user_print('环境卡开始', ind=ind)
+        todo = self.record['functions']['env_card']['upgrade']['todo']
+        if not todo:
+            user_print('环境卡跳过', ind=ind)
+            return
+        done = self.record['functions']['env_card']['upgrade']['done']
+        while done != 1:
+            px, py = 0, 0
+            f0 = False
+            while not f0:
+                self.back_to_home(ind=ind+1)
+                f0, tpx, tpy = self.find(img_path='./tasks/gn.png')
+                if f0: px, py = tpx, tpy
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gn_hjk.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gn_hjk_fsqqh.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gn_hjk_fsqqh_qbxh.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gn_hjk_fsqqh_fh.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gn_hjk_fh.png')
+            self.move_and_click(pos=[px, py])
+            self.record['functions']['secret_treasures']['done'] = 1
+            done = 1
+            self.save_to_json()
+        if done == 1:
+            user_print('环境卡完成', ind=ind)
+        else:
+            user_print('环境卡未完成', ind=ind)
 
     def get_space(self, ind=0):
         ''' 清理空间 '''
@@ -2468,28 +2494,9 @@ class AutoRun(object):
         self.test=True
         self.equipment_enchant()
         self.pet()
+        self.add_kdb()
+        self.env_card()
         self.test=False
-        done = 0
-        while done != 1:
-            px, py = 0, 0
-            f0 = False
-            while not f0:
-                self.back_to_home(ind=ind+1)
-                f0, tpx, tpy = self.find(img_path='./tasks/bag.png')
-                if f0: px, py = tpx, tpy
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj.png')
-            self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dj.png')
-            found, px, py = self.find(img_path='./tasks/bag_dj_dhzgsc.png')
-            if found:
-                px, py = self.click_and_confirm(pos=[px, py], offset=[4*DPM, 0], img_path='./tasks/bag_dj_qd.png')
-                px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dj.png')
-            found, px, py = self.find(img_path='./tasks/bag_dj_dhsc.png')
-            if found:
-                px, py = self.click_and_confirm(pos=[px, py], offset=[4*DPM, 0], img_path='./tasks/bag_dj_+10.png')
-                px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dhsc_qd.png')
-                px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_qd.png')
-                px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_dj_dj.png')
-            done = 1    
         self.record['get_space']['times'] += 1
         self.save_to_json()
         user_print('清理空间完成', ind=ind)
@@ -2583,6 +2590,6 @@ print('Working on {}'.format(role))
 print('Reset: {}'.format(to_reset))
 ar = AutoRun(role=role, to_test=False, to_reset=to_reset)
 # ar.prison()
-# ar.run()
-ar.add_kdb()
+ar.run()
+# ar.env_card()
 # ar.loop_prison()

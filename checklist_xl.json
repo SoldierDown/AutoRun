@@ -43,7 +43,7 @@
     },
     "game_assistant": {
         "todo": true,
-        "done": 0
+        "done": 1
     },
     "reward_center": {
         "todo": true,
@@ -58,19 +58,19 @@
     "union": {
         "union_construction": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "pirate_wanted": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "official_pirates": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "get_coffee": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "get_union_bonus": {
             "todo": true,
@@ -94,7 +94,13 @@
         },
         "secret_treasures": {
             "todo": true,
-            "done": 0
+            "done": 1
+        },
+        "env_card": {
+            "upgrade": {
+                "todo": true,
+                "done": 0
+            }
         }
     },
     "routine": {
@@ -109,16 +115,16 @@
         },
         "DBF": {
             "todo": true,
-            "done": 0
+            "done": 1
         },
         "prison": {
             "todo": true,
             "current_chances": 0,
-            "done": 0
+            "done": 1
         },
         "coin": {
             "todo": true,
-            "done": 0
+            "done": 1
         }
     },
     "bag": {
@@ -126,12 +132,12 @@
             "play_with_pet": {
                 "todo": true,
                 "pet_name": "ty",
-                "done": 0
+                "done": 1
             },
             "pet_growing": {
                 "todo": true,
                 "pet_name": "ty",
-                "done": 0
+                "done": 1
             }
         }
     },
@@ -153,7 +159,7 @@
         "accessory_strengthen": {
             "todo": true,
             "quality": "high",
-            "done": 0,
+            "done": 1,
             "hz_name": "xl",
             "sp_name": "zzzh"
         },
@@ -273,7 +279,7 @@
         "rc_recruit": {
             "bw": {
                 "todo": true,
-                "times": 0,
+                "times": 1,
                 "done": 0
             },
             "qw": {
@@ -284,7 +290,7 @@
     },
     "get_space": {
         "todo": true,
-        "times": 0
+        "times": 1
     },
     "awesome_activities": {
         "lucky_pet": {
