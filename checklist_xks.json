@@ -43,7 +43,7 @@
     },
     "game_assistant": {
         "todo": true,
-        "done": 1
+        "done": 0
     },
     "reward_center": {
         "todo": true,
@@ -52,25 +52,27 @@
     "harbor": {
         "harbor_reward": {
             "todo": true,
-            "done": 1
+            "done": 0
         }
     },
     "union": {
+        "todo": true,
+        "done": 0,
         "union_construction": {
             "todo": true,
-            "done": 1
+            "done": 0
         },
         "pirate_wanted": {
             "todo": true,
-            "done": 1
+            "done": 0
         },
         "official_pirates": {
             "todo": true,
-            "done": 1
+            "done": 0
         },
         "get_coffee": {
             "todo": true,
-            "done": 1
+            "done": 0
         },
         "get_union_bonus": {
             "todo": true,
@@ -82,14 +84,14 @@
         "adventure_logs": {
             "gumball_machine": {
                 "todo": true,
-                "done": 1,
-                "current_chances": 3
+                "done": 0,
+                "current_chances": 0
             },
             "adventure_fights": {
                 "todo": true,
-                "current_fights": 3,
-                "current_changes": 3,
-                "done": 1
+                "current_fights": 0,
+                "current_changes": 0,
+                "done": 0
             }
         },
         "secret_treasures": {
@@ -119,7 +121,7 @@
         },
         "prison": {
             "todo": true,
-            "done": 1
+            "done": 0
         },
         "coin": {
             "todo": true,
@@ -131,12 +133,12 @@
             "play_with_pet": {
                 "todo": true,
                 "pet_name": "ty",
-                "done": 1
+                "done": 0
             },
             "pet_growing": {
                 "todo": true,
                 "pet_name": "ty",
-                "done": 1
+                "done": 0
             }
         }
     },
@@ -156,18 +158,18 @@
     },
     "lineup": {
         "accessory_strengthen": {
-            "todo": false,
+            "todo": true,
             "quality": "high",
             "done": 0,
             "hz_name": "xks",
-            "sp_name": "hleh"
+            "sp_name": "slzj"
         },
         "equipment_enchant": {
             "todo": true,
             "quality": "high",
             "done": 0,
             "hz_name": "xks",
-            "zb_name": "cylgy"
+            "zb_name": "cylgx"
         },
         "kdb": {
             "todo": true,
@@ -212,7 +214,7 @@
                 "wnbw",
                 "hsbwjh"
             ],
-            "done": 1,
+            "done": 0,
             "cur_chances": 0
         },
         "hbshop": {
@@ -239,7 +241,7 @@
                 "zjcwsl",
                 "djcwsl"
             ],
-            "done": 1,
+            "done": 0,
             "cur_chances": 0
         },
         "xzshop": {
@@ -281,7 +283,7 @@
         "rc_recruit": {
             "bw": {
                 "todo": true,
-                "times": 2,
+                "times": 1,
                 "done": 0
             },
             "qw": {

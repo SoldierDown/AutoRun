@@ -225,7 +225,7 @@ class AutoRun(object):
 
     def run(self):
         ''''''
-        self.awesome_activities()
+        # self.awesome_activities()
         times = self.record['get_space']['times']
         if times == 0:
             self.get_space()
@@ -1018,8 +1018,8 @@ class AutoRun(object):
         ''' 限时活动 '''
         user_print('限时活动开始', ind=ind)
         self.consecutive_logins()
-        self.sales_items()
         self.dollar_shop()
+        self.sales_items()
         user_print('限时活动完成', ind=ind)
     def consecutive_logins(self, ind=1):
         ''' 累计登录 '''
@@ -1217,22 +1217,13 @@ class AutoRun(object):
 
 
     def union(self, ind=0):
-        ''' 工会活动 '''
-        user_print('工会活动开始', ind=ind)
-        self.union_construction()
-        self.pirate_wanted()
-        self.get_coffee()
-        # self.get_union_bonus()
-        self.official_pirates()
-        user_print('工会活动完成', ind=ind)
-    def union_construction(self, ind=1):
-        ''' 工会建设 '''
-        user_print('工会建设开始', ind=ind)
-        todo = self.record['union']['union_construction']['todo']
+        ''' 工会 '''
+        user_print('工会开始', ind=ind)
+        todo = self.record['union']['todo']
         if not todo:
-            user_print('工会建设开始', ind=ind)
+            user_print('工会开始', ind=ind)
             return
-        done = self.record['union']['union_construction']['done']
+        done = self.record['union']['done']
         if self.test:
             done = 0
         while done != 1:
@@ -1243,6 +1234,42 @@ class AutoRun(object):
                 f0, tpx, tpy = self.find(img_path='./tasks/gh.png')
                 if f0: px, py = tpx, tpy
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_ghdt.png')
+            
+            self.union_construction()
+            
+            self.pirate_wanted()
+            
+            self.get_coffee()
+            
+            self.official_pirates()
+            
+            f0, px, py = self.find(img_path='./tasks/gh_fh.png')
+            self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
+            
+            if not self.test:
+                self.record['union']['done'] = 1
+                done = 1
+                self.save_to_json()
+        if done == 1:
+            user_print('工会完成', ind=ind)
+        else:
+            user_print('工会未完成', ind=ind)
+    def union_construction(self, ind=1):
+        ''' 工会建设 '''
+        user_print('工会建设开始', ind=ind)
+        todo = self.record['union']['union_construction']['todo']
+        if not todo:
+            user_print('工会建设跳过', ind=ind)
+            return
+        done = self.record['union']['union_construction']['done']
+        if self.test:
+            done = 0
+        while done != 1:
+            px, py = 0, 0
+            f0 = False
+            while not f0:
+                f0, tpx, tpy = self.find(img_path='./tasks/gh_ghdt.png')
+                if f0: px, py = tpx, tpy
             time.sleep(MID_PAUSE)
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_ghdt_ptjs.png')
             px, py = self.click_and_confirm(pos=[px, py], offset=[DPM/3, DPM*2.5], img_path='./tasks/gh_ghdt_qwlq.png')
@@ -1252,11 +1279,6 @@ class AutoRun(object):
             _, px, py = self.find('./tasks/gh_ghdt_qwlq_fh.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_ghdt.png')
             time.sleep(MID_PAUSE)
-            f7 = False
-            while not f7:
-                f7, px, py = self.find(img_path='./tasks/gh_fh.png')
-            self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
-            
             if not self.test:
                 self.record['union']['union_construction']['done'] = 1
                 done = 1
@@ -1280,10 +1302,8 @@ class AutoRun(object):
             px, py = 0, 0
             f0 = False
             while not f0:
-                self.back_to_home(ind=ind+1)
-                f0, tpx, tpy = self.find(img_path='./tasks/gh.png')
+                f0, tpx, tpy = self.find(img_path='./tasks/gh_hdxs.png')
                 if f0: px, py = tpx, tpy
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_hdxs.png')
             time.sleep(MID_PAUSE)
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_hdxs_tz.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_hdxs_tz_sl.png') 
@@ -1291,10 +1311,6 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_hdxs_fh.png') 
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_hdxs.png') 
             time.sleep(MID_PAUSE)
-            f5 = False
-            while not f5:
-                f5, px, py = self.find(img_path='./tasks/gh_fh.png')
-            self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
             if not self.test:
                 self.record['union']['pirate_wanted']['done'] = 1
                 done = 1
@@ -1317,10 +1333,8 @@ class AutoRun(object):
             px, py = 0, 0
             f0 = False
             while not f0:
-                self.back_to_home(ind=ind+1)
-                f0, tpx, tpy = self.find(img_path='./tasks/gh.png')
+                f0, tpx, tpy = self.find(img_path='./tasks/gh_rykft.png')
                 if f0: px, py = tpx, tpy
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_rykft.png')
             time.sleep(MID_PAUSE)
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_rykft_hkf.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_rykft_hkf_qd.png')
@@ -1328,10 +1342,6 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_rykft_fh.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_rykft.png')
             time.sleep(MID_PAUSE)
-            f5 = False
-            while not f5:
-                f5, px, py = self.find(img_path='./tasks/gh_fh.png')
-            self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
             if not self.test:
                 self.record['union']['get_coffee']['done'] = 1
                 done = 1
@@ -1409,10 +1419,8 @@ class AutoRun(object):
             px, py = 0, 0
             f0 = False
             while not f0:
-                self.back_to_home(ind=ind+1)
-                f0, tpx, tpy = self.find(img_path='./tasks/gh.png')
+                f0, tpx, tpy = self.find(img_path='./tasks/gh_qwh.png')
                 if f0: px, py = tpx, tpy
-            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_qwh.png')
             time.sleep(MID_PAUSE)
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_qwh_jsjl.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_qwh_jsjl_yjlq.png')
@@ -1427,10 +1435,6 @@ class AutoRun(object):
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_qwh_fh.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/gh_qwh.png')
             time.sleep(MID_PAUSE)
-            f5 = False
-            while not f5:
-                f5, px, py = self.find(img_path='./tasks/gh_fh.png')
-            self.click_and_confirm(pos=[px, py], img_path='./tasks/bth.png')
             if not self.test:
                 self.record['union']['official_pirates']['done'] = 1
                 done = 1
@@ -2202,7 +2206,7 @@ class AutoRun(object):
         ''' 阵容 '''
         user_print('阵容开始', ind=ind)
         self.accessory_strengthen()    
-        # self.equipment_enchant()
+        self.equipment_enchant()
         user_print('阵容完成', ind=ind)
 
 

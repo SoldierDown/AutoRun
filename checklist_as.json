@@ -47,7 +47,7 @@
     },
     "reward_center": {
         "todo": true,
-        "done": 0
+        "done": 1
     },
     "harbor": {
         "harbor_reward": {
@@ -56,6 +56,8 @@
         }
     },
     "union": {
+        "todo": true,
+        "done": 1,
         "union_construction": {
             "todo": true,
             "done": 1
@@ -165,7 +167,7 @@
         },
         "equipment_enchant": {
             "todo": true,
-            "done": 0,
+            "done": 1,
             "hz_name": "xlf",
             "zb_name": "cylgy"
         },
