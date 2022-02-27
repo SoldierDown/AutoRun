@@ -6,16 +6,16 @@
         },
         "buy_bali": {
             "todo": true,
-            "done": 1
+            "done": 0
         },
         "get_vip_gift": {
             "todo": true,
-            "done": 1
+            "done": 0
         },
         "get_daily_gift": {
             "mr": {
                 "todo": true,
-                "done": 1
+                "done": 0
             },
             "mz": {
                 "todo": false,
@@ -47,12 +47,12 @@
     },
     "reward_center": {
         "todo": true,
-        "done": 1
+        "done": 0
     },
     "harbor": {
         "harbor_reward": {
             "todo": true,
-            "done": 1
+            "done": 0
         }
     },
     "union": {
@@ -84,19 +84,19 @@
         "adventure_logs": {
             "gumball_machine": {
                 "todo": true,
-                "done": 1,
-                "current_chances": 3
+                "done": 0,
+                "current_chances": 0
             },
             "adventure_fights": {
                 "todo": true,
-                "current_fights": 3,
-                "current_changes": 3,
-                "done": 1
+                "current_fights": 0,
+                "current_changes": 0,
+                "done": 0
             }
         },
         "secret_treasures": {
             "todo": true,
-            "done": 1
+            "done": 0
         },
         "env_card": {
             "upgrade": {
@@ -122,7 +122,7 @@
         "prison": {
             "todo": true,
             "current_chances": 0,
-            "done": 1
+            "done": 0
         },
         "coin": {
             "todo": false,
@@ -134,12 +134,12 @@
             "play_with_pet": {
                 "todo": true,
                 "pet_name": "ty",
-                "done": 1
+                "done": 0
             },
             "pet_growing": {
                 "todo": true,
                 "pet_name": "ty",
-                "done": 1
+                "done": 0
             }
         }
     },
@@ -152,7 +152,7 @@
     "boyos": {
         "train_boyo": {
             "todo": true,
-            "done": 1,
+            "done": 0,
             "timed": false,
             "hz_name": "xlf"
         }
@@ -167,7 +167,7 @@
         },
         "equipment_enchant": {
             "todo": true,
-            "done": 1,
+            "done": 0,
             "hz_name": "xlf",
             "zb_name": "cylgy"
         },
@@ -205,7 +205,7 @@
     },
     "get_task_reward": {
         "todo": true,
-        "done": 1
+        "done": 0
     },
     "shop": {
         "bwshop": {
@@ -214,7 +214,7 @@
                 "wnbw",
                 "hsbwjh"
             ],
-            "done": 1,
+            "done": 0,
             "cur_chances": 0
         },
         "need_lhzl": 0,
@@ -263,7 +263,7 @@
     "assistance_punch": {
         "todo": true,
         "name": "zlzj",
-        "done": 1
+        "done": 0
     },
     "cabin": {
         "cruise": {
@@ -281,7 +281,7 @@
         "rc_recruit": {
             "bw": {
                 "todo": true,
-                "times": 3,
+                "times": 1,
                 "done": 0
             },
             "qw": {
@@ -292,7 +292,7 @@
     },
     "get_space": {
         "todo": true,
-        "times": 2
+        "times": 1
     },
     "awesome_activities": {
         "lucky_pet": {

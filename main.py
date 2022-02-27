@@ -490,7 +490,7 @@ class AutoRun(object):
                         px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_cz_qd.png')
                         px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_sd.png')
                         px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_cz_qd.png')
-                        px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_cz_qd.png')
+                        px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/rc_tjc_cz_qd.png',pause=MID_PAUSE)
                         self.move_and_click(pos=[px, py])
                     else:
                         break
