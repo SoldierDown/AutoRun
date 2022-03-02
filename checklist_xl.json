@@ -120,9 +120,9 @@
             "done": 1
         },
         "prison": {
-            "todo": true,
+            "todo": false,
             "current_chances": 0,
-            "done": 1
+            "done": 0
         },
         "coin": {
             "todo": true,
