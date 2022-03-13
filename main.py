@@ -423,6 +423,7 @@ class AutoRun(object):
                 f0, tpx, tpy = self.find(img_path='./tasks/bag.png')
                 if f0: px, py = tpx, tpy
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb.png')
+            px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb_hjzz.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb_sp.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb_sp_hqtj.png')
             px, py = self.click_and_confirm(pos=[px, py], img_path='./tasks/bag_yb_sp_hqtj_hhlx.png')

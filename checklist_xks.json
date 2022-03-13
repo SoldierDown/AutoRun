@@ -47,7 +47,7 @@
     },
     "reward_center": {
         "todo": true,
-        "done": 1
+        "done": 0
     },
     "harbor": {
         "harbor_reward": {
