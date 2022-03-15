@@ -6,16 +6,16 @@
         },
         "buy_bali": {
             "todo": true,
-            "done": 1
+            "done": 0
         },
         "get_vip_gift": {
             "todo": true,
-            "done": 1
+            "done": 0
         },
         "get_daily_gift": {
             "mr": {
                 "todo": true,
-                "done": 1
+                "done": 0
             },
             "mz": {
                 "todo": false,
@@ -47,7 +47,7 @@
     },
     "reward_center": {
         "todo": true,
-        "done": 1
+        "done": 0
     },
     "harbor": {
         "harbor_reward": {
@@ -152,7 +152,7 @@
     "boyos": {
         "train_boyo": {
             "todo": true,
-            "done": 1,
+            "done": 0,
             "timed": false,
             "hz_name": "tt"
         }
@@ -205,7 +205,7 @@
     },
     "get_task_reward": {
         "todo": true,
-        "done": 1
+        "done": 0
     },
     "shop": {
         "bwshop": {
@@ -242,7 +242,7 @@
                 "zjcwsl",
                 "djcwsl"
             ],
-            "done": 1,
+            "done": 0,
             "cur_chances": 0
         },
         "xzshop": {
@@ -281,7 +281,7 @@
         "rc_recruit": {
             "bw": {
                 "todo": true,
-                "times": 3,
+                "times": 2,
                 "done": 0
             },
             "qw": {
@@ -292,7 +292,7 @@
     },
     "get_space": {
         "todo": true,
-        "times": 2
+        "times": 1
     },
     "awesome_activities": {
         "lucky_pet": {
