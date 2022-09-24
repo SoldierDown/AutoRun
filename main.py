@@ -9,7 +9,6 @@ DCONF = -0.03
 DPM = 100
 MAX_ATTEMPTS = 10
 TOTAL_CHANCES = 3
-from PIL.Image import FASTOCTREE
 from numpy import copysign, fabs, true_divide
 import pyautogui as pag
 from pynput import mouse
@@ -2343,14 +2342,9 @@ class AutoRun(object):
             rename_command = 'ren tmp.json checklist_' + self.role + '.json'
             os.system(rename_command)
         else:
-            if HIGH_LEVEL:
-                os.system('rm checklist.json')
-                time.sleep(3)
-                os.system('mv tmp.json checklist.json')
-            else:
-                os.system('rm tmp.json')
-                time.sleep(3)
-                os.system('mv tmp.json checklist.json')
+            os.system('rm checklist.json')
+            time.sleep(3)
+            os.system('mv tmp.json checklist.json')
 
     
 
